@@ -153,11 +153,7 @@ export default function AdminPortal() {
     if (!isAuthenticated) return;
     const fetchRegistrations = async () => {
       try {
-        const { createClient } = await import("@supabase/supabase-js");
-        const supabase = createClient(
-          process.env.NEXT_PUBLIC_SUPABASE_URL!,
-          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-        );
+        const supabase = await getSupabase();
         const { data, error } = await supabase
           .from("members")
           .select("*")
