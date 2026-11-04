@@ -1,0 +1,153 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Mulish:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #ffffff;
+  --fg: #374151;
+  --head: #1b2238;
+  --blue: #1377a4;
+  --blue-dark: #0e5779;
+  --blue-light: #e8f3f8;
+  --green: #63b849;
+  --green-dark: #4f9738;
+  --green-light: #f0f9ed;
+  --gold: #c6ac62;
+  --gold-dark: #a88e45;
+  --gold-light: #faf6eb;
+  --navy: #1e3559;
+  --navy2: #131c33;
+  --soft: #f8fafc;
+  --card: #f8fafc;
+  --line: #e2e8f0;
+  box-sizing: border-box;
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: "Lato", system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Lato", system-ui, sans-serif;
+  color: var(--head);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/* Custom Brand Ribbon */
+.brand-ribbon {
+  height: 6px;
+  background: linear-gradient(
+    90deg,
+    #63b849 0%,
+    #63b849 33.3%,
+    #1377a4 33.3%,
+    #1377a4 66.6%,
+    #c6ac62 66.6%,
+    #c6ac62 100%
+  );
+}
+
+/* Pill CTA Buttons */
+.pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 9999px;
+  padding: 0.5rem 1.2rem;
+  font-family: "Mulish", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.pill-green {
+  background-color: #63b849;
+  color: #ffffff;
+}
+.pill-green:hover {
+  background-color: #4f9738;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 184, 73, 0.3);
+}
+
+.pill-blue {
+  background-color: #1377a4;
+  color: #ffffff;
+}
+.pill-blue:hover {
+  background-color: #0e5779;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(19, 119, 164, 0.3);
+}
+
+.pill-gold {
+  background-color: #c6ac62;
+  color: #131c33;
+}
+.pill-gold:hover {
+  background-color: #a88e45;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(198, 172, 98, 0.3);
+}
+
+.pill-outline {
+  border: 1.5px solid currentColor;
+  background-color: transparent;
+}
+.pill-outline:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+/* 3D Flip Card Utilities */
+.perspective-1000 {
+  perspective: 1000px;
+}
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.rotate-y-180 {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
