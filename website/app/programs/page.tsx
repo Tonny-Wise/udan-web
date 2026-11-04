@@ -213,11 +213,11 @@ export default function ProgramsPage() {
                   Applications Closed
                 </div>
                 <a
-                  href="/documents/Diaspora-Youth-Matchmaking-Guidelines.docx"
-                  download="UDAN-Matchmaking-Guidelines.docx"
+                  href="/documents/UDAN-Matchmaking-Guidelines.pdf"
+                  download="UDAN-Matchmaking-Guidelines.pdf"
                   className="w-full text-center pill-btn pill-outline border-[#1377a4] text-[#1377a4] text-xs justify-center hover:bg-[#1377a4] hover:text-white transition-colors"
                 >
-                  <span>Download Guidelines</span>
+                  <span>⬇ Download Guidelines (PDF)</span>
                 </a>
               </div>
             </div>
