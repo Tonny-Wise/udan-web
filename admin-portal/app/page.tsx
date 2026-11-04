@@ -148,7 +148,16 @@ export default function AdminPortal() {
     checkAuth();
   }, []);
 
-  // ── Registrations fetch (unchanged) ─────────────────────────────────────────
+  // ── Supabase client with service role key ────────────────────────────────────
+  const getSupabase = async () => {
+    const { createClient } = await import("@supabase/supabase-js");
+    const key =
+      process.env.NEXT_PUBLIC_SUPABASE_SERVICE_KEY ||
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+    return createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, key);
+  };
+
+  // ── Registrations fetch ──────────────────────────────────────────────────────
   useEffect(() => {
     if (!isAuthenticated) return;
     const fetchRegistrations = async () => {
@@ -186,16 +195,6 @@ export default function AdminPortal() {
     if (!isAuthenticated) return;
     fetchGalleryData();
   }, [isAuthenticated]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const getSupabase = async () => {
-    const { createClient } = await import("@supabase/supabase-js");
-    // Use service role key so RLS doesn't block admin operations.
-    // Falls back to anon key if service key is not set (e.g. missing env var on deployment).
-    const key =
-      process.env.NEXT_PUBLIC_SUPABASE_SERVICE_KEY ||
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-    return createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, key);
-  };
 
   const fetchGalleryData = async () => {
     setGalleryError(null);
