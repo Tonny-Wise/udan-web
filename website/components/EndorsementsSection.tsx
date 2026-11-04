@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { img } from "@/lib/supabase/imageTransform";
 
 export default function EndorsementsSection() {
   const endorsements = [
@@ -62,7 +63,7 @@ export default function EndorsementsSection() {
               <div className="pt-4 border-t border-gray-200/60 flex items-center gap-3.5 relative z-10">
                 <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-[#c6ac62] shrink-0 shadow-sm">
                   <Image
-                    src={item.image}
+                    src={img.portrait(item.image)}
                     alt={item.from}
                     fill
                     sizes="48px"

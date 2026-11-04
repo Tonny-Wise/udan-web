@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { img } from "@/lib/supabase/imageTransform";
 
 export default function Hero() {
   return (
@@ -7,7 +8,7 @@ export default function Hero() {
       {/* Real Photographic Background Layer with Contrast Overlay */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/homepage-hero.jpeg"
+          src={img.hero("https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/homepage-hero.jpeg")}
           alt="UDAN Agribusiness Convening & Leaders"
           fill
           priority

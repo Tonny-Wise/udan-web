@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
+import { img } from "@/lib/supabase/imageTransform";
 
 export interface GalleryImage {
   src: string;
@@ -115,11 +116,12 @@ export default function ConferenceGallery({ categories }: ConferenceGalleryProps
               {/* Cover Photo */}
               <div className="relative aspect-[16/10] w-full overflow-hidden bg-gray-900">
                 <Image
-                  src={cover}
+                  src={img.cover(cover)}
                   alt={cat.title}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
                 />
 
                 {/* Gradient overlay on hover */}
@@ -241,7 +243,7 @@ export default function ConferenceGallery({ categories }: ConferenceGalleryProps
               {currentImages[currentPhotoIdx] && (
                 <div className="relative w-full h-full">
                   <Image
-                    src={currentImages[currentPhotoIdx].src}
+                    src={img.full(currentImages[currentPhotoIdx].src)}
                     alt={
                       currentImages[currentPhotoIdx].caption ||
                       `${activeCategory.title} - Photo ${currentPhotoIdx + 1}`
@@ -313,7 +315,7 @@ export default function ConferenceGallery({ categories }: ConferenceGalleryProps
             <div className="bg-[#1b2542] border-t border-white/10 px-4 sm:px-6 py-3 shrink-0 flex flex-col gap-2">
               {/* Thumbnail strip */}
               <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin scrollbar-thumb-white/20">
-                {currentImages.map((img, idx) => {
+                  {currentImages.map((photo, idx) => {
                   const isCurrent = idx === currentPhotoIdx;
                   return (
                     <button
@@ -328,11 +330,12 @@ export default function ConferenceGallery({ categories }: ConferenceGalleryProps
                       aria-label={`Jump to photo ${idx + 1}`}
                     >
                       <Image
-                        src={img.src}
+                        src={img.thumb(photo.src)}
                         alt={`Thumbnail ${idx + 1}`}
                         fill
                         sizes="64px"
                         className="object-cover"
+                        loading="lazy"
                       />
                     </button>
                   );
