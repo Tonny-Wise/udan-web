@@ -15,89 +15,89 @@ const fallbackGalleryCategories: GalleryCategory[] = [
   {
     id: "youth-agripreneur-products-exhibition",
     title: "Youth Agripreneur Products Exhibition",
-    coverImage: "/images/gallery/youth-agripreneur-products-exhibition/1.png",
+    coverImage: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/youth-agripreneur-products-exhibition/1.png",
     images: [
-      { src: "/images/gallery/youth-agripreneur-products-exhibition/1.png" },
-      { src: "/images/gallery/youth-agripreneur-products-exhibition/2.png" },
-      { src: "/images/gallery/youth-agripreneur-products-exhibition/3.png" },
-      { src: "/images/gallery/youth-agripreneur-products-exhibition/4.png" },
-      { src: "/images/gallery/youth-agripreneur-products-exhibition/5.png" },
-      { src: "/images/gallery/youth-agripreneur-products-exhibition/6.png" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/youth-agripreneur-products-exhibition/1.png" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/youth-agripreneur-products-exhibition/2.png" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/youth-agripreneur-products-exhibition/3.png" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/youth-agripreneur-products-exhibition/4.png" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/youth-agripreneur-products-exhibition/5.png" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/youth-agripreneur-products-exhibition/6.png" },
     ],
   },
   {
     id: "hamis-breeding-farm-tour",
     title: "Hamis Breeding Farm Tour",
-    coverImage: "/images/gallery/hamis-breeding-farm-tour/1.jpg",
+    coverImage: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/hamis-breeding-farm-tour/1.jpg",
     images: [
-      { src: "/images/gallery/hamis-breeding-farm-tour/1.jpg" },
-      { src: "/images/gallery/hamis-breeding-farm-tour/2.jpg" },
-      { src: "/images/gallery/hamis-breeding-farm-tour/3.jpg" },
-      { src: "/images/gallery/hamis-breeding-farm-tour/4.jpg" },
-      { src: "/images/gallery/hamis-breeding-farm-tour/5.jpg" },
-      { src: "/images/gallery/hamis-breeding-farm-tour/6.jpg" },
-      { src: "/images/gallery/hamis-breeding-farm-tour/7.jpg" },
-      { src: "/images/gallery/hamis-breeding-farm-tour/8.jpg" },
-      { src: "/images/gallery/hamis-breeding-farm-tour/9.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/hamis-breeding-farm-tour/1.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/hamis-breeding-farm-tour/2.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/hamis-breeding-farm-tour/3.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/hamis-breeding-farm-tour/4.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/hamis-breeding-farm-tour/5.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/hamis-breeding-farm-tour/6.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/hamis-breeding-farm-tour/7.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/hamis-breeding-farm-tour/8.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/hamis-breeding-farm-tour/9.jpg" },
     ],
   },
   {
     id: "sanga-animal-farm-tour",
     title: "Sanga Animal Farm Tour",
-    coverImage: "/images/gallery/sanga-animal-farm-tour/1.jpg",
+    coverImage: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/sanga-animal-farm-tour/1.jpg",
     images: [
-      { src: "/images/gallery/sanga-animal-farm-tour/1.jpg" },
-      { src: "/images/gallery/sanga-animal-farm-tour/2.jpg" },
-      { src: "/images/gallery/sanga-animal-farm-tour/3.jpg" },
-      { src: "/images/gallery/sanga-animal-farm-tour/4.jpg" },
-      { src: "/images/gallery/sanga-animal-farm-tour/5.jpg" },
-      { src: "/images/gallery/sanga-animal-farm-tour/6.jpg" },
-      { src: "/images/gallery/sanga-animal-farm-tour/7.jpg" },
-      { src: "/images/gallery/sanga-animal-farm-tour/8.jpg" },
-      { src: "/images/gallery/sanga-animal-farm-tour/9.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/sanga-animal-farm-tour/1.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/sanga-animal-farm-tour/2.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/sanga-animal-farm-tour/3.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/sanga-animal-farm-tour/4.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/sanga-animal-farm-tour/5.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/sanga-animal-farm-tour/6.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/sanga-animal-farm-tour/7.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/sanga-animal-farm-tour/8.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/sanga-animal-farm-tour/9.jpg" },
     ],
   },
   {
     id: "2026-matchmaking-conference",
     title: "2026 Matchmaking Conference",
-    coverImage: "/images/gallery/2026-matchmaking-conference/1.jpg",
+    coverImage: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/2026-matchmaking-conference/1.jpg",
     images: [
-      { src: "/images/gallery/2026-matchmaking-conference/1.jpg" },
-      { src: "/images/gallery/2026-matchmaking-conference/2.jpg" },
-      { src: "/images/gallery/2026-matchmaking-conference/3.jpg" },
-      { src: "/images/gallery/2026-matchmaking-conference/4.jpg" },
-      { src: "/images/gallery/2026-matchmaking-conference/5.jpg" },
-      { src: "/images/gallery/2026-matchmaking-conference/6.jpg" },
-      { src: "/images/gallery/2026-matchmaking-conference/7.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/2026-matchmaking-conference/1.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/2026-matchmaking-conference/2.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/2026-matchmaking-conference/3.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/2026-matchmaking-conference/4.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/2026-matchmaking-conference/5.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/2026-matchmaking-conference/6.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/2026-matchmaking-conference/7.jpg" },
     ],
   },
   {
     id: "2025-climate-action-awards-winners",
     title: "2025 Climate Action Awards Winners",
-    coverImage: "/images/gallery/2025-climate-action-awards-winners/1.jpg",
+    coverImage: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/2025-climate-action-awards-winners/1.jpg",
     images: [
-      { src: "/images/gallery/2025-climate-action-awards-winners/1.jpg" },
-      { src: "/images/gallery/2025-climate-action-awards-winners/2.jpg" },
-      { src: "/images/gallery/2025-climate-action-awards-winners/3.jpg" },
-      { src: "/images/gallery/2025-climate-action-awards-winners/4.jpg" },
-      { src: "/images/gallery/2025-climate-action-awards-winners/5.jpg" },
-      { src: "/images/gallery/2025-climate-action-awards-winners/6.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/2025-climate-action-awards-winners/1.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/2025-climate-action-awards-winners/2.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/2025-climate-action-awards-winners/3.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/2025-climate-action-awards-winners/4.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/2025-climate-action-awards-winners/5.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/2025-climate-action-awards-winners/6.jpg" },
     ],
   },
   {
     id: "diaspora-convention-2025",
     title: "Diaspora Convention 2025",
-    coverImage: "/images/gallery/diaspora-convention-2025/1.jpg",
+    coverImage: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/diaspora-convention-2025/1.jpg",
     images: [
-      { src: "/images/gallery/diaspora-convention-2025/1.jpg" },
-      { src: "/images/gallery/diaspora-convention-2025/2.jpg" },
-      { src: "/images/gallery/diaspora-convention-2025/3.jpg" },
-      { src: "/images/gallery/diaspora-convention-2025/4.jpg" },
-      { src: "/images/gallery/diaspora-convention-2025/5.jpg" },
-      { src: "/images/gallery/diaspora-convention-2025/6.jpg" },
-      { src: "/images/gallery/diaspora-convention-2025/7.jpg" },
-      { src: "/images/gallery/diaspora-convention-2025/8.jpg" },
-      { src: "/images/gallery/diaspora-convention-2025/9.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/diaspora-convention-2025/1.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/diaspora-convention-2025/2.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/diaspora-convention-2025/3.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/diaspora-convention-2025/4.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/diaspora-convention-2025/5.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/diaspora-convention-2025/6.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/diaspora-convention-2025/7.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/diaspora-convention-2025/8.jpg" },
+      { src: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/gallery/diaspora-convention-2025/9.jpg" },
     ],
   },
 ];
@@ -141,19 +141,19 @@ export default async function ConferencePage() {
       name: "Ambassador MJ Muhindo",
       title: "Head of Diaspora Department, Ministry of Foreign Affairs",
       topic: "Diaspora Diplomacy & Bilateral Trade Partnerships",
-      image: "/images/conference/ambassador-johnny-addressing.jpeg",
+      image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/conference/ambassador-johnny-addressing.jpeg",
     },
     {
       name: "Andrew Bamugye",
       title: "UDAN Executive Secretary",
       topic: "Private Sector Leadership & Agribusiness Climate Finance",
-      image: "/images/conference/andrew-addressing.jpeg",
+      image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/conference/andrew-addressing.jpeg",
     },
     {
       name: "Edward Tanyiima",
       title: "National Policy Officer, UN-FAO Uganda",
       topic: "Agrifood Innovation & Climate Resilience in Value Chains",
-      image: "/images/conference/edward-tanyima-speech.jpeg",
+      image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/conference/edward-tanyima-speech.jpeg",
     },
   ];
 
@@ -166,12 +166,12 @@ export default async function ConferencePage() {
       sector: "Horticulture & Agroforestry",
       description:
         "1,750+ permanent carbon-sequestering Hass avocado & macadamia trees, 3.5 acres of onions, solar irrigation, and thriving outgrower seedling facility.",
-      image: "/images/awards/jasper-full-pic.jpg",
+      image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/awards/jasper-full-pic.jpg",
       badge: "Winner",
-      awardImage: "/images/awards/jasper-award.png",
+      awardImage: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/awards/jasper-award.png",
       productImages: [
-        "/images/awards/jasper-products-1.png",
-        "/images/awards/jasper-products-2.png",
+        "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/awards/jasper-products-1.png",
+        "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/awards/jasper-products-2.png",
       ],
       journey:
         "When Jasper Batureine left Uganda for the Syrian Arab Republic, he carried with him the classic diaspora ambition: work hard, send support home, and eventually return with a vision bold enough to make even the old eucalyptus trees nervous.",
@@ -202,12 +202,12 @@ export default async function ConferencePage() {
       sector: "Nutrition, Circular Economy & Post-Harvest Preservation",
       description:
         "Circular mushroom production using agricultural waste substrates, eliminating charcoal drying, and producing nutritious value-added porridge flour and sauces.",
-      image: "/images/awards/ambroce-full-pic.jpg",
+      image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/awards/ambroce-full-pic.jpg",
       badge: "1st Runner-Up",
-      awardImage: "/images/awards/ambroce-award.png",
+      awardImage: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/awards/ambroce-award.png",
       productImages: [
-        "/images/awards/ambroce-products-1.png",
-        "/images/awards/ambroce-products-2.png",
+        "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/awards/ambroce-products-1.png",
+        "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/awards/ambroce-products-2.png",
       ],
       journey:
         "If resilience had a face in the agribusiness world, it would probably be wearing a hairnet and standing next to a solar greenhouse. Founded in 2022, Vyema Sote Limited is an emerging nutrition and climate-action enterprise specializing in mushroom porridge flour, fresh oyster mushrooms, and mushroom-based chili sauce.",
@@ -238,12 +238,12 @@ export default async function ConferencePage() {
       sector: "Nutrition, Functional Foods & Soil Regeneration",
       description:
         "Okra-based functional nutrition, agroforestry intercropping, soil regeneration across 22 acres, and 20-30% reduction in post-harvest losses.",
-      image: "/images/awards/walter-full-pic.jpg",
+      image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/awards/walter-full-pic.jpg",
       badge: "2nd Runner-Up",
-      awardImage: "/images/awards/dunga-award.png",
+      awardImage: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/awards/dunga-award.png",
       productImages: [
-        "/images/awards/dunga-products-1.png",
-        "/images/awards/dunga-products-2.png",
+        "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/awards/dunga-products-1.png",
+        "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/awards/dunga-products-2.png",
       ],
       journey:
         "Where some see okra as a slimy side dish, Walter Dunga saw possibility, nutrition, employment, and climate-smart transformation. Prum Ventures specializes in okra porridge flour for maternal nutrition, okra powder for digestion and immunity, okra sauce, okra seed oil, and dried okra slices for export and off-season consumption.",
@@ -276,7 +276,7 @@ export default async function ConferencePage() {
         {/* Photographic backdrop */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/AF6A6287.JPG"
+            src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6287.JPG"
             alt="UDAN Annual Agribusiness Conference"
             fill
             priority
@@ -368,7 +368,7 @@ export default async function ConferencePage() {
 
             <div className="lg:col-span-5 relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/5] bg-gray-100">
               <Image
-                src="/images/AF6A6131.JPG"
+                src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6131.JPG"
                 alt="Speke Resort Munyonyo Conference Hall"
                 fill
                 sizes="(max-width: 1024px) 100vw, 40vw"
@@ -444,7 +444,7 @@ export default async function ConferencePage() {
 
             <div className="lg:col-span-6 relative rounded-2xl overflow-hidden shadow-xl aspect-video bg-gray-100">
               <Image
-                src="/images/AF6A6683.JPG"
+                src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6683.JPG"
                 alt="Agribusiness Exhibition Stalls at Speke Resort"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"

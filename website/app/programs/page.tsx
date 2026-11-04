@@ -64,40 +64,40 @@ export default function ProgramsPage() {
       enterprise: "JESSIE COCOA CRAFT",
       location: "Iganga, Uganda",
       sector: "Horticulture & Cold Chain Storage",
-      faceImage: "/images/youth-cohort/nakiranda-jesca-face.png",
-      detailsImage: "/images/youth-cohort/nakiranda-jesca.jpeg",
+      faceImage: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/youth-cohort/nakiranda-jesca-face.png",
+      detailsImage: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/youth-cohort/nakiranda-jesca.jpeg",
     },
     {
       name: "Nangobi Victoria",
       enterprise: "BUSOGA FLOWER FOOD COMPANY",
       location: "Jinja, Uganda",
       sector: "Smart Solar Irrigation & Soil Testing",
-      faceImage: "/images/youth-cohort/nangobi-victoria-face.png",
-      detailsImage: "/images/youth-cohort/nangobi-victoria.jpeg",
+      faceImage: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/youth-cohort/nangobi-victoria-face.png",
+      detailsImage: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/youth-cohort/nangobi-victoria.jpeg",
     },
     {
       name: "Muhoozi Allan",
       enterprise: "AGROWISE FARM INPUTS LTD",
       location: "Sheema District, Uganda",
       sector: "Post-Harvest Agro-Processing",
-      faceImage: "/images/youth-cohort/muhoozi-allan-face.png",
-      detailsImage: "/images/youth-cohort/muhoozi-allan.jpeg",
+      faceImage: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/youth-cohort/muhoozi-allan-face.png",
+      detailsImage: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/youth-cohort/muhoozi-allan.jpeg",
     },
     {
       name: "Ali Walter",
       enterprise: "KING OF KINGS MIC FARM LTD",
       location: "Kitgum, Uganda",
       sector: "Oilseed & Livestock Feed",
-      faceImage: "/images/youth-cohort/ali-walter-face.png",
-      detailsImage: "/images/youth-cohort/alii-walter.jpeg",
+      faceImage: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/youth-cohort/ali-walter-face.png",
+      detailsImage: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/youth-cohort/alii-walter.jpeg",
     },
     {
       name: "Namwaya Emily",
       enterprise: "HERTECH FOUNDATION",
       location: "Busia, Uganda",
       sector: "Organic Farming & Honey Value Addition",
-      faceImage: "/images/youth-cohort/namwaya-emily-face.png",
-      detailsImage: "/images/youth-cohort/emily-namwaya.jpeg",
+      faceImage: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/youth-cohort/namwaya-emily-face.png",
+      detailsImage: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/youth-cohort/emily-namwaya.jpeg",
     },
   ];
 
@@ -157,7 +157,7 @@ export default function ProgramsPage() {
 
             <div className="lg:col-span-7 relative rounded-2xl overflow-hidden shadow-2xl aspect-[3/2] bg-gray-50 border border-gray-200/60 order-1 lg:order-2">
               <Image
-                src="/images/youthmatchmaking.jpg"
+                src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/youthmatchmaking.jpg"
                 alt="Diaspora Youth Matchmaking Programme"
                 fill
                 priority
@@ -250,7 +250,7 @@ export default function ProgramsPage() {
 
             <div className="relative max-w-5xl mx-auto aspect-[3/2] rounded-2xl overflow-hidden shadow-2xl border border-gray-200/80 bg-gray-50">
               <Image
-                src="/images/matchmaking-programme-2026.jpeg"
+                src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/matchmaking-programme-2026.jpeg"
                 alt="2026 Diaspora - Youth Matchmaking Program"
                 fill
                 sizes="(max-width: 1024px) 100vw, 1100px"
@@ -275,7 +275,7 @@ export default function ProgramsPage() {
                   programId="talk-series"
                   buttonText="Learn More About Talk Series"
                   buttonClassName="pill-btn pill-blue text-xs font-semibold inline-flex items-center gap-1.5 py-2.5 px-5 shadow-sm hover:shadow"
-                  learnMoreImage="/images/udan-talk-series-learn-more.jpeg"
+                  learnMoreImage="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/udan-talk-series-learn-more.jpeg"
                 />
               </div>
               <div className="space-y-2.5 pt-1">
@@ -300,7 +300,7 @@ export default function ProgramsPage() {
 
             <div className="lg:col-span-7 relative rounded-2xl overflow-hidden shadow-xl bg-gray-100 order-1 lg:order-2">
               <Image
-                src="/images/udan-talk-series-main.jpeg"
+                src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/udan-talk-series-main.jpeg"
                 alt="UDAN Talk Series & High-level Panel"
                 width={1000}
                 height={750}
@@ -316,7 +316,7 @@ export default function ProgramsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-6 order-2 lg:order-1 relative rounded-2xl overflow-hidden shadow-xl aspect-[3/2] bg-gray-100 border border-gray-200/60">
               <Image
-                src="/images/PHOTO-2026-11-02-18-16-04.jpg"
+                src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/PHOTO-2026-11-02-18-16-04.jpg"
                 alt="Agri-Food Investments & Due Diligence"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -349,7 +349,7 @@ export default function ProgramsPage() {
                   programId="investments"
                   buttonText="Learn More About Agri-Food Investments"
                   buttonClassName="pill-btn pill-blue text-xs font-semibold inline-flex items-center gap-1.5 py-2.5 px-5 shadow-sm hover:shadow"
-                  learnMoreImage="/images/PHOTO-2026-11-02-18-22-12.jpg"
+                  learnMoreImage="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/PHOTO-2026-11-02-18-22-12.jpg"
                 />
               </div>
             </div>

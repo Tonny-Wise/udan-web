@@ -81,7 +81,7 @@ export function getRandomImages(
     }
 
     usedIndices.add(index);
-    selected.push(`/images/${availableImages[index]}`);
+    selected.push(`https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/${availableImages[index]}`);
   }
 
   return selected;

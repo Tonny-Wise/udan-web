@@ -37,21 +37,21 @@ export default function AboutPage() {
       role: "Executive Secretary",
       org: "UDAN Secretariat",
       bio: "Leading UDAN's day-to-day operations, strategic partnerships, and diaspora investment facilitation. Dedicated to creating structured, accountable pipelines that convert remittances into productive agricultural assets.",
-      image: "/images/executives/andrew-bamugye.jpeg",
+      image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/executives/andrew-bamugye.jpeg",
     },
     {
       name: "Ambassador MJ Muhindo",
       role: "Head of Diaspora Department",
       org: "Ministry of Foreign Affairs (MoFA)",
       bio: "Spearheading government diplomacy, diaspora engagement, and international collaboration to ensure Ugandan diaspora communities worldwide have institutional support for socio-economic investments at home.",
-      image: "/images/executives/johnny-muthahi.jpeg",
+      image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/executives/johnny-muthahi.jpeg",
     },
     {
       name: "Edward Tanyiima",
       role: "National Policy Officer",
       org: "Food and Agriculture Organization (UN-FAO)",
       bio: "Guiding policy alignment, climate resilience, and sustainable development goals across agribusiness value chains, ensuring diaspora investments align with global food security standards.",
-      image: "/images/executives/edward-tanyima.jpeg",
+      image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/executives/edward-tanyima.jpeg",
     },
   ];
 
@@ -61,7 +61,7 @@ export default function AboutPage() {
       role: "Governance & Fiduciary Oversight",
       org: "UDAN Board",
       bio: "Distinguished diaspora and Ugandan agricultural leaders providing strategic oversight, fiduciary accountability, and ethical stewardship of all network programs.",
-      image: "/images/AF6A6671.JPG",
+      image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6671.JPG",
     },
   ];
 
@@ -98,7 +98,7 @@ export default function AboutPage() {
 
             <div className="lg:col-span-7 relative rounded-2xl overflow-hidden shadow-2xl aspect-[16/10] bg-gray-100 border border-gray-100 order-1 lg:order-2">
               <Image
-                src="/images/about-us-hero.jpeg"
+                src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/about-us-hero.jpeg"
                 alt="UDAN Agri-food Dialogue"
                 fill
                 sizes="(max-width: 1024px) 100vw, 60vw"
@@ -270,7 +270,7 @@ export default function AboutPage() {
 
             <div className="lg:col-span-6 relative rounded-2xl overflow-hidden shadow-xl aspect-video bg-gray-100">
               <Image
-                src="/images/AF6A6675.JPG"
+                src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6675.JPG"
                 alt="UDAN Secretariat Planning Session"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"

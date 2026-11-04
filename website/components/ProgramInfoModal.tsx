@@ -122,10 +122,10 @@ export default function ProgramInfoModal({
                   <Image
                     src={
                       programId === "matchmaking"
-                        ? "/images/045A8992.jpg"
+                        ? "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/045A8992.jpg"
                         : programId === "talk-series"
-                        ? learnMoreImage || "/images/agri-talk-series.jpeg"
-                        : learnMoreImage || "/images/PHOTO-2026-11-02-18-22-12.jpg"
+                        ? learnMoreImage || "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/agri-talk-series.jpeg"
+                        : learnMoreImage || "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/PHOTO-2026-11-02-18-22-12.jpg"
                     }
                     alt={
                       programId === "matchmaking"

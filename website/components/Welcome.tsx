@@ -9,7 +9,7 @@ export default function Welcome() {
           <div className="lg:col-span-7 relative">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[16/10] bg-gray-100 border border-gray-100">
               <Image
-                src="/images/homepage-about-section.jpeg"
+                src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/homepage-about-section.jpeg"
                 alt="Connecting Diaspora Capital to Uganda Agribusiness"
                 fill
                 sizes="(max-width: 1024px) 100vw, 60vw"

@@ -80,7 +80,7 @@ export default function Footer() {
               <Link href="/" className="inline-block group" aria-label="UDAN Home">
                 <div className="relative h-16 sm:h-20 w-36 sm:w-44 mb-2 transition-transform group-hover:scale-105 flex items-center justify-start overflow-hidden">
                   <Image
-                    src="/images/logo/278134-removebg-preview.png"
+                    src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/278134-removebg-preview.png"
                     alt="UDAN Logo"
                     fill
                     sizes="(max-width: 640px) 144px, 176px"
@@ -151,7 +151,7 @@ export default function Footer() {
               </h4>
               <ul className="space-y-2.5 text-[12px] text-gray-300">
                 <li className="flex items-start gap-2.5">
-                  <Image src="/images/icons/location.png" alt="Location" width={16} height={16} className="w-4 h-4 object-contain mt-0.5 flex-none" />
+                  <Image src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/location.png" alt="Location" width={16} height={16} className="w-4 h-4 object-contain mt-0.5 flex-none" />
                   <span><strong>Location:</strong> Kampala, Uganda</span>
                 </li>
                 <li className="flex items-start gap-2.5">
@@ -162,13 +162,13 @@ export default function Footer() {
                   <span><strong>Chapters:</strong> East Africa, Europe, North America, Middle East, Asia</span>
                 </li>
                 <li className="flex items-start gap-2.5">
-                  <Image src="/images/icons/gmail.png" alt="Email" width={16} height={16} className="w-4 h-4 object-contain mt-0.5 flex-none" />
+                  <Image src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/gmail.png" alt="Email" width={16} height={16} className="w-4 h-4 object-contain mt-0.5 flex-none" />
                   <a href="mailto:info@udandiaspora.org" className="hover:text-[#63b849] transition-colors">
                     info@udandiaspora.org
                   </a>
                 </li>
                 <li className="flex items-start gap-2.5">
-                  <Image src="/images/icons/phone.png" alt="Phone" width={16} height={16} className="w-4 h-4 object-contain mt-0.5 flex-none" />
+                  <Image src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/phone.png" alt="Phone" width={16} height={16} className="w-4 h-4 object-contain mt-0.5 flex-none" />
                   <span>
                     <a href="tel:+256781978239" className="hover:text-[#63b849] transition-colors">+256 781 978 239</a>
                     {" / "}
@@ -189,7 +189,7 @@ export default function Footer() {
                     className="w-7 h-7 rounded-full overflow-hidden hover:opacity-80 transition-transform hover:scale-110 flex items-center justify-center"
                   >
                     <Image
-                      src="/images/icons/instagram.png"
+                      src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/instagram.png"
                       alt="Instagram"
                       width={28}
                       height={28}
@@ -205,7 +205,7 @@ export default function Footer() {
                     className="w-7 h-7 rounded-full overflow-hidden hover:opacity-80 transition-transform hover:scale-110 flex items-center justify-center"
                   >
                     <Image
-                      src="/images/icons/linkedin.png"
+                      src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/linkedin.png"
                       alt="LinkedIn"
                       width={28}
                       height={28}
@@ -221,7 +221,7 @@ export default function Footer() {
                     className="w-7 h-7 rounded-full overflow-hidden hover:opacity-80 transition-transform hover:scale-110 flex items-center justify-center"
                   >
                     <Image
-                      src="/images/icons/tiktok.png"
+                      src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/tiktok.png"
                       alt="TikTok"
                       width={28}
                       height={28}
@@ -237,7 +237,7 @@ export default function Footer() {
                     className="w-7 h-7 rounded-full overflow-hidden hover:opacity-80 transition-transform hover:scale-110 flex items-center justify-center"
                   >
                     <Image
-                      src="/images/icons/youtube.png"
+                      src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/youtube.png"
                       alt="YouTube"
                       width={28}
                       height={28}
@@ -333,7 +333,7 @@ export default function Footer() {
           className="bg-[#25d366] hover:bg-[#20ba5a] text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-110 p-3"
         >
           <Image
-            src="/images/icons/whatsapp.png"
+            src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/whatsapp.png"
             alt="WhatsApp"
             width={40}
             height={40}

@@ -94,7 +94,7 @@ export default function ConferenceGallery({ categories }: ConferenceGalleryProps
       {/* ALBUM CATEGORIES GRID */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {categories.map((cat, catIdx) => {
-          const cover = cat.coverImage || cat.images[0]?.src || "/images/AF6A6287.JPG";
+          const cover = cat.coverImage || cat.images[0]?.src || "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6287.JPG";
           const count = cat.images.length;
 
           return (

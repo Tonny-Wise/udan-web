@@ -30,7 +30,7 @@ export const defaultPosts: BlogPostItem[] = [
     date: "2025-12-20",
     author: "UDAN Secretariat",
     readTime: "5 min read",
-    image: "/images/AF6A6131.JPG",
+    image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6131.JPG",
   },
   {
     id: "2",
@@ -42,7 +42,7 @@ export const defaultPosts: BlogPostItem[] = [
     date: "2025-12-19",
     author: "Andrew Bamugye",
     readTime: "6 min read",
-    image: "/images/AF6A6742.JPG",
+    image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6742.JPG",
   },
   {
     id: "3",
@@ -54,7 +54,7 @@ export const defaultPosts: BlogPostItem[] = [
     date: "2025-11-15",
     author: "Edward Tanyiima (FAO)",
     readTime: "4 min read",
-    image: "/images/AF6A6287.JPG",
+    image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6287.JPG",
   },
   {
     id: "4",
@@ -66,7 +66,7 @@ export const defaultPosts: BlogPostItem[] = [
     date: "2025-10-01",
     author: "Youth Desk",
     readTime: "4 min read",
-    image: "/images/AF6A6520.JPG",
+    image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6520.JPG",
   },
 ];
 

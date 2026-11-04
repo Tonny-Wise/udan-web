@@ -24,7 +24,7 @@ const articlesDatabase: Record<string, PostData> = {
     author: "UDAN Secretariat",
     authorRole: "Editorial Team",
     readTime: "5 min read",
-    image: "/images/AF6A6131.JPG",
+    image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6131.JPG",
     paragraphs: [
       "On December 18, 2025, the Speke Resort Munyonyo in Kampala hosted a landmark convening: the 2025 Diaspora in Agribusiness for Climate Action Awards, organized by UDAN alongside the Ministry of Foreign Affairs Diaspora Convention and in collaboration with UN-FAO.",
       "The awards brought together hundreds of diaspora leaders, domestic agribusiness entrepreneurs, policymakers, and international development executives to spotlight practical, scalable models of climate-smart farming across Uganda.",
@@ -45,7 +45,7 @@ const articlesDatabase: Record<string, PostData> = {
     author: "Andrew Bamugye",
     authorRole: "Executive Secretary, UDAN",
     readTime: "6 min read",
-    image: "/images/AF6A6742.JPG",
+    image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6742.JPG",
     paragraphs: [
       "When Jasper Batureine left Uganda for the Syrian Arab Republic, he carried with him the classic diaspora ambition: work hard, send support home, and eventually return with a vision bold enough to transform his community.",
       "That vision materialized in 2021 when he established Sunland Hass Farm in the Kyegegwa region. Today, Sunland Hass Farm is reshaping horticulture and tree crop farming in Western Uganda on a foundation of long-term resilience and climate adaptation.",
@@ -66,7 +66,7 @@ const articlesDatabase: Record<string, PostData> = {
     author: "Edward Tanyiima",
     authorRole: "National Policy Officer, UN-FAO Uganda",
     readTime: "4 min read",
-    image: "/images/AF6A6287.JPG",
+    image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6287.JPG",
     paragraphs: [
       "The Food and Agriculture Organization of the United Nations (FAO), in close partnership with the Ministry of Foreign Affairs (MoFA) and the Ministry of Agriculture, Animal Industry and Fisheries (MAAIF), has launched a multi-stakeholder framework to crowd in diaspora capital into Uganda's agri-food sector.",
       "Recognizing that Ugandan diaspora remittances surpass $1.2 billion annually, the initiative seeks to channel these vital capital flows into productive value chain infrastructure, including cold storage, grain silos, and processing equipment.",
@@ -86,7 +86,7 @@ const articlesDatabase: Record<string, PostData> = {
     author: "UDAN Youth Desk",
     authorRole: "Programme Directorate",
     readTime: "4 min read",
-    image: "/images/AF6A6520.JPG",
+    image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6520.JPG",
     paragraphs: [
       "The Uganda Diaspora in Agribusiness Network is pleased to announce the opening of the 2025 Call for Applications for its flagship Diaspora Youth Matchmaking Programme.",
       "This cohort aims to match 100 high-potential young Ugandan agripreneurs (aged 18-35) with matched diaspora investors, mentors, and commercial buyers across North America, Europe, the Middle East, and East Africa.",
@@ -122,7 +122,7 @@ function parseDbArticle(row: Record<string, unknown>): PostData | null {
       author: (parsed.author as string) || "UDAN Secretariat",
       authorRole: (parsed.authorRole as string) || "Editorial Team",
       readTime: (parsed.readTime as string) || "3 min read",
-      image: (row.image_url as string) || "/images/AF6A6131.JPG",
+      image: (row.image_url as string) || "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6131.JPG",
       paragraphs: Array.isArray(parsed.paragraphs) ? (parsed.paragraphs as string[]) : [],
       keyTakeaways: Array.isArray(parsed.keyTakeaways) ? (parsed.keyTakeaways as string[]) : [],
     };

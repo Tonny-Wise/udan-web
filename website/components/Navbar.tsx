@@ -117,7 +117,7 @@ export default function Navbar() {
               }`}
             >
               <Image
-                src="/images/logo/278134-removebg-preview.png"
+                src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/278134-removebg-preview.png"
                 alt="UDAN"
                 fill
                 sizes="(max-width: 640px) 144px, 176px"

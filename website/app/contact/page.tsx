@@ -90,7 +90,7 @@ export default function ContactPage() {
               <div className="p-5 rounded-xl border border-gray-200 bg-gray-50/60 shadow-sm flex items-start gap-4">
                 <span className="w-11 h-11 rounded-xl bg-white border border-gray-200 flex items-center justify-center p-2.5 flex-none shadow-sm">
                   <Image
-                    src="/images/icons/location.png"
+                    src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/location.png"
                     alt="Location"
                     width={28}
                     height={28}
@@ -109,7 +109,7 @@ export default function ContactPage() {
               <div className="p-5 rounded-xl border border-gray-200 bg-gray-50/60 shadow-sm flex items-start gap-4">
                 <span className="w-11 h-11 rounded-xl bg-white border border-gray-200 flex items-center justify-center p-2.5 flex-none shadow-sm">
                   <Image
-                    src="/images/icons/phone.png"
+                    src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/phone.png"
                     alt="Phone"
                     width={28}
                     height={28}
@@ -128,7 +128,7 @@ export default function ContactPage() {
               <div className="p-5 rounded-xl border border-gray-200 bg-gray-50/60 shadow-sm flex items-start gap-4">
                 <span className="w-11 h-11 rounded-xl bg-white border border-gray-200 flex items-center justify-center p-2.5 flex-none shadow-sm">
                   <Image
-                    src="/images/icons/gmail.png"
+                    src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/gmail.png"
                     alt="Email"
                     width={28}
                     height={28}
@@ -162,7 +162,7 @@ export default function ContactPage() {
                   className="px-3.5 py-2 rounded-xl bg-white border border-gray-200 text-[#1b2238] text-xs font-semibold flex items-center gap-2 hover:border-[#e1306c] hover:shadow-sm transition-all"
                 >
                   <Image
-                    src="/images/icons/instagram.png"
+                    src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/instagram.png"
                     alt="Instagram"
                     width={20}
                     height={20}
@@ -177,7 +177,7 @@ export default function ContactPage() {
                   className="px-3.5 py-2 rounded-xl bg-white border border-gray-200 text-[#1b2238] text-xs font-semibold flex items-center gap-2 hover:border-[#1377a4] hover:shadow-sm transition-all"
                 >
                   <Image
-                    src="/images/icons/linkedin.png"
+                    src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/linkedin.png"
                     alt="LinkedIn"
                     width={20}
                     height={20}
@@ -192,7 +192,7 @@ export default function ContactPage() {
                   className="px-3.5 py-2 rounded-xl bg-white border border-gray-200 text-[#1b2238] text-xs font-semibold flex items-center gap-2 hover:border-black hover:shadow-sm transition-all"
                 >
                   <Image
-                    src="/images/icons/tiktok.png"
+                    src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/tiktok.png"
                     alt="TikTok"
                     width={20}
                     height={20}
@@ -207,7 +207,7 @@ export default function ContactPage() {
                   className="px-3.5 py-2 rounded-xl bg-white border border-gray-200 text-[#1b2238] text-xs font-semibold flex items-center gap-2 hover:border-[#ff0000] hover:shadow-sm transition-all"
                 >
                   <Image
-                    src="/images/icons/youtube.png"
+                    src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/youtube.png"
                     alt="YouTube"
                     width={20}
                     height={20}
@@ -222,7 +222,7 @@ export default function ContactPage() {
                   className="px-3.5 py-2 rounded-xl bg-white border border-gray-200 text-[#1b2238] text-xs font-semibold flex items-center gap-2 hover:border-[#25d366] hover:shadow-sm transition-all"
                 >
                   <Image
-                    src="/images/icons/whatsapp.png"
+                    src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/whatsapp.png"
                     alt="WhatsApp"
                     width={20}
                     height={20}
