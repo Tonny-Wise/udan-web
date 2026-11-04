@@ -95,7 +95,7 @@ export default function ProgramInfoModal({
             </div>
 
             {/* Modal Scrollable Content */}
-            <div className="overflow-y-auto p-6 sm:p-8 space-y-8 text-gray-700 font-body text-xs sm:text-sm leading-relaxed">
+            <div className="flex-1 min-h-0 overflow-y-auto p-6 sm:p-8 space-y-8 text-gray-700 font-body text-xs sm:text-sm leading-relaxed">
               {/* Program Featured Visual Banner */}
               <div className="space-y-3">
                 <div className="bg-[#f0f7fa] border-l-4 border-[#1377a4] p-4 rounded-r-xl">
