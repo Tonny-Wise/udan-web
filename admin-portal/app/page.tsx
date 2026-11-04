@@ -90,8 +90,9 @@ export default function AdminPortal() {
   const [galleryError, setGalleryError] = useState<string | null>(null);
   const [newCategoryName, setNewCategoryName] = useState("");
   const [selectedGalleryCategory, setSelectedGalleryCategory] = useState<string>("all");
-  const [newImageUrl, setNewImageUrl] = useState("");
+  const [newImageFiles, setNewImageFiles] = useState<FileList | null>(null);
   const [newImageCategory, setNewImageCategory] = useState("");
+  const [galleryUploading, setGalleryUploading] = useState(false);
 
   // News state — loaded from Supabase
   const [news, setNews] = useState<NewsItem[]>([]);
@@ -108,6 +109,8 @@ export default function AdminPortal() {
     paragraphs: "", // one paragraph per line
     keyTakeaways: "", // one takeaway per line
   });
+  const [newsImageFile, setNewsImageFile] = useState<File | null>(null);
+  const [newsUploading, setNewsUploading] = useState(false);
 
   // Events state — loaded from Supabase
   const [events, setEvents] = useState<Event[]>([]);
@@ -493,28 +496,52 @@ export default function AdminPortal() {
   };
 
   const addImage = async () => {
-    if (!newImageUrl.trim() || !newImageCategory) return;
+    if (!newImageFiles || newImageFiles.length === 0 || !newImageCategory) return;
     setGalleryError(null);
+    setGalleryUploading(true);
     try {
       const supabase = await getSupabase();
-      const currentImagesInCategory = galleryImages.filter(
-        (img) => img.category_id === newImageCategory
-      );
-      // Actual DB columns: image_url, category_id, alt_text
-      const { error } = await supabase.from("gallery_images").insert({
-        category_id: newImageCategory,
-        image_url: newImageUrl.trim(),
-        alt_text: galleryCategories.find((c) => c.id === newImageCategory)?.name ?? "",
-        uploaded_by: currentUser?.id ?? null,
-      });
-      if (error) {
-        setGalleryError("Failed to add image: " + error.message);
-        return;
+      const categoryName = galleryCategories.find((c) => c.id === newImageCategory)?.name ?? "general";
+
+      for (const file of Array.from(newImageFiles)) {
+        const ext = file.name.split(".").pop();
+        const fileName = `${categoryName}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from("gallery")
+          .upload(fileName, file, { cacheControl: "3600", upsert: false });
+
+        if (uploadError) {
+          setGalleryError("Upload failed: " + uploadError.message);
+          setGalleryUploading(false);
+          return;
+        }
+
+        const { data: urlData } = supabase.storage.from("gallery").getPublicUrl(fileName);
+
+        const { error: dbError } = await supabase.from("gallery_images").insert({
+          category_id: newImageCategory,
+          image_url: urlData.publicUrl,
+          alt_text: categoryName,
+          uploaded_by: currentUser?.id ?? null,
+        });
+
+        if (dbError) {
+          setGalleryError("DB insert failed: " + dbError.message);
+          setGalleryUploading(false);
+          return;
+        }
       }
-      setNewImageUrl("");
+
+      setNewImageFiles(null);
+      // reset the file input
+      const fileInput = document.getElementById("gallery-file-input") as HTMLInputElement;
+      if (fileInput) fileInput.value = "";
       await fetchGalleryData();
     } catch (err: any) {
-      setGalleryError("Unexpected error adding image: " + (err?.message ?? String(err)));
+      setGalleryError("Unexpected error uploading image: " + (err?.message ?? String(err)));
+    } finally {
+      setGalleryUploading(false);
     }
   };
 
@@ -538,8 +565,27 @@ export default function AdminPortal() {
   const addNews = async () => {
     if (!newNews.title.trim() || !newNews.slug.trim()) return;
     setNewsError(null);
+    setNewsUploading(true);
     try {
       const supabase = await getSupabase();
+
+      // Upload cover image to storage if a file was selected
+      let finalImageUrl = newNews.imageUrl.trim();
+      if (newsImageFile) {
+        const ext = newsImageFile.name.split(".").pop();
+        const fileName = `${newNews.slug}-${Date.now()}.${ext}`;
+        const { error: uploadError } = await supabase.storage
+          .from("news-photos")
+          .upload(fileName, newsImageFile, { cacheControl: "3600", upsert: false });
+        if (uploadError) {
+          setNewsError("Image upload failed: " + uploadError.message);
+          setNewsUploading(false);
+          return;
+        }
+        const { data: urlData } = supabase.storage.from("news-photos").getPublicUrl(fileName);
+        finalImageUrl = urlData.publicUrl;
+      }
+
       // Parse paragraphs and key takeaways from line-separated text
       const paragraphs = newNews.paragraphs
         .split("\n")
@@ -566,7 +612,7 @@ export default function AdminPortal() {
         slug: newNews.slug.trim(),
         excerpt: newNews.excerpt.trim() || null,
         content: contentJson,
-        image_url: newNews.imageUrl.trim() || null,
+        image_url: finalImageUrl || null,
         status: "draft",
       });
       if (error) {
@@ -577,9 +623,14 @@ export default function AdminPortal() {
         title: "", slug: "", category: "", author: "", authorRole: "",
         readTime: "", excerpt: "", imageUrl: "", paragraphs: "", keyTakeaways: "",
       });
+      setNewsImageFile(null);
+      const newsFileInput = document.getElementById("news-file-input") as HTMLInputElement;
+      if (newsFileInput) newsFileInput.value = "";
       await fetchNews();
     } catch (err: any) {
       setNewsError("Unexpected error creating article: " + (err?.message ?? String(err)));
+    } finally {
+      setNewsUploading(false);
     }
   };
 
@@ -871,7 +922,7 @@ export default function AdminPortal() {
 
               {/* Add Image Form */}
               <div className="bg-white rounded-xl p-6 shadow-sm">
-                <h3 className="text-sm font-semibold text-[#0f172a] mb-4">Add Image to Category</h3>
+                <h3 className="text-sm font-semibold text-[#0f172a] mb-4">Upload Images</h3>
                 <div className="flex flex-col sm:flex-row gap-3">
                   <select
                     value={newImageCategory}
@@ -884,18 +935,19 @@ export default function AdminPortal() {
                     ))}
                   </select>
                   <input
-                    type="text"
-                    value={newImageUrl}
-                    onChange={(e) => setNewImageUrl(e.target.value)}
-                    placeholder="Image URL or path (e.g. /images/photo.jpg)"
-                    className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm outline-none focus:border-[#22c55e] focus:ring-2 focus:ring-[#22c55e]/20 transition-all"
+                    id="gallery-file-input"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={(e) => setNewImageFiles(e.target.files)}
+                    className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm outline-none focus:border-[#22c55e] focus:ring-2 focus:ring-[#22c55e]/20 transition-all file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-[#22c55e]/10 file:text-[#22c55e] hover:file:bg-[#22c55e]/20"
                   />
                   <button
                     onClick={addImage}
-                    disabled={!newImageUrl.trim() || !newImageCategory}
+                    disabled={!newImageFiles || newImageFiles.length === 0 || !newImageCategory || galleryUploading}
                     className="px-4 py-2 bg-[#22c55e] text-white text-sm font-semibold rounded-lg hover:bg-green-600 transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
                   >
-                    Add Image
+                    {galleryUploading ? "Uploading…" : `Upload${newImageFiles && newImageFiles.length > 1 ? ` (${newImageFiles.length})` : ""}`}
                   </button>
                 </div>
               </div>
@@ -1055,10 +1107,17 @@ export default function AdminPortal() {
                   </div>
                   {/* Row 4: Image URL */}
                   <div>
-                    <label className="block text-[11px] font-semibold text-[#64748b] uppercase tracking-wider mb-1">Cover Image URL</label>
-                    <input type="text" value={newNews.imageUrl} onChange={(e) => setNewNews({ ...newNews, imageUrl: e.target.value })}
-                      placeholder="/images/photo.jpg or https://..."
-                      className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm outline-none focus:border-[#22c55e] focus:ring-2 focus:ring-[#22c55e]/20" />
+                    <label className="block text-[11px] font-semibold text-[#64748b] uppercase tracking-wider mb-1">Cover Image</label>
+                    <input
+                      id="news-file-input"
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => setNewsImageFile(e.target.files?.[0] ?? null)}
+                      className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm outline-none focus:border-[#22c55e] focus:ring-2 focus:ring-[#22c55e]/20 file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-[#22c55e]/10 file:text-[#22c55e] hover:file:bg-[#22c55e]/20"
+                    />
+                    {newsImageFile && (
+                      <p className="text-[11px] text-[#22c55e] mt-1 font-medium">Selected: {newsImageFile.name}</p>
+                    )}
                   </div>
                   {/* Row 5: Excerpt */}
                   <div>
@@ -1088,9 +1147,9 @@ export default function AdminPortal() {
                       className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm outline-none focus:border-[#22c55e] focus:ring-2 focus:ring-[#22c55e]/20 resize-y font-mono" />
                   </div>
                   <button onClick={addNews}
-                    disabled={!newNews.title.trim() || !newNews.slug.trim()}
+                    disabled={!newNews.title.trim() || !newNews.slug.trim() || newsUploading}
                     className="w-full py-2.5 bg-[#22c55e] text-white text-sm font-semibold rounded-lg hover:bg-green-600 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
-                    Create Article (Draft)
+                    {newsUploading ? "Uploading…" : "Create Article (Draft)"}
                   </button>
                 </div>
               </div>
