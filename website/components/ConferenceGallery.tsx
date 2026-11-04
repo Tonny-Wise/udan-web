@@ -204,11 +204,11 @@ export default function ConferenceGallery({ categories }: ConferenceGalleryProps
           role="dialog"
           aria-modal="true"
           aria-label={activeCategory.title}
-          className="fixed inset-0 z-50 flex items-center justify-center p-1 sm:p-4 md:p-6 bg-black/92 backdrop-blur-md animate-fadeIn overflow-hidden"
+          className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/92 backdrop-blur-md animate-fadeIn overflow-hidden"
           onClick={handleClose}
         >
           <div
-            className="relative max-w-6xl w-full max-h-[100dvh] bg-[#0f172a] rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex flex-col"
+            className="relative max-w-6xl w-full h-[92dvh] max-h-[920px] bg-[#0f172a] rounded-none sm:rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex flex-col"
             onClick={(e) => e.stopPropagation()}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
@@ -240,7 +240,7 @@ export default function ConferenceGallery({ categories }: ConferenceGalleryProps
             {/* Slider Center Viewport */}
             <div className="relative flex-1 bg-black flex items-center justify-center overflow-hidden min-h-0 p-2 sm:p-4">
               {currentImages[currentPhotoIdx] && (
-                <div className="relative w-full h-full">
+                <div className="relative w-full h-full min-h-[200px]">
                   <Image
                     src={currentImages[currentPhotoIdx].src}
                     alt={
