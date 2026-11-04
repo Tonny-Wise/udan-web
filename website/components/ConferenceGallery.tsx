@@ -205,11 +205,11 @@ export default function ConferenceGallery({ categories }: ConferenceGalleryProps
           role="dialog"
           aria-modal="true"
           aria-label={activeCategory.title}
-          className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/92 backdrop-blur-md animate-fadeIn"
+          className="fixed inset-0 z-50 flex items-center justify-center p-1 sm:p-4 md:p-6 bg-black/92 backdrop-blur-md animate-fadeIn overflow-hidden"
           onClick={handleClose}
         >
           <div
-            className="relative max-w-6xl w-full h-[92vh] max-h-[920px] bg-[#0f172a] rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex flex-col"
+            className="relative max-w-6xl w-full max-h-[100dvh] bg-[#0f172a] rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex flex-col"
             onClick={(e) => e.stopPropagation()}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
@@ -322,7 +322,7 @@ export default function ConferenceGallery({ categories }: ConferenceGalleryProps
                       key={idx}
                       type="button"
                       onClick={() => setCurrentPhotoIdx(idx)}
-                      className={`relative w-14 h-14 sm:w-16 sm:h-16 rounded-lg overflow-hidden shrink-0 border-2 transition-all ${
+                      className={`relative w-10 h-10 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-lg overflow-hidden shrink-0 border-2 transition-all ${
                         isCurrent
                           ? "border-[#63b849] scale-105 shadow-md"
                           : "border-transparent opacity-60 hover:opacity-100"

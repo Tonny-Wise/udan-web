@@ -77,9 +77,9 @@ export default function BlogPage() {
   return (
     <div className="bg-white font-body">
       {/* Page Header */}
-      <section className="bg-[#131c33] text-white py-24 sm:py-32 lg:py-36 px-4 sm:px-6 relative overflow-hidden">
+      <section className="bg-[#131c33] text-white py-16 sm:py-24 lg:py-32 px-4 sm:px-6 relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10 text-center">
-          <h1 className="font-heading font-bold text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight mb-4">
+          <h1 className="font-heading font-bold text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight mb-4">
             UDAN News
           </h1>
           <p className="text-gray-300 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
@@ -94,7 +94,7 @@ export default function BlogPage() {
         <section>
           <div className="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-shadow group">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
-              <div className="lg:col-span-7 relative h-72 sm:h-96 lg:h-auto bg-gray-100 overflow-hidden">
+              <div className="lg:col-span-7 relative h-56 sm:h-80 lg:h-auto bg-gray-100 overflow-hidden">
                 <Image
                   src={featured.image}
                   alt={featured.title}

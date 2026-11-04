@@ -22,7 +22,7 @@ export default function Hero() {
       {/* Hero Content Container */}
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-8 sm:pb-10 flex-1 flex flex-col items-center justify-center text-center">
         {/* Main Title - scaled down */}
-        <h1 className="font-heading font-bold text-xl sm:text-3xl lg:text-4xl max-w-3xl tracking-tight text-white mb-2.5 leading-snug drop-shadow-md">
+        <h1 className="font-heading font-bold text-lg sm:text-3xl lg:text-4xl max-w-3xl tracking-tight text-white mb-2.5 leading-snug drop-shadow-md">
           Mobilizing Diaspora Capital, Innovation &amp; Knowledge For Uganda&apos;s Agri-Food Transformation
         </h1>
 
@@ -81,17 +81,17 @@ export default function Hero() {
         </div>
 
         {/* Quick Highlights / Key Metrics Strip */}
-        <div className="pt-3 border-t border-white/15 grid grid-cols-3 gap-4 sm:gap-6 w-full max-w-3xl text-center backdrop-blur-xs">
+        <div className="pt-3 border-t border-white/15 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 w-full max-w-3xl text-center backdrop-blur-xs">
           <div>
-            <div className="font-heading font-bold text-base sm:text-xl text-[#63b849]">$1.2M+</div>
+            <div className="font-heading font-bold text-sm sm:text-xl text-[#63b849]">$1.2M+</div>
             <div className="text-[9px] sm:text-[9.5px] text-gray-200 font-semibold uppercase tracking-wider">Agri-Finance Pipeline</div>
           </div>
           <div>
-            <div className="font-heading font-bold text-base sm:text-xl text-[#c6ac62]">6 Chapters</div>
+            <div className="font-heading font-bold text-sm sm:text-xl text-[#c6ac62]">6 Chapters</div>
             <div className="text-[9px] sm:text-[9.5px] text-gray-200 font-semibold uppercase tracking-wider">Global Diaspora Footprint</div>
           </div>
           <div>
-            <div className="font-heading font-bold text-base sm:text-xl text-[#63b849]">500+</div>
+            <div className="font-heading font-bold text-sm sm:text-xl text-[#63b849]">500+</div>
             <div className="text-[9px] sm:text-[9.5px] text-gray-200 font-semibold uppercase tracking-wider">Agri Diaspora Members</div>
           </div>
         </div>

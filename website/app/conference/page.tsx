@@ -272,7 +272,7 @@ export default async function ConferencePage() {
   return (
     <div className="bg-white font-body">
       {/* Banner with Photographic Conference Backdrop and Pulsing CTA Card */}
-      <section className="relative bg-[#131c33] text-white py-24 sm:py-32 lg:py-36 px-4 sm:px-6 overflow-hidden">
+      <section className="relative bg-[#131c33] text-white py-16 sm:py-24 lg:py-32 px-4 sm:px-6 overflow-hidden">
         {/* Photographic backdrop */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -287,7 +287,7 @@ export default async function ConferencePage() {
         </div>
 
         <div className="max-w-7xl mx-auto relative z-10 text-center">
-          <h1 className="font-heading font-bold text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight mb-4 drop-shadow-md">
+          <h1 className="font-heading font-bold text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight mb-4 drop-shadow-md">
             Annual Conference
           </h1>
           <p className="text-gray-200 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed drop-shadow">
@@ -392,7 +392,7 @@ export default async function ConferencePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {speakers.map((spk, idx) => (
               <div key={idx} className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group">
-                <div className="relative h-64 w-full bg-gray-100 overflow-hidden">
+                <div className="relative h-48 sm:h-64 w-full bg-gray-100 overflow-hidden">
                   <Image
                     src={spk.image}
                     alt={spk.name}

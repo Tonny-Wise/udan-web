@@ -64,7 +64,7 @@ export default function ProgramInfoModal({
           onClick={() => setIsOpen(false)}
         >
           <div
-            className="relative max-w-5xl lg:max-w-6xl w-full bg-white rounded-2xl overflow-hidden shadow-2xl border border-gray-200 flex flex-col max-h-[90vh]"
+            className="relative max-w-5xl lg:max-w-6xl w-full bg-white rounded-2xl overflow-hidden shadow-2xl border border-gray-200 flex flex-col max-h-[90dvh]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}

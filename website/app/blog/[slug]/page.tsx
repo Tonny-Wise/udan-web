@@ -189,7 +189,7 @@ export default async function BlogPostPage({
             <span className="text-[#c6ac62] font-semibold">{post.readTime}</span>
           </div>
 
-          <h1 className="font-heading font-bold text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-tight mb-6">
+          <h1 className="font-heading font-bold text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight leading-tight mb-6">
             {post.title}
           </h1>
 

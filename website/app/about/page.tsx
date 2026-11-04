@@ -68,9 +68,9 @@ export default function AboutPage() {
   return (
     <div className="bg-white font-body">
       {/* Page Header Banner */}
-      <section className="bg-[#131c33] text-white py-24 sm:py-32 lg:py-36 px-4 sm:px-6 relative overflow-hidden">
+      <section className="bg-[#131c33] text-white py-16 sm:py-24 lg:py-32 px-4 sm:px-6 relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10 text-center">
-          <h1 className="font-heading font-bold text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight mb-4">
+          <h1 className="font-heading font-bold text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight mb-4">
             About UDAN
           </h1>
           <p className="text-gray-300 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
@@ -117,31 +117,31 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+            <div className="bg-white p-4 sm:p-6 rounded-xl border border-gray-100 shadow-sm">
               <div className="w-10 h-10 rounded-full bg-[#1377a4] text-white flex items-center justify-center font-bold mb-3">
                 01
               </div>
-              <h3 className="font-heading font-bold text-lg text-[#1b2238] mb-2">Diaspora Investors &amp; Professionals</h3>
+              <h3 className="font-heading font-bold text-base sm:text-lg text-[#1b2238] mb-2">Diaspora Investors &amp; Professionals</h3>
               <p className="text-xs text-gray-600 leading-relaxed">
                 Individuals and diaspora business syndicates seeking verified, de-risked agricultural investment opportunities with clear governance and transparent reporting.
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+            <div className="bg-white p-4 sm:p-6 rounded-xl border border-gray-100 shadow-sm">
               <div className="w-10 h-10 rounded-full bg-[#63b849] text-white flex items-center justify-center font-bold mb-3">
                 02
               </div>
-              <h3 className="font-heading font-bold text-lg text-[#1b2238] mb-2">Ugandan Youth Agripreneurs</h3>
+              <h3 className="font-heading font-bold text-base sm:text-lg text-[#1b2238] mb-2">Ugandan Youth Agripreneurs</h3>
               <p className="text-xs text-gray-600 leading-relaxed">
                 Dynamic young founders running viable farming, processing, and agritech ventures who require patient growth capital, international mentorship, and market linkages.
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+            <div className="bg-white p-4 sm:p-6 rounded-xl border border-gray-100 shadow-sm">
               <div className="w-10 h-10 rounded-full bg-[#c6ac62] text-[#131c33] flex items-center justify-center font-bold mb-3">
                 03
               </div>
-              <h3 className="font-heading font-bold text-lg text-[#1b2238] mb-2">Institutions &amp; Development Partners</h3>
+              <h3 className="font-heading font-bold text-base sm:text-lg text-[#1b2238] mb-2">Institutions &amp; Development Partners</h3>
               <p className="text-xs text-gray-600 leading-relaxed">
                 Government ministries, bilateral agencies (UN-FAO, IOM), and commercial banks seeking a credible partner to channel diaspora finance toward national development goals.
               </p>
@@ -194,7 +194,7 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {executiveMembers.map((leader, i) => (
                 <div key={i} className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm flex flex-col group">
-                  <div className="relative h-64 w-full bg-gray-100 overflow-hidden">
+                  <div className="relative h-48 sm:h-64 w-full bg-gray-100 overflow-hidden">
                     <Image
                       src={leader.image}
                       alt={leader.name}

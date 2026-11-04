@@ -86,9 +86,9 @@ export default function AccountPage() {
   return (
     <div className="bg-white font-body min-h-[85vh]">
       {/* Banner */}
-      <section className="bg-[#131c33] text-white py-14 px-4 sm:px-6 relative overflow-hidden">
+      <section className="bg-[#131c33] text-white py-12 sm:py-16 px-4 sm:px-6 relative overflow-hidden">
         <div className="max-w-4xl mx-auto relative z-10 text-center">
-          <h1 className="font-heading font-bold text-3xl sm:text-5xl text-white tracking-tight mb-2">
+          <h1 className="font-heading font-bold text-2xl sm:text-4xl text-white tracking-tight mb-2">
             {registrationType === "success" ? "Registration Confirmed" : "Register with UDAN"}
           </h1>
           <p className="text-gray-300 text-xs sm:text-sm max-w-xl mx-auto">

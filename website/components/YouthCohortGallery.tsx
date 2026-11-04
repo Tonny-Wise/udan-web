@@ -119,7 +119,7 @@ export default function YouthCohortGallery({ youthList }: { youthList: YouthItem
           onClick={() => setSelectedYouth(null)}
         >
           <div
-            className="relative max-w-5xl lg:max-w-6xl w-full bg-[#131c33] rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex flex-col"
+            className="relative max-w-5xl lg:max-w-6xl w-full bg-[#131c33] rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex flex-col max-h-[90dvh]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header bar */}
@@ -140,7 +140,7 @@ export default function YouthCohortGallery({ youthList }: { youthList: YouthItem
             </div>
 
             {/* Modal Image display - original popup size showing the detailed card image */}
-            <div className="relative w-full aspect-[16/11] max-h-[75vh] bg-[#0d1527] flex items-center justify-center p-1 sm:p-2">
+            <div className="relative w-full aspect-[16/11] max-h-[70dvh] bg-[#0d1527] flex items-center justify-center p-1 sm:p-2 overflow-hidden flex-1 min-h-0">
               <Image
                 src={selectedYouth.detailsImage}
                 alt={`${selectedYouth.name} Full Venture Details`}

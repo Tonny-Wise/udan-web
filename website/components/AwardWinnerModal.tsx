@@ -69,7 +69,7 @@ export default function AwardWinnerModal({ winners, winner }: AwardWinnerModalPr
               key={idx}
               className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col group"
             >
-              <div className="relative h-56 w-full bg-gray-100 overflow-hidden">
+              <div className="relative h-44 sm:h-56 w-full bg-gray-100 overflow-hidden">
                 <Image
                   src={win.image}
                   alt={win.name}
@@ -81,7 +81,7 @@ export default function AwardWinnerModal({ winners, winner }: AwardWinnerModalPr
                   {win.badge}
                 </div>
               </div>
-              <div className="p-6 flex-1 flex flex-col justify-between space-y-3">
+              <div className="p-4 sm:p-6 flex-1 flex flex-col justify-between space-y-3">
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-[#63b849] block">
                     {win.sector}
@@ -133,7 +133,7 @@ export default function AwardWinnerModal({ winners, winner }: AwardWinnerModalPr
 
           {/* Modal Container */}
           <div
-            className="relative z-10 max-w-4xl w-full bg-white rounded-2xl overflow-hidden shadow-2xl border border-gray-200 flex flex-col max-h-[92vh] animate-fadeIn"
+            className="relative z-10 max-w-4xl w-full bg-white rounded-2xl overflow-hidden shadow-2xl border border-gray-200 flex flex-col max-h-[90dvh] animate-fadeIn"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}

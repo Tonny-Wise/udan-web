@@ -296,12 +296,12 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar: Copyright & Policies */}
-        <div className="bg-[#131c33] py-4 px-4 sm:px-6 text-[11px] text-gray-400">
+        <div className="bg-[#131c33] py-4 px-3 sm:px-6 text-[11px] text-gray-400">
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
             <div>
               &copy; {new Date().getFullYear()} Uganda Diaspora in Agribusiness Network (UDAN). All rights reserved.
             </div>
-            <nav className="flex items-center gap-4 text-xs" aria-label="Legal footer links">
+            <nav className="flex flex-wrap items-center justify-center sm:justify-end gap-2 sm:gap-4 text-xs" aria-label="Legal footer links">
               <Link href="/resources" className="hover:text-white transition-colors">
                 Constitution &amp; Governance
               </Link>
