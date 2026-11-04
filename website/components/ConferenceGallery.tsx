@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
-import { img } from "@/lib/supabase/imageTransform";
 
 export interface GalleryImage {
   src: string;
@@ -116,7 +115,7 @@ export default function ConferenceGallery({ categories }: ConferenceGalleryProps
               {/* Cover Photo */}
               <div className="relative aspect-[16/10] w-full overflow-hidden bg-gray-900">
                 <Image
-                  src={img.cover(cover)}
+                  src={cover}
                   alt={cat.title}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -243,7 +242,7 @@ export default function ConferenceGallery({ categories }: ConferenceGalleryProps
               {currentImages[currentPhotoIdx] && (
                 <div className="relative w-full h-full">
                   <Image
-                    src={img.full(currentImages[currentPhotoIdx].src)}
+                    src={currentImages[currentPhotoIdx].src}
                     alt={
                       currentImages[currentPhotoIdx].caption ||
                       `${activeCategory.title} - Photo ${currentPhotoIdx + 1}`
@@ -330,7 +329,7 @@ export default function ConferenceGallery({ categories }: ConferenceGalleryProps
                       aria-label={`Jump to photo ${idx + 1}`}
                     >
                       <Image
-                        src={img.thumb(photo.src)}
+                        src={photo.src}
                         alt={`Thumbnail ${idx + 1}`}
                         fill
                         sizes="64px"
