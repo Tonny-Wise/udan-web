@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
 import { createClient } from "@/lib/supabase/server";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -33,14 +32,21 @@ export async function POST(req: NextRequest) {
       console.error("Database error:", dbError);
     }
 
-    // Send confirmation email
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL ?? "noreply@udandiaspora.org",
-      to: email,
-      subject: "Thanks for subscribing to UDAN Diaspora updates!",
-      html: "<h2>You are subscribed!</h2><p>Thank you for subscribing to UDAN Diaspora. You will receive updates about our programs, events, and community news.</p>",
-    });
+    // Send confirmation email only if Resend is configured
+    if (process.env.RESEND_API_KEY) {
+      try {
+        const { Resend } = await import("resend");
+        const resend = new Resend(process.env.RESEND_API_KEY);
+        await resend.emails.send({
+          from: process.env.RESEND_FROM_EMAIL ?? "noreply@udandiaspora.org",
+          to: email,
+          subject: "Thanks for subscribing to UDAN Diaspora updates!",
+          html: "<h2>You are subscribed!</h2><p>Thank you for subscribing to UDAN Diaspora. You will receive updates about our programs, events, and community news.</p>",
+        });
+      } catch (emailErr) {
+        console.error("Newsletter email failed:", emailErr);
+      }
+    }
 
     return NextResponse.json({ success: true });
   } catch (err) {
