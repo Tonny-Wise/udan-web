@@ -27,7 +27,7 @@ export default function FloatingEventButton() {
           .limit(1);
         if (data && data.length > 0) setActiveEvent(data[0]);
       } catch {
-        // No active event or Supabase unavailable — hide the button
+        // No active event or Supabase unavailable: hide the button
       }
     };
     fetchEvent();

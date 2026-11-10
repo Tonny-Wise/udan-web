@@ -84,7 +84,7 @@ export default function AdminPortal() {
   // Registrations (unchanged)
   const [registrations, setRegistrations] = useState<Registration[]>([]);
 
-  // Gallery state — loaded from Supabase
+  // Gallery state: loaded from Supabase
   const [galleryCategories, setGalleryCategories] = useState<GalleryCategory[]>([]);
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
   const [galleryError, setGalleryError] = useState<string | null>(null);
@@ -94,7 +94,7 @@ export default function AdminPortal() {
   const [newImageCategory, setNewImageCategory] = useState("");
   const [galleryUploading, setGalleryUploading] = useState(false);
 
-  // News state — loaded from Supabase
+  // News state: loaded from Supabase
   const [news, setNews] = useState<NewsItem[]>([]);
   const [newsError, setNewsError] = useState<string | null>(null);
   const [newNews, setNewNews] = useState({
@@ -112,7 +112,7 @@ export default function AdminPortal() {
   const [newsImageFile, setNewsImageFile] = useState<File | null>(null);
   const [newsUploading, setNewsUploading] = useState(false);
 
-  // Events state — loaded from Supabase
+  // Events state: loaded from Supabase
   const [events, setEvents] = useState<Event[]>([]);
   const [eventsError, setEventsError] = useState<string | null>(null);
   const [newEvent, setNewEvent] = useState<{
@@ -610,6 +610,7 @@ export default function AdminPortal() {
         content: contentJson,
         image_url: finalImageUrl || null,
         status: "draft",
+        created_by: currentUser?.id ?? null,
       });
       if (error) {
         setNewsError("Failed to create article: " + error.message);
@@ -679,6 +680,7 @@ export default function AdminPortal() {
         location: newEvent.location,
         enabled: true,
         countdown_active: true,
+        created_by: currentUser?.id ?? null,
       });
       if (error) {
         setEventsError("Failed to create event: " + error.message);
@@ -819,12 +821,13 @@ export default function AdminPortal() {
           {/* ── REGISTRATIONS TAB ─────────────────────────────────────────────── */}
           {activeTab === "registrations" && (
             <div className="space-y-6">
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
                 {[
                   { label: "Total", value: registrations.length, color: "text-[#0f172a]" },
                   { label: "Pending", value: registrations.filter((r) => r.status === "pending").length, color: "text-yellow-600" },
                   { label: "Approved", value: registrations.filter((r) => r.status === "approved").length, color: "text-[#22c55e]" },
-                  { label: "Sellers", value: registrations.filter((r) => r.role === "seller").length, color: "text-blue-600" },
+                  { label: "Buyers", value: registrations.filter((r) => r.role === "buyer").length, color: "text-blue-600" },
+                  { label: "Sellers", value: registrations.filter((r) => r.role === "seller").length, color: "text-purple-600" },
                 ].map((stat) => (
                   <div key={stat.label} className="bg-white rounded-xl p-5 shadow-sm">
                     <p className="text-xs font-medium text-[#64748b] mb-1">{stat.label}</p>
@@ -1008,7 +1011,7 @@ export default function AdminPortal() {
                   })}
                 </div>
 
-                {/* Image grid — small squares */}
+                {/* Image grid: small squares */}
                 <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2">
                   {galleryImages
                     .filter((img) => selectedGalleryCategory === "all" || img.category_id === selectedGalleryCategory)
@@ -1125,7 +1128,7 @@ export default function AdminPortal() {
                   {/* Row 6: Paragraphs */}
                   <div>
                     <label className="block text-[11px] font-semibold text-[#64748b] uppercase tracking-wider mb-1">
-                      Article Body — one paragraph per line
+                      Article Body (one paragraph per line)
                     </label>
                     <textarea value={newNews.paragraphs} onChange={(e) => setNewNews({ ...newNews, paragraphs: e.target.value })}
                       placeholder={"First paragraph of the article.\nSecond paragraph continues here.\nThird paragraph..."}
@@ -1135,7 +1138,7 @@ export default function AdminPortal() {
                   {/* Row 7: Key Takeaways */}
                   <div>
                     <label className="block text-[11px] font-semibold text-[#64748b] uppercase tracking-wider mb-1">
-                      Key Takeaways — one per line (shown as ✓ bullet points)
+                      Key Takeaways (one per line, shown as bullet points)
                     </label>
                     <textarea value={newNews.keyTakeaways} onChange={(e) => setNewNews({ ...newNews, keyTakeaways: e.target.value })}
                       placeholder={"First key takeaway point.\nSecond key takeaway point.\nThird key takeaway point."}
@@ -1145,16 +1148,16 @@ export default function AdminPortal() {
                   <button onClick={addNews}
                     disabled={!newNews.title.trim() || !newNews.slug.trim() || newsUploading}
                     className="w-full py-2.5 bg-[#22c55e] text-white text-sm font-semibold rounded-lg hover:bg-green-600 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
-                    {newsUploading ? "Uploading…" : "Create Article (Draft)"}
+                    {newsUploading ? "Uploading..." : "Create Article (Draft)"}
                   </button>
                 </div>
               </div>
 
-              {/* Static (hardcoded) articles — always visible, read-only */}
+              {/* Static (hardcoded) articles: always visible, read-only */}
               <div className="bg-white rounded-xl p-5 shadow-sm">
                 <div className="flex items-center gap-2 mb-4">
                   <h3 className="text-sm font-semibold text-[#0f172a]">Current Articles</h3>
-                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-[#64748b] font-medium">Built-in — visible on website</span>
+                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-[#64748b] font-medium">Built-in: visible on website</span>
                 </div>
                 <div className="space-y-3">
                   {[
