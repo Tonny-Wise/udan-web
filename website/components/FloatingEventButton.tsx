@@ -24,9 +24,8 @@ export default function FloatingEventButton() {
           .select("title, event_type")
           .eq("enabled", true)
           .order("event_date", { ascending: true })
-          .limit(1)
-          .single();
-        if (data) setActiveEvent(data);
+          .limit(1);
+        if (data && data.length > 0) setActiveEvent(data[0]);
       } catch {
         // No active event or Supabase unavailable — hide the button
       }

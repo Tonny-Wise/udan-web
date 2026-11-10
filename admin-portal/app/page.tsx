@@ -376,7 +376,7 @@ export default function AdminPortal() {
           <div className="text-center mb-8">
             <div className="flex justify-center mb-4">
               <Image
-                src="/images/logo/278134-removebg-preview.png"
+                src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/278134-removebg-preview.png"
                 alt="UDAN"
                 width={64}
                 height={64}
@@ -736,7 +736,7 @@ export default function AdminPortal() {
       <aside className={`fixed inset-y-0 left-0 z-50 w-60 bg-[#0f172a] flex flex-col transform transition-transform duration-200 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}>
         <div className="flex items-center gap-3 px-4 py-4 border-b border-slate-700">
           <Image
-            src="/images/logo/278134-removebg-preview.png"
+            src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/278134-removebg-preview.png"
             alt="UDAN"
             width={40}
             height={40}
@@ -806,7 +806,7 @@ export default function AdminPortal() {
               <line x1="3" y1="18" x2="21" y2="18" />
             </svg>
           </button>
-          <Image src="/images/logo/278134-removebg-preview.png" alt="UDAN" width={32} height={32} />
+          <Image src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/278134-removebg-preview.png" alt="UDAN" width={32} height={32} />
           <span className="font-bold text-[#0f172a]">UDAN Admin</span>
         </header>
 
