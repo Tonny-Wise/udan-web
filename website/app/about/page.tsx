@@ -40,18 +40,40 @@ export default function AboutPage() {
       image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/executives/andrew-bamugye.jpeg",
     },
     {
-      name: "Ambassador MJ Muhindo",
-      role: "Head of Diaspora Department",
-      org: "Ministry of Foreign Affairs (MoFA)",
-      bio: "Spearheading government diplomacy, diaspora engagement, and international collaboration to ensure Ugandan diaspora communities worldwide have institutional support for socio-economic investments at home.",
-      image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/executives/johnny-muthahi.jpeg",
+      name: "Christopher Olobo",
+      role: "Executive Member",
+      org: "UDAN Executive Committee",
+      bio: "Advising on strategic agribusiness investments, diaspora financing pipelines, and commercial agribusiness structuring across Uganda.",
     },
     {
-      name: "Edward Tanyiima",
-      role: "National Policy Officer",
-      org: "Food and Agriculture Organization (UN-FAO)",
-      bio: "Guiding policy alignment, climate resilience, and sustainable development goals across agribusiness value chains, ensuring diaspora investments align with global food security standards.",
-      image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/executives/edward-tanyima.jpeg",
+      name: "Jacob Lubaale",
+      role: "Executive Member",
+      org: "UDAN Executive Committee",
+      bio: "Supporting global diaspora membership coordination, value chain expansion, and technical knowledge transfer.",
+    },
+    {
+      name: "Livingstone Kyeyune",
+      role: "Executive Member",
+      org: "UDAN Executive Committee",
+      bio: "Driving commercial agriculture partnerships, agro-processing integration, and direct market access channels.",
+    },
+    {
+      name: "Lydia Nakayenze",
+      role: "Executive Member",
+      org: "UDAN Executive Committee",
+      bio: "Advancing youth and women in agribusiness, sustainable rural enterprises, and community outgrower integration models.",
+    },
+    {
+      name: "Pamela Anyoti Peronaci",
+      role: "Executive Member",
+      org: "UDAN Executive Committee",
+      bio: "Spearheading international export promotion, specialty agricultural trade corridors, and diaspora market connections.",
+    },
+    {
+      name: "Mukasa Muawiya",
+      role: "Executive Member",
+      org: "UDAN Executive Committee",
+      bio: "Promoting digital technology deployment, farm mechanization, and operational excellence for scalable agri-enterprises.",
     },
   ];
 
@@ -61,7 +83,6 @@ export default function AboutPage() {
       role: "Governance & Fiduciary Oversight",
       org: "UDAN Board",
       bio: "Distinguished diaspora and Ugandan agricultural leaders providing strategic oversight, fiduciary accountability, and ethical stewardship of all network programs.",
-      image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6671.JPG",
     },
   ];
 
@@ -186,39 +207,7 @@ export default function AboutPage() {
             </h2>
           </div>
 
-          {/* 1. Executive Members */}
-          <div>
-            <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#1b2238] mb-6 text-center">
-              Executive Members
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {executiveMembers.map((leader, i) => (
-                <div key={i} className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm flex flex-col group">
-                  <div className="relative h-48 sm:h-64 w-full bg-gray-100 overflow-hidden">
-                    <Image
-                      src={leader.image}
-                      alt={leader.name}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute bottom-2 left-2 right-2 bg-black/60 backdrop-blur-md px-2.5 py-1.5 rounded text-white text-[10px] font-semibold">
-                      {leader.org}
-                    </div>
-                  </div>
-                  <div className="p-5 flex-1 flex flex-col justify-between">
-                    <div>
-                      <h4 className="font-heading font-bold text-lg text-[#1b2238]">{leader.name}</h4>
-                      <div className="text-xs font-semibold text-[#1377a4] mb-3">{leader.role}</div>
-                      <p className="text-xs text-gray-600 leading-relaxed">{leader.bio}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* 2. Board of Trustees */}
+          {/* 1. Board of Trustees (Positioned above Executive) */}
           <div>
             <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#1b2238] mb-6 text-center">
               Board of Trustees
@@ -226,7 +215,7 @@ export default function AboutPage() {
             <div className="flex justify-center">
               {boardOfTrustees.map((member, i) => (
                 <div key={i} className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm flex flex-col w-full max-w-sm">
-                  <div className="w-24 h-24 mx-auto bg-gray-100 rounded-full flex items-center justify-center mt-6 border border-gray-200">
+                  <div className="w-24 h-24 mx-auto bg-gray-100 rounded-full flex items-center justify-center mt-6 border border-gray-200 shadow-inner">
                     <div className="text-gray-400 text-4xl">👥</div>
                   </div>
                   <div className="p-6 flex-1 flex flex-col justify-between text-center">
@@ -240,42 +229,60 @@ export default function AboutPage() {
               ))}
             </div>
           </div>
-        </section>
 
-        {/* SECTION 5: SERVICES */}
-        <section id="services" className="scroll-mt-32">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            <div className="lg:col-span-6 space-y-4">
-              <h2 className="font-heading font-bold text-3xl sm:text-4xl text-[#1b2238]">
-                Our Services
-              </h2>
+          {/* 2. Executive Members */}
+          <div>
+            <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#1b2238] mb-6 text-center">
+              Executive Members
+            </h3>
+            <div className="flex flex-wrap justify-center gap-4">
+              {executiveMembers.map((leader, i) => (
+                <div
+                  key={i}
+                  className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm flex flex-col text-center w-full sm:w-[calc(50%-0.6rem)] md:w-[calc(33.333%-0.75rem)] lg:w-[calc(25%-0.85rem)] max-w-[270px] group hover:shadow-md hover:-translate-y-0.5 transition-all"
+                >
+                  {/* Square Profile Image Header */}
+                  <div className="relative aspect-square w-full bg-gray-100 overflow-hidden">
+                    {leader.image ? (
+                      <Image
+                        src={leader.image}
+                        alt={leader.name}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 25vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-[#131c33] via-[#1b2b4e] to-[#0f4b66] flex flex-col items-center justify-center text-white p-4">
+                        <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center font-heading font-bold text-xl text-white shadow-inner mb-1">
+                          {leader.name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .slice(0, 2)
+                            .join("")}
+                        </div>
+                      </div>
+                    )}
+                    <div className="absolute bottom-2 left-2 right-2 bg-black/60 backdrop-blur-md px-2 py-1 rounded text-white text-[10px] font-semibold text-center truncate">
+                      {leader.org}
+                    </div>
+                  </div>
 
-              <div className="space-y-3 pt-2">
-                <div className="p-3.5 bg-gray-50 rounded-lg border border-gray-100">
-                  <h4 className="font-heading font-bold text-base text-[#1b2238]">1. Membership Services</h4>
-                  <p className="text-xs text-gray-600">Onboarding members, facilitating regional chapter coordination, and delivering tailored agribusiness intelligence bulletins.</p>
+                  {/* Member Details */}
+                  <div className="p-4 flex-1 flex flex-col justify-between text-center">
+                    <div>
+                      <h4 className="font-heading font-bold text-sm sm:text-base text-[#1b2238] leading-snug">
+                        {leader.name}
+                      </h4>
+                      <div className="text-[11px] font-semibold text-[#1377a4] mt-0.5 mb-2">
+                        {leader.role}
+                      </div>
+                      <p className="text-[11px] text-gray-600 leading-relaxed">
+                        {leader.bio}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-
-                <div className="p-3.5 bg-gray-50 rounded-lg border border-gray-100">
-                  <h4 className="font-heading font-bold text-base text-[#1b2238]">2. Partner &amp; Government Engagement</h4>
-                  <p className="text-xs text-gray-600">Maintaining policy dialog with MoFA, MAAIF, Uganda Investment Authority (UIA), Uganda Revenue Authority (URA), and international bodies like UN-FAO.</p>
-                </div>
-
-                <div className="p-3.5 bg-gray-50 rounded-lg border border-gray-100">
-                  <h4 className="font-heading font-bold text-base text-[#1b2238]">3. Due Diligence &amp; Impact Reporting</h4>
-                  <p className="text-xs text-gray-600">Screening youth agribusiness proposals, monitoring capital deployment, and producing audited environmental and economic impact reports.</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="lg:col-span-6 relative rounded-2xl overflow-hidden shadow-xl aspect-video bg-gray-100">
-              <Image
-                src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6675.JPG"
-                alt="UDAN Secretariat Planning Session"
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
-              />
+              ))}
             </div>
           </div>
         </section>

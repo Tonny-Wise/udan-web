@@ -78,7 +78,7 @@ export default function ContactPage() {
           <div className="lg:col-span-5 space-y-8">
             <div>
               <h2 className="font-heading font-bold text-2xl sm:text-3xl text-[#1b2238] mt-1 mb-4">
-                Headquarters
+                Secretariat
               </h2>
               <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-6">
                 The UDAN Secretariat coordinates closely with the Ministry of Foreign Affairs (MoFA) Diaspora Department and diplomatic missions worldwide.
@@ -98,7 +98,7 @@ export default function ContactPage() {
                   />
                 </span>
                 <div>
-                  <h4 className="font-heading font-bold text-base text-[#1b2238]">Headquarters</h4>
+                  <h4 className="font-heading font-bold text-base text-[#1b2238]">Secretariat</h4>
                   <p className="text-xs text-gray-600">
                     Uganda Diaspora in Agribusiness Network (UDAN) Secretariat<br />
                     Kampala, Uganda

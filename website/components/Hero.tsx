@@ -7,15 +7,15 @@ export default function Hero() {
       {/* Real Photographic Background Layer with Contrast Overlay */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/homepage-hero.jpeg"
-          alt="UDAN Agribusiness Convening & Leaders"
+          src="/images/youth-matchmaking.jpeg"
+          alt="UDAN Youth Agripreneurs and Diaspora Innovation"
           fill
           priority
           sizes="100vw"
           className="object-cover object-center"
         />
         {/* Neutral dark contrast overlay - no blue tint */}
-        <div className="absolute inset-0 bg-black/55" />
+        <div className="absolute inset-0 bg-black/60" />
       </div>
 
       {/* Hero Content Container */}
@@ -27,7 +27,7 @@ export default function Hero() {
 
         {/* Subhead - compact */}
         <p className="font-body text-[11px] sm:text-xs lg:text-[13px] max-w-xl text-gray-200 mb-4 leading-relaxed drop-shadow">
-          Connecting diaspora investors, youth agripreneurs, development partners, and policy champions to build sustainable, climate-smart food systems across Uganda.
+          Connecting diaspora investors, youth agripreneurs, development partners, and policy champions to build sustainable, climate-smart food systems.
         </p>
 
         {/* Action CTAs */}
@@ -80,7 +80,7 @@ export default function Hero() {
         </div>
 
         {/* Quick Highlights / Key Metrics Strip */}
-        <div className="pt-3 border-t border-white/15 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 w-full max-w-3xl text-center backdrop-blur-xs">
+        <div className="pt-3 border-t border-white/15 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 w-full max-w-3xl text-center backdrop-blur-xs mb-4">
           <div>
             <div className="font-heading font-bold text-sm sm:text-xl text-[#63b849]">$1.2M+</div>
             <div className="text-[9px] sm:text-[9.5px] text-gray-200 font-semibold uppercase tracking-wider">Agri-Finance Pipeline</div>
@@ -92,6 +92,29 @@ export default function Hero() {
           <div>
             <div className="font-heading font-bold text-sm sm:text-xl text-[#63b849]">500+</div>
             <div className="text-[9px] sm:text-[9.5px] text-gray-200 font-semibold uppercase tracking-wider">Agri Diaspora Members</div>
+          </div>
+        </div>
+
+        {/* Mission & Vision (Positioned directly below the $1.2M pipeline line) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-3xl text-left">
+          <div className="p-3 sm:p-3.5 rounded-xl bg-black/45 backdrop-blur-md border border-[#63b849]/40 shadow-sm">
+            <h3 className="font-heading font-bold text-xs sm:text-sm text-[#63b849] uppercase tracking-wider mb-1 flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#63b849]" />
+              Our Mission
+            </h3>
+            <p className="text-[11px] sm:text-xs text-gray-200 leading-relaxed font-body">
+              Mobilizing diaspora capital and technical skills to empower youth and transform rural agriculture.
+            </p>
+          </div>
+
+          <div className="p-3 sm:p-3.5 rounded-xl bg-black/45 backdrop-blur-md border border-[#c6ac62]/40 shadow-sm">
+            <h3 className="font-heading font-bold text-xs sm:text-sm text-[#c6ac62] uppercase tracking-wider mb-1 flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#c6ac62]" />
+              Our Vision
+            </h3>
+            <p className="text-[11px] sm:text-xs text-gray-200 leading-relaxed font-body">
+              A thriving, climate-resilient Ugandan agri-food sector powered by diaspora innovation.
+            </p>
           </div>
         </div>
       </div>

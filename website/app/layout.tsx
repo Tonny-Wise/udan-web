@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     template: "%s | UDAN",
   },
   description:
-    "Connecting diaspora capital, technology, and market access with sustainable agribusiness opportunities across Uganda's agricultural value chains — in partnership with UN-FAO and the Ministry of Foreign Affairs.",
+    "Connecting diaspora capital, technology, and market access with sustainable agribusiness opportunities across Uganda's agricultural value chains.",
   keywords: [
     "Uganda diaspora agribusiness",
     "UDAN",
@@ -22,7 +22,6 @@ export const metadata: Metadata = {
     "Uganda agribusiness",
     "youth agripreneurs Uganda",
     "diaspora matchmaking",
-    "UN-FAO Uganda",
     "climate action awards Uganda",
     "Uganda agri-food investments",
   ],
@@ -38,16 +37,16 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_UG",
     url: SITE_URL,
-    siteName: "UDAN — Uganda Diaspora in Agribusiness Network",
+    siteName: "UDAN: Uganda Diaspora in Agribusiness Network",
     title: "UDAN | Uganda Diaspora in Agribusiness Network",
     description:
-      "Connecting diaspora capital, technology, and market access with sustainable agribusiness opportunities across Uganda — partnered with UN-FAO and MoFA.",
+      "Connecting diaspora capital, technology, and market access with sustainable agribusiness opportunities across Uganda.",
     images: [
       {
         url: OG_IMAGE,
         width: 1200,
         height: 1200,
-        alt: "UDAN — Uganda Diaspora in Agribusiness Network",
+        alt: "UDAN: Uganda Diaspora in Agribusiness Network",
       },
     ],
   },

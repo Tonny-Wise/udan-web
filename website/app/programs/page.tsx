@@ -212,13 +212,6 @@ export default function ProgramsPage() {
                 <div className="w-full text-center px-4 py-2.5 rounded-full bg-gray-200 text-gray-500 font-bold text-xs border border-gray-300 select-none cursor-not-allowed">
                   Applications Closed
                 </div>
-                <a
-                  href="/documents/UDAN-Matchmaking-Guidelines.pdf"
-                  download="UDAN-Matchmaking-Guidelines.pdf"
-                  className="w-full text-center pill-btn pill-outline border-[#1377a4] text-[#1377a4] text-xs justify-center hover:bg-[#1377a4] hover:text-white transition-colors"
-                >
-                  <span>⬇ Download Guidelines (PDF)</span>
-                </a>
               </div>
             </div>
           </div>
@@ -235,28 +228,6 @@ export default function ProgramsPage() {
             </div>
 
             <YouthCohortGallery youthList={topYouth} />
-          </div>
-
-          {/* 2026 DIASPORA - YOUTH MATCHMAKING PROGRAM FEATURED COHORT */}
-          <div className="pt-20">
-            <div className="text-center max-w-3xl mx-auto mb-8 space-y-3">
-              <h3 className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl text-[#1b2238] tracking-tight">
-                2026 Diaspora - Youth Matchmaking Program
-              </h3>
-              <p className="text-gray-600 text-xs sm:text-sm leading-relaxed max-w-2xl mx-auto">
-                These carefully vetted youth agripreneurs were selected through the 2026 Agriprenuers Matchmaking Program. They lead innovative and scalable agricultural ventures across Uganda and are actively seeking strategic partnership, investment opportunities, market access, and knowledge exchange with the diaspora community to accelerate growth and create lasting impact.
-              </p>
-            </div>
-
-            <div className="relative max-w-5xl mx-auto aspect-[3/2] rounded-2xl overflow-hidden shadow-2xl border border-gray-200/80 bg-gray-50">
-              <Image
-                src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/matchmaking-programme-2026.jpeg"
-                alt="2026 Diaspora - Youth Matchmaking Program"
-                fill
-                sizes="(max-width: 1024px) 100vw, 1100px"
-                className="object-contain"
-              />
-            </div>
           </div>
         </section>
 

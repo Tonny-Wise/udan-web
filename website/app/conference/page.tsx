@@ -6,9 +6,9 @@ import AwardWinnerModal from "@/components/AwardWinnerModal";
 import { createServiceRoleClient } from "@/lib/supabase/server";
 
 export const metadata = {
-  title: "Annual Conference | UDAN Diaspora",
+  title: "The Annual Diaspora in Agribusiness Conference | UDAN Diaspora",
   description:
-    "Discover the UDAN Annual Conference & 2025 Diaspora in Agribusiness for Climate Action Awards at Speke Resort Munyonyo.",
+    "Discover The Annual Diaspora in Agribusiness Conference and Diaspora in Agribusiness Awards.",
 };
 
 const fallbackGalleryCategories: GalleryCategory[] = [
@@ -288,7 +288,7 @@ export default async function ConferencePage() {
 
         <div className="max-w-7xl mx-auto relative z-10 text-center">
           <h1 className="font-heading font-bold text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight mb-4 drop-shadow-md">
-            Annual Conference
+            The Annual Diaspora in Agribusiness Conference
           </h1>
           <p className="text-gray-200 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed drop-shadow">
             The flagship convening of the Uganda Diaspora in Agribusiness.
@@ -308,11 +308,11 @@ export default async function ConferencePage() {
                       <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#63b849]" />
                     </span>
                     <span className="text-[11px] font-bold uppercase tracking-wider text-[#c6ac62]">
-                      Bookings Open
+                      2026 Conference Bookings Open
                     </span>
                   </div>
                   <h3 className="font-heading font-bold text-base sm:text-lg text-white">
-                    Exhibition Stalls &amp; Investor Access
+                    2026 Exhibition Stalls &amp; Investor Access
                   </h3>
                 </div>
 
@@ -356,11 +356,11 @@ export default async function ConferencePage() {
                   <p className="text-xs text-gray-600 mt-1">Connecting diaspora capital and technical expertise with verified local agribusiness enterprises to accelerate viable investment agreements.</p>
                 </div>
                 <div className="p-4 bg-gray-50 rounded-xl border border-gray-100 border-l-4 border-l-[#63b849] hover:border-gray-200 hover:shadow-md transition-all">
-                  <h4 className="font-heading font-bold text-base text-[#1b2238]">2. Policy Engagement with MoFA &amp; FAO</h4>
+                  <h4 className="font-heading font-bold text-base text-[#1b2238]">2. Policy Engagement</h4>
                   <p className="text-xs text-gray-600 mt-1">Providing an open forum to discuss tax exemptions, land security, climate adaptation metrics, and export compliance.</p>
                 </div>
                 <div className="p-4 bg-gray-50 rounded-xl border border-gray-100 border-l-4 border-l-[#c6ac62] hover:border-gray-200 hover:shadow-md transition-all">
-                  <h4 className="font-heading font-bold text-base text-[#1b2238]">3. Recognition of Green Innovation</h4>
+                  <h4 className="font-heading font-bold text-base text-[#1b2238]">3. Recognition of Outstanding Diaspora in Agribusiness</h4>
                   <p className="text-xs text-gray-600 mt-1">Celebrating diaspora and youth champions who prove that environmentally sustainable farming is commercially viable.</p>
                 </div>
               </div>
@@ -472,9 +472,6 @@ export default async function ConferencePage() {
         <section id="tickets" className="scroll-mt-32 p-8 sm:p-12 rounded-2xl bg-gradient-to-br from-[#131c33] via-[#1b2b4e] to-[#0f4b66] text-white border border-white/15 shadow-2xl relative overflow-hidden">
           <div className="absolute -right-20 -top-20 w-80 h-80 bg-[#c6ac62]/10 rounded-full blur-3xl pointer-events-none" />
           <div className="max-w-4xl mx-auto text-center space-y-4 relative z-10">
-            <span className="inline-block px-3.5 py-1 rounded-full bg-[#63b849] text-white text-xs font-bold uppercase tracking-wider shadow">
-              Join Future Convocations
-            </span>
             <h2 className="font-heading font-bold text-3xl sm:text-4xl text-white">
               Participate in the Next UDAN Annual Conference
             </h2>

@@ -221,7 +221,7 @@ export default function MembershipPage() {
         <section id="chapters" className="scroll-mt-32 bg-gray-50 rounded-2xl p-8 sm:p-12 border border-gray-200">
           <div className="max-w-3xl mb-10">
             <h2 className="font-heading font-bold text-3xl sm:text-4xl text-[#1b2238] mt-1">
-              UDAN Country
+              UDAN Global Chapters
             </h2>
             <p className="text-gray-600 text-xs sm:text-sm mt-2">
               Our regional chapters provide grassroots organizing, local networking events, and collaborative investment clubs in your country of residence.

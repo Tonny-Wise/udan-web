@@ -78,20 +78,14 @@ export default function Footer() {
             {/* Column 1: Organization & Identity */}
             <div className="space-y-4">
               <Link href="/" className="inline-block group" aria-label="UDAN Home">
-                <div className="relative h-16 sm:h-20 w-36 sm:w-44 mb-2 transition-transform group-hover:scale-105 flex items-center justify-start overflow-hidden">
+                <div className="relative h-16 sm:h-20 w-44 sm:w-52 mb-2 transition-transform group-hover:scale-105 flex items-center justify-start">
                   <Image
-                    src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/278134-removebg-preview.png"
-                    alt="UDAN Logo"
+                    src="/images/logo/udan-logo.png"
+                    alt="UDAN - Uganda Diaspora in Agribusiness Network"
                     fill
-                    sizes="(max-width: 640px) 144px, 176px"
-                    className="object-contain object-left scale-[2.2] origin-left"
+                    sizes="(max-width: 640px) 176px, 208px"
+                    className="object-contain object-left filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.25)] contrast-110 brightness-105"
                   />
-                </div>
-                <div>
-                  <div className="font-heading font-bold text-lg text-white">UDAN</div>
-                  <div className="text-[9px] uppercase tracking-wider font-bold text-[#c6ac62]">
-                    Uganda Diaspora in Agribusiness Network
-                  </div>
                 </div>
               </Link>
               <p className="text-[12px] text-gray-300 leading-relaxed">
@@ -134,11 +128,6 @@ export default function Footer() {
                 <li>
                   <Link href="/about#pillars" className="hover:text-[#63b849] transition-colors">
                     &bull; The 5 Pillars of Community Growth
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/about#services" className="hover:text-[#63b849] transition-colors">
-                    &bull; UDAN Services
                   </Link>
                 </li>
               </ul>

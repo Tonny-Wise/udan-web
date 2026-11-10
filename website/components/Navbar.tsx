@@ -40,8 +40,7 @@ export default function Navbar() {
         { label: "Who We Are", href: "/about#who-we-are", desc: "Our origin, mission & mandate" },
         { label: "Who We Serve", href: "/about#who-we-serve", desc: "Diaspora, youth agripreneurs & partners" },
         { label: "Our 5 Pillars", href: "/about#pillars", desc: "Diaspora Investment, Policy, Tech, Markets, Capacity" },
-        { label: "Leadership", href: "/about#leadership", desc: "Executive members & Board of Trustees" },
-        { label: "Our Services", href: "/about#services", desc: "Membership, partnerships & due diligence" },
+        { label: "Leadership", href: "/about#leadership", desc: "Board of Trustees & Executive members" },
       ],
     },
     {
@@ -78,9 +77,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto flex justify-between items-center gap-2">
           <div className="flex items-center gap-2 sm:gap-3 truncate">
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#63b849] animate-pulse flex-none" />
-            <span className="truncate">Uganda Diaspora in Agribusiness Network</span>
-            <span className="hidden md:inline text-gray-400">|</span>
-            <span className="hidden md:inline text-[#c6ac62]">Partnership with UN-FAO &amp; MoFA</span>
+            <span className="truncate font-semibold tracking-wide">Uganda Diaspora in Agribusiness Network</span>
           </div>
           <div className="flex items-center gap-3 text-gray-300 flex-none text-[9px] sm:text-[10px]">
             <Link href="/contact" className="hidden sm:inline hover:text-white transition-colors">
@@ -103,25 +100,25 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-3 sm:px-6 flex items-center justify-between gap-2 sm:gap-4">
-          {/* Logo ONLY (Authentic UDAN emblem, enlarged & proportional) */}
+          {/* Logo (Authentic UDAN emblem, tightly cropped, pronounced in size & vivid colour) */}
           <Link
             href="/"
-            className="flex items-center flex-none group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1377a4] rounded-md"
+            className="flex items-center flex-none group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1377a4] rounded-md py-1"
             aria-label="UDAN Home"
           >
             <div
-              className={`relative flex-none transition-all duration-300 group-hover:scale-105 flex items-center justify-center overflow-hidden ${
+              className={`relative flex-none transition-all duration-300 group-hover:scale-105 flex items-center justify-center ${
                 scrolled
-                  ? "h-10 sm:h-11 md:h-12 w-28 sm:w-32 md:w-36"
-                  : "h-12 sm:h-14 md:h-16 w-32 sm:w-36 md:w-44"
+                  ? "h-11 sm:h-12 md:h-13 w-28 sm:w-32 md:w-36"
+                  : "h-14 sm:h-16 md:h-18 w-36 sm:w-44 md:w-48"
               }`}
             >
               <Image
-                src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/278134-removebg-preview.png"
-                alt="UDAN"
+                src="/images/logo/udan-logo.png"
+                alt="UDAN: Uganda Diaspora in Agribusiness Network"
                 fill
-                sizes="(max-width: 640px) 144px, 176px"
-                className="object-contain scale-[2.1]"
+                sizes="(max-width: 640px) 144px, 192px"
+                className="object-contain filter drop-shadow-[0_2px_6px_rgba(0,0,0,0.12)] contrast-110 brightness-105"
                 priority
               />
             </div>
