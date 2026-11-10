@@ -80,7 +80,7 @@ export default function Footer() {
               <Link href="/" className="inline-block group" aria-label="UDAN Home">
                 <div className="relative h-16 sm:h-20 w-44 sm:w-52 mb-2 transition-transform group-hover:scale-105 flex items-center justify-start">
                   <Image
-                    src="/images/logo/udan-logo.png"
+                    src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/278134-removebg-preview.png"
                     alt="UDAN - Uganda Diaspora in Agribusiness Network"
                     fill
                     sizes="(max-width: 640px) 176px, 208px"

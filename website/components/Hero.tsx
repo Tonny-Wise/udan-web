@@ -7,8 +7,8 @@ export default function Hero() {
       {/* Real Photographic Background Layer with Contrast Overlay */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/youth-matchmaking.jpeg"
-          alt="UDAN Youth Agripreneurs and Diaspora Innovation"
+          src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/homepage-hero.jpeg"
+          alt="UDAN Agribusiness Convening & Leaders"
           fill
           priority
           sizes="100vw"
