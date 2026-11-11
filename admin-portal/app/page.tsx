@@ -655,6 +655,54 @@ export default function AdminPortal() {
     }
   };
 
+  const setFeaturedNews = async (id: string) => {
+    setNewsError(null);
+    try {
+      const supabase = await getSupabase();
+      // Get current article content
+      const { data: current, error: fetchError } = await supabase
+        .from("news_articles")
+        .select("content")
+        .eq("id", id)
+        .single();
+      if (fetchError || !current) {
+        setNewsError("Failed to fetch article: " + fetchError?.message);
+        return;
+      }
+      // Parse and update is_featured, unset all others
+      let parsed: Record<string, unknown> = {};
+      try { parsed = JSON.parse(current.content); } catch { /* ignore */ }
+      parsed.is_featured = true;
+
+      // Unset is_featured on all other articles first
+      const { data: allArticles } = await supabase
+        .from("news_articles")
+        .select("id, content")
+        .neq("id", id);
+      for (const article of allArticles || []) {
+        let p: Record<string, unknown> = {};
+        try { p = JSON.parse(article.content); } catch { /* ignore */ }
+        if (p.is_featured) {
+          p.is_featured = false;
+          await supabase.from("news_articles").update({ content: JSON.stringify(p) }).eq("id", article.id);
+        }
+      }
+
+      // Set this one as featured
+      const { error } = await supabase
+        .from("news_articles")
+        .update({ content: JSON.stringify(parsed) })
+        .eq("id", id);
+      if (error) {
+        setNewsError("Failed to set featured: " + error.message);
+        return;
+      }
+      await fetchNews();
+    } catch (err: any) {
+      setNewsError("Unexpected error setting featured: " + (err?.message ?? String(err)));
+    }
+  };
+
   const deleteNews = async (id: string) => {
     setNewsError(null);
     try {
@@ -742,19 +790,15 @@ export default function AdminPortal() {
 
       {/* Sidebar */}
       <aside className={`fixed inset-y-0 left-0 z-50 w-60 bg-[#0f172a] flex flex-col transform transition-transform duration-200 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}>
-        <div className="flex items-center gap-3 px-4 py-4 border-b border-slate-700">
-          <div className="relative h-10 w-24 flex-shrink-0 flex items-center">
+        <div className="flex items-center justify-center px-4 py-4 border-b border-slate-700">
+          <div className="relative h-11 w-44 flex items-center justify-center">
             <Image
               src="/images/logo/udan-logo.png"
               alt="UDAN"
               fill
-              sizes="96px"
-              className="object-contain object-left"
+              sizes="176px"
+              className="object-contain"
             />
-          </div>
-          <div>
-            <p className="text-white font-bold text-sm leading-tight">UDAN</p>
-            <p className="text-slate-400 text-[11px]">Admin Portal</p>
           </div>
         </div>
 
@@ -1245,11 +1289,17 @@ export default function AdminPortal() {
                         {article.image_url && (
                           <img src={article.image_url.startsWith("/") ? `http://localhost:3000${article.image_url}` : article.image_url} alt={article.title} className="w-full h-28 object-cover rounded-lg mb-3" />
                         )}
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 flex-wrap">
                           {article.status !== "published" && (
                             <button onClick={() => publishNews(article.id)}
                               className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-[#22c55e] text-[#22c55e] hover:bg-[#22c55e] hover:text-white transition-colors">
                               Publish
+                            </button>
+                          )}
+                          {article.status === "published" && (
+                            <button onClick={() => setFeaturedNews(article.id)}
+                              className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-[#c6ac62] text-[#c6ac62] hover:bg-[#c6ac62] hover:text-white transition-colors">
+                              {article.keyTakeaways.length > 0 ? "★ Set Featured" : "Set Featured"}
                             </button>
                           )}
                           <button onClick={() => deleteNews(article.id)}
