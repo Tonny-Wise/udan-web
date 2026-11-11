@@ -108,6 +108,7 @@ export default function AdminPortal() {
     imageUrl: "",
     paragraphs: "", // one paragraph per line
     keyTakeaways: "", // one takeaway per line
+    isFeatured: false,
   });
   const [newsImageFile, setNewsImageFile] = useState<File | null>(null);
   const [newsUploading, setNewsUploading] = useState(false);
@@ -374,13 +375,17 @@ export default function AdminPortal() {
       <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center p-4">
         <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8">
           <div className="text-center mb-8">
-            <div className="flex justify-center mb-4">
-              <Image
-                src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/278134-removebg-preview.png"
-                alt="UDAN"
-                width={64}
-                height={64}
-              />
+            <div className="flex justify-center mb-5">
+              <div className="relative h-16 w-44 sm:h-20 sm:w-52 flex items-center justify-center">
+                <Image
+                  src="/images/logo/udan-logo.png"
+                  alt="UDAN"
+                  fill
+                  sizes="(max-width: 640px) 176px, 208px"
+                  className="object-contain filter drop-shadow-sm"
+                  priority
+                />
+              </div>
             </div>
             <h1 className="font-bold text-2xl text-[#0f172a] mb-1">Admin Portal</h1>
             <p className="text-sm text-[#64748b]">Secure access for administrators only</p>
@@ -601,6 +606,7 @@ export default function AdminPortal() {
         excerpt: newNews.excerpt.trim(),
         paragraphs,
         keyTakeaways,
+        is_featured: newNews.isFeatured,
       });
 
       const { error } = await supabase.from("news_articles").insert({
@@ -618,7 +624,7 @@ export default function AdminPortal() {
       }
       setNewNews({
         title: "", slug: "", category: "", author: "", authorRole: "",
-        readTime: "", excerpt: "", imageUrl: "", paragraphs: "", keyTakeaways: "",
+        readTime: "", excerpt: "", imageUrl: "", paragraphs: "", keyTakeaways: "", isFeatured: false,
       });
       setNewsImageFile(null);
       const newsFileInput = document.getElementById("news-file-input") as HTMLInputElement;
@@ -737,13 +743,15 @@ export default function AdminPortal() {
       {/* Sidebar */}
       <aside className={`fixed inset-y-0 left-0 z-50 w-60 bg-[#0f172a] flex flex-col transform transition-transform duration-200 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}>
         <div className="flex items-center gap-3 px-4 py-4 border-b border-slate-700">
-          <Image
-            src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/278134-removebg-preview.png"
-            alt="UDAN"
-            width={40}
-            height={40}
-            className="flex-shrink-0"
-          />
+          <div className="relative h-10 w-24 flex-shrink-0 flex items-center">
+            <Image
+              src="/images/logo/udan-logo.png"
+              alt="UDAN"
+              fill
+              sizes="96px"
+              className="object-contain object-left"
+            />
+          </div>
           <div>
             <p className="text-white font-bold text-sm leading-tight">UDAN</p>
             <p className="text-slate-400 text-[11px]">Admin Portal</p>
@@ -808,7 +816,15 @@ export default function AdminPortal() {
               <line x1="3" y1="18" x2="21" y2="18" />
             </svg>
           </button>
-          <Image src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/278134-removebg-preview.png" alt="UDAN" width={32} height={32} />
+          <div className="relative h-8 w-20 flex-shrink-0 flex items-center">
+            <Image
+              src="/images/logo/udan-logo.png"
+              alt="UDAN"
+              fill
+              sizes="80px"
+              className="object-contain object-left"
+            />
+          </div>
           <span className="font-bold text-[#0f172a]">UDAN Admin</span>
         </header>
 
@@ -1145,6 +1161,17 @@ export default function AdminPortal() {
                       rows={3}
                       className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm outline-none focus:border-[#22c55e] focus:ring-2 focus:ring-[#22c55e]/20 resize-y font-mono" />
                   </div>
+                  {/* Featured toggle */}
+                  <label className="flex items-center gap-3 cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      checked={newNews.isFeatured}
+                      onChange={(e) => setNewNews({ ...newNews, isFeatured: e.target.checked })}
+                      className="w-4 h-4 rounded border-slate-300 accent-[#22c55e]"
+                    />
+                    <span className="text-sm font-semibold text-[#0f172a]">Set as Featured Story</span>
+                    <span className="text-xs text-[#64748b]">(shows as the top article on the News page)</span>
+                  </label>
                   <button onClick={addNews}
                     disabled={!newNews.title.trim() || !newNews.slug.trim() || newsUploading}
                     className="w-full py-2.5 bg-[#22c55e] text-white text-sm font-semibold rounded-lg hover:bg-green-600 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">

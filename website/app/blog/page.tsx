@@ -1,5 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
+import { createClient } from "@supabase/supabase-js";
+
+export const revalidate = 60; // revalidate every 60 seconds
 
 export const metadata = {
   title: "News, Insights & Success Stories | UDAN Diaspora",
@@ -17,9 +20,11 @@ export interface BlogPostItem {
   author: string;
   readTime: string;
   image: string;
+  is_featured: boolean;
 }
 
-export const defaultPosts: BlogPostItem[] = [
+// Static fallback posts shown when DB has no published articles
+const defaultPosts: BlogPostItem[] = [
   {
     id: "1",
     slug: "climate-action-awards-winners-2025",
@@ -31,6 +36,7 @@ export const defaultPosts: BlogPostItem[] = [
     author: "UDAN Secretariat",
     readTime: "5 min read",
     image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6131.JPG",
+    is_featured: true,
   },
   {
     id: "2",
@@ -43,6 +49,7 @@ export const defaultPosts: BlogPostItem[] = [
     author: "Andrew Bamugye",
     readTime: "6 min read",
     image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6742.JPG",
+    is_featured: false,
   },
   {
     id: "3",
@@ -55,6 +62,7 @@ export const defaultPosts: BlogPostItem[] = [
     author: "Edward Tanyiima (FAO)",
     readTime: "4 min read",
     image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6287.JPG",
+    is_featured: false,
   },
   {
     id: "4",
@@ -67,12 +75,55 @@ export const defaultPosts: BlogPostItem[] = [
     author: "Youth Desk",
     readTime: "4 min read",
     image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6520.JPG",
+    is_featured: false,
   },
 ];
 
-export default function BlogPage() {
-  const featured = defaultPosts[0];
-  const restPosts = defaultPosts.slice(1);
+function parsePost(row: Record<string, unknown>): BlogPostItem {
+  let parsed: Record<string, unknown> = {};
+  if (typeof row.content === "string") {
+    try { parsed = JSON.parse(row.content); } catch { /* ignore */ }
+  }
+  return {
+    id: row.id as string,
+    slug: row.slug as string,
+    title: row.title as string,
+    excerpt: (row.excerpt as string) || (parsed.excerpt as string) || "",
+    category: (parsed.category as string) || "News",
+    date: (row.published_at as string) || (row.created_at as string) || "",
+    author: (parsed.author as string) || "UDAN Secretariat",
+    readTime: (parsed.readTime as string) || "3 min read",
+    image: (row.image_url as string) || "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6131.JPG",
+    is_featured: (parsed.is_featured as boolean) || false,
+  };
+}
+
+async function fetchPosts(): Promise<BlogPostItem[]> {
+  try {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+    const { data, error } = await supabase
+      .from("news_articles")
+      .select("*")
+      .eq("status", "published")
+      .order("published_at", { ascending: false });
+
+    if (error || !data || data.length === 0) return [];
+    return data.map((row) => parsePost(row as Record<string, unknown>));
+  } catch {
+    return [];
+  }
+}
+
+export default async function BlogPage() {
+  const dbPosts = await fetchPosts();
+  const posts = dbPosts.length > 0 ? dbPosts : defaultPosts;
+
+  // Featured = explicitly marked, or most recent
+  const featured = posts.find((p) => p.is_featured) ?? posts[0];
+  const restPosts = posts.filter((p) => p.id !== featured.id);
 
   return (
     <div className="bg-white font-body">
@@ -94,7 +145,7 @@ export default function BlogPage() {
         <section>
           <div className="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-shadow group">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
-              <div className="lg:col-span-7 relative h-56 sm:h-80 lg:h-auto bg-gray-100 overflow-hidden">
+              <div className="lg:col-span-7 relative h-56 sm:h-80 lg:h-auto min-h-[280px] bg-gray-100 overflow-hidden">
                 <Image
                   src={featured.image}
                   alt={featured.title}
@@ -110,21 +161,19 @@ export default function BlogPage() {
                 </div>
               </div>
 
-              <div className="lg:col-span-5 p-8 sm:p-10 flex flex-col justify-between space-y-4">
+              <div className="lg:col-span-5 p-6 sm:p-10 flex flex-col justify-between space-y-4">
                 <div>
-                  <div className="flex items-center gap-3 text-xs text-gray-400 font-semibold mb-2">
+                  <div className="flex items-center gap-3 text-xs text-gray-400 font-semibold mb-2 flex-wrap">
                     <span className="text-[#1377a4] uppercase font-bold">{featured.category}</span>
                     <span>&bull;</span>
                     <time dateTime={featured.date}>
                       {new Date(featured.date).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
+                        year: "numeric", month: "long", day: "numeric",
                       })}
                     </time>
                   </div>
 
-                  <h2 className="font-heading font-bold text-2xl sm:text-3xl text-[#1b2238] group-hover:text-[#1377a4] transition-colors mb-3 leading-tight">
+                  <h2 className="font-heading font-bold text-xl sm:text-3xl text-[#1b2238] group-hover:text-[#1377a4] transition-colors mb-3 leading-tight">
                     <Link href={`/blog/${featured.slug}`}>{featured.title}</Link>
                   </h2>
 
@@ -133,12 +182,9 @@ export default function BlogPage() {
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
+                <div className="pt-4 border-t border-gray-100 flex items-center justify-between flex-wrap gap-2">
                   <span className="text-xs text-gray-500 font-medium">By {featured.author}</span>
-                  <Link
-                    href={`/blog/${featured.slug}`}
-                    className="pill-btn pill-blue text-[11px] py-2 px-4"
-                  >
+                  <Link href={`/blog/${featured.slug}`} className="pill-btn pill-blue text-[11px] py-2 px-4">
                     <span>Read Full Story</span>
                     <span aria-hidden="true">&rarr;</span>
                   </Link>
@@ -148,70 +194,65 @@ export default function BlogPage() {
           </div>
         </section>
 
-        {/* RECENT STORIES GRID */}
-        <section>
-          <div className="text-center max-w-3xl mx-auto mb-8">
-            <h2 className="font-heading font-bold text-2xl sm:text-3xl text-[#1b2238] mt-1">
-              Updates
-            </h2>
-          </div>
+        {/* UPDATES GRID */}
+        {restPosts.length > 0 && (
+          <section>
+            <div className="text-center max-w-3xl mx-auto mb-8">
+              <h2 className="font-heading font-bold text-2xl sm:text-3xl text-[#1b2238] mt-1">Updates</h2>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {restPosts.map((post) => (
-              <article
-                key={post.id}
-                className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-all flex flex-col group"
-              >
-                <div className="relative h-48 w-full bg-gray-100 overflow-hidden">
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute top-3 left-3 bg-[#131c33]/80 backdrop-blur-sm text-white px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider">
-                    {post.category}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              {restPosts.map((post) => (
+                <article
+                  key={post.id}
+                  className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-all flex flex-col group"
+                >
+                  <div className="relative h-48 w-full bg-gray-100 overflow-hidden">
+                    <Image
+                      src={post.image}
+                      alt={post.title}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute top-3 left-3 bg-[#131c33]/80 backdrop-blur-sm text-white px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider">
+                      {post.category}
+                    </div>
                   </div>
-                </div>
 
-                <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
-                  <div>
-                    <div className="text-[11px] text-gray-400 font-semibold mb-2">
-                      <time dateTime={post.date}>
-                        {new Date(post.date).toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                        })}
-                      </time>{" "}
-                      &bull; {post.readTime}
+                  <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-3">
+                    <div>
+                      <div className="text-[11px] text-gray-400 font-semibold mb-2">
+                        <time dateTime={post.date}>
+                          {new Date(post.date).toLocaleDateString("en-US", {
+                            year: "numeric", month: "short", day: "numeric",
+                          })}
+                        </time>{" "}
+                        &bull; {post.readTime}
+                      </div>
+
+                      <h3 className="font-heading font-bold text-base sm:text-lg text-[#1b2238] group-hover:text-[#1377a4] transition-colors leading-snug mb-2">
+                        <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                      </h3>
+
+                      <p className="text-xs text-gray-600 line-clamp-3 leading-relaxed">
+                        {post.excerpt}
+                      </p>
                     </div>
 
-                    <h3 className="font-heading font-bold text-lg sm:text-xl text-[#1b2238] group-hover:text-[#1377a4] transition-colors leading-snug mb-2">
-                      <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-                    </h3>
-
-                    <p className="text-xs text-gray-600 line-clamp-3 leading-relaxed">
-                      {post.excerpt}
-                    </p>
+                    <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
+                      <span className="text-[11px] text-gray-400">By {post.author}</span>
+                      <Link href={`/blog/${post.slug}`} className="text-xs font-bold text-[#63b849] hover:underline flex items-center gap-1">
+                        <span>Read More</span>
+                        <span aria-hidden="true">&rarr;</span>
+                      </Link>
+                    </div>
                   </div>
-
-                  <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
-                    <span className="text-[11px] text-gray-400">By {post.author}</span>
-                    <Link
-                      href={`/blog/${post.slug}`}
-                      className="text-xs font-bold text-[#63b849] hover:underline flex items-center gap-1"
-                    >
-                      <span>Read More</span>
-                      <span aria-hidden="true">&rarr;</span>
-                    </Link>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );
