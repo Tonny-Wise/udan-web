@@ -78,6 +78,28 @@ export default function Hero() {
             <div className="text-[9px] sm:text-[9.5px] text-gray-200 font-semibold uppercase tracking-wider">Agri Diaspora Members</div>
           </div>
         </div>
+
+        {/* Mission & Vision */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-3xl text-left mt-4">
+          <div className="p-3 sm:p-3.5 rounded-xl bg-black/45 backdrop-blur-md border border-[#63b849]/40 shadow-sm">
+            <h3 className="font-heading font-bold text-xs sm:text-sm text-[#63b849] uppercase tracking-wider mb-1 flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#63b849]" />
+              Our Mission
+            </h3>
+            <p className="text-[11px] sm:text-xs text-gray-200 leading-relaxed font-body">
+              Mobilizing diaspora capital and technical skills to empower youth and transform rural agriculture.
+            </p>
+          </div>
+          <div className="p-3 sm:p-3.5 rounded-xl bg-black/45 backdrop-blur-md border border-[#c6ac62]/40 shadow-sm">
+            <h3 className="font-heading font-bold text-xs sm:text-sm text-[#c6ac62] uppercase tracking-wider mb-1 flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#c6ac62]" />
+              Our Vision
+            </h3>
+            <p className="text-[11px] sm:text-xs text-gray-200 leading-relaxed font-body">
+              A thriving, climate-resilient Ugandan agri-food sector powered by diaspora innovation.
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Brand Color Ribbon Strip */}
