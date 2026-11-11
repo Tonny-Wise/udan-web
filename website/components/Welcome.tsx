@@ -35,31 +35,6 @@ export default function Welcome() {
                 Andrew Bamugye, UDAN Executive Secretary
               </span>
             </blockquote>
-
-            {/* Mission & Vision Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-              <div className="p-3.5 bg-[#f0f9ed] rounded-xl border border-[#63b849]/30">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <h3 className="font-heading font-bold text-xs sm:text-sm text-[#1b2238] uppercase tracking-wider">
-                    Our Mission
-                  </h3>
-                </div>
-                <p className="text-[11px] text-gray-600 leading-relaxed">
-                  Mobilizing diaspora capital and technical skills to empower youth and transform rural agriculture.
-                </p>
-              </div>
-
-              <div className="p-3.5 bg-[#e8f3f8] rounded-xl border border-[#1377a4]/30">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <h3 className="font-heading font-bold text-xs sm:text-sm text-[#1b2238] uppercase tracking-wider">
-                    Our Vision
-                  </h3>
-                </div>
-                <p className="text-[11px] text-gray-600 leading-relaxed">
-                  A thriving, climate-resilient Ugandan agri-food sector powered by diaspora innovation.
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
