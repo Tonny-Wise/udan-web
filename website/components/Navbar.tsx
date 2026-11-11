@@ -114,7 +114,7 @@ export default function Navbar() {
               }`}
             >
               <Image
-                src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/278134-removebg-preview.png"
+                src="/images/logo/udan-logo.png"
                 alt="UDAN: Uganda Diaspora in Agribusiness Network"
                 fill
                 sizes="(max-width: 640px) 144px, 192px"
