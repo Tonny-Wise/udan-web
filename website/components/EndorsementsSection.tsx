@@ -46,10 +46,10 @@ export default function EndorsementsSection() {
           {endorsements.map((item, idx) => (
             <div
               key={idx}
-              className="bg-[#1b2a44] rounded-2xl p-6 sm:p-7 border border-white/10 shadow-sm hover:shadow-md transition-all flex flex-col justify-between relative group hover:border-[#c6ac62]/50"
+              className="bg-[#1b2a44] rounded-2xl p-6 sm:p-7 border border-white/10 shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between relative group hover:border-[#c6ac62]/60"
             >
               {/* Decorative quotation mark */}
-              <div className="absolute top-5 right-6 text-4xl text-[#c6ac62]/20 font-serif select-none pointer-events-none group-hover:text-[#c6ac62]/40 transition-colors">
+              <div className="absolute top-5 right-6 text-5xl text-[#c6ac62]/15 font-serif select-none pointer-events-none group-hover:text-[#c6ac62]/35 transition-colors">
                 &ldquo;
               </div>
 
@@ -59,8 +59,8 @@ export default function EndorsementsSection() {
               </p>
 
               {/* Author / Endorser Info */}
-              <div className="pt-4 border-b border-white/10 flex items-center gap-3.5 relative z-10 pb-4">
-                <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-[#c6ac62] shrink-0 shadow-sm">
+              <div className="pt-4 border-t border-white/10 flex items-center gap-3.5 relative z-10">
+                <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-[#c6ac62] shrink-0 shadow-sm transition-all duration-300 group-hover:ring-4 group-hover:ring-[#c6ac62]/40">
                   <Image
                     src={item.image}
                     alt={item.from}

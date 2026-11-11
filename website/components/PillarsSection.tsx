@@ -286,6 +286,47 @@ export default function PillarsSection() {
     },
   ];
 
+  const pillarIcons: Record<string, React.ReactNode> = {
+    investments: (
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <line x1="12" y1="2" x2="12" y2="22" />
+        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+      </svg>
+    ),
+    policy: (
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+        <line x1="16" y1="13" x2="8" y2="13" />
+        <line x1="16" y1="17" x2="8" y2="17" />
+      </svg>
+    ),
+    technology: (
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2v8" />
+        <path d="m4.93 10.93 1.41 1.41" />
+        <path d="M2 18h2" />
+        <path d="M20 18h2" />
+        <path d="m19.07 10.93-1.41 1.41" />
+        <path d="M22 22H2" />
+        <path d="m8 22 4-10 4 10" />
+      </svg>
+    ),
+    markets: (
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <line x1="2" y1="12" x2="22" y2="12" />
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+      </svg>
+    ),
+    capacity: (
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+        <path d="M6 12v5c3 3 9 3 12 0v-5" />
+      </svg>
+    ),
+  };
+
   return (
     <section id="pillars" className="py-16 sm:py-20 bg-gradient-to-b from-white via-gray-50 to-white border-t border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -306,23 +347,36 @@ export default function PillarsSection() {
             return (
               <div
                 key={pillar.id}
-                className={`bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 border border-l-4 ${
-                  isExpanded ? "border-[#1377a4] ring-1 ring-[#1377a4]/30" : "border-gray-100"
+                className={`bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 border border-l-4 ${
+                  isExpanded ? "border-[#1377a4] ring-2 ring-[#1377a4]/20" : "border-slate-200/80 hover:border-slate-300"
                 } flex flex-col justify-between group`}
                 style={{ borderLeftColor: pillar.accentColor }}
               >
                 <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span
-                      className={`inline-block px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-wider ${pillar.bgColor} ${pillar.color}`}
+                  {/* Top row: SVG Icon badge on left, Large modern number on right */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-xs"
+                      style={{
+                        backgroundColor: `${pillar.accentColor}18`,
+                        color: pillar.accentColor,
+                      }}
                     >
-                      {pillar.badge}
-                    </span>
-                    <span className="font-heading text-2xl font-black text-gray-400 group-hover:text-[#1377a4] transition-colors">
+                      {pillarIcons[pillar.id]}
+                    </div>
+                    <span className="font-heading text-2xl font-black text-slate-300 group-hover:text-slate-600 transition-colors">
                       {pillar.number}
                     </span>
                   </div>
-                  <h3 className="font-heading font-bold text-lg text-[#1b2238] mb-2">
+
+                  <div className="mb-2">
+                    <span
+                      className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${pillar.bgColor} ${pillar.color}`}
+                    >
+                      {pillar.badge}
+                    </span>
+                  </div>
+                  <h3 className="font-heading font-bold text-lg text-[#1b2238] mb-2 group-hover:text-[#1377a4] transition-colors leading-snug">
                     {pillar.title}
                   </h3>
                   <p className="text-xs text-gray-600 leading-relaxed">
@@ -377,11 +431,11 @@ export default function PillarsSection() {
                   )}
                 </div>
 
-                <div className="pt-4 border-t border-gray-100 mt-4">
+                <div className="pt-4 border-t border-gray-100 mt-5">
                   <button
                     type="button"
                     onClick={() => togglePillar(pillar.id)}
-                    className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#1377a4] hover:text-[#0e5779] uppercase tracking-wider transition-colors cursor-pointer group-hover:translate-x-0.5 duration-200"
+                    className="w-full py-2 px-3 rounded-lg text-xs font-semibold flex items-center justify-between transition-all duration-200 bg-slate-50 hover:bg-slate-100 text-[#1377a4] hover:text-[#0e5779] border border-slate-200/60 cursor-pointer"
                     aria-expanded={isExpanded}
                     aria-label={
                       isExpanded
@@ -389,8 +443,18 @@ export default function PillarsSection() {
                         : `Learn more about Pillar ${pillar.number}: ${pillar.title}`
                     }
                   >
-                    <span>{isExpanded ? "Learn Less" : "Learn More"}</span>
-                    <span aria-hidden="true">{isExpanded ? "↑" : "→"}</span>
+                    <span>{isExpanded ? "Show Less" : "Explore Mandate"}</span>
+                    <svg
+                      className={`w-3.5 h-3.5 transition-transform duration-300 ${
+                        isExpanded ? "rotate-180 text-[#1377a4]" : "text-slate-400 group-hover:translate-x-0.5"
+                      }`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      strokeWidth="2.5"
+                    >
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
                   </button>
                 </div>
               </div>
