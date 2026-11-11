@@ -286,14 +286,6 @@ export default function PillarsSection() {
     },
   ];
 
-  const pillarEmojis: Record<string, string> = {
-    investments: "💰",
-    policy: "📋",
-    technology: "💡",
-    markets: "🌍",
-    capacity: "🎓",
-  };
-
   return (
     <section id="pillars" className="py-16 sm:py-20 bg-gradient-to-b from-white via-gray-50 to-white border-t border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -320,10 +312,6 @@ export default function PillarsSection() {
                 style={{ borderLeftColor: pillar.accentColor }}
               >
                 <div>
-                  {/* Emoji icon above badge/number row */}
-                  <span className="text-2xl sm:text-3xl block mb-2" aria-hidden="true">
-                    {pillarEmojis[pillar.id]}
-                  </span>
                   <div className="flex items-center justify-between mb-3">
                     <span
                       className={`inline-block px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-wider ${pillar.bgColor} ${pillar.color}`}
