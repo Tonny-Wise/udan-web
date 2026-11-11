@@ -31,8 +31,9 @@ const config: Config = {
         "udan-light": "#f7f8fc",
       },
       fontFamily: {
-        heading: ["Cormorant Garamond", "Georgia", "serif"],
-        body: ["Mulish", "system-ui", "sans-serif"],
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        heading: ["var(--font-inter)", "system-ui", "sans-serif"],
+        body: ["var(--font-inter)", "system-ui", "sans-serif"],
       },
       spacing: {
         section: "6rem",

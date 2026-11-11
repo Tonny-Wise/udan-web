@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
 
 const SITE_URL = "https://udandiaspora.org";
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
@@ -76,7 +83,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-scroll-behavior="smooth">
-      <body className="antialiased">
+      <body className={`${inter.variable} antialiased font-sans`}>
         <Navbar />
         <main id="main-content">
           {children}
