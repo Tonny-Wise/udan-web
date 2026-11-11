@@ -15,7 +15,7 @@ export default function Hero() {
           className="object-cover object-center"
         />
         {/* Neutral dark contrast overlay - no blue tint */}
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-black/40" />
       </div>
 
       {/* Hero Content Container */}
