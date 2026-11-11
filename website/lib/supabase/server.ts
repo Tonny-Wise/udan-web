@@ -28,7 +28,7 @@ export async function createClient() {
 }
 
 // Service-role client for server-side reads that need to bypass RLS
-// Safe to use here — never exposed to the browser
+// Safe to use here - never exposed to the browser
 export function createServiceRoleClient() {
   return createServiceClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

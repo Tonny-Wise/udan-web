@@ -14,7 +14,7 @@ const STORAGE_BASE = "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object
 interface TransformOptions {
   width?: number;
   height?: number;
-  quality?: number; // 1–100, default 80
+  quality?: number; // 1-100, default 80
   resize?: "cover" | "contain" | "fill";
   format?: "origin" | "avif" | "webp";
 }
