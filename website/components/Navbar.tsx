@@ -206,10 +206,10 @@ export default function Navbar() {
             {/* Account / Portal CTA */}
             <Link
               href="/account"
-              className="hidden sm:inline-flex items-center gap-1 bg-[#63b849] hover:bg-[#4f9738] text-white px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full font-body text-[9.5px] sm:text-[10px] font-bold uppercase tracking-wider transition-all shadow-xs hover:shadow"
+              className="hidden sm:inline-flex items-center gap-1.5 bg-[#63b849] hover:bg-white text-white hover:text-[#63b849] border-2 border-[#63b849] px-3 py-1 sm:px-3.5 sm:py-1 rounded-full font-body text-[9.5px] sm:text-[10px] font-bold uppercase tracking-wider transition-all duration-300 shadow-sm hover:shadow-[0_0_16px_rgba(99,184,73,0.65)] hover:-translate-y-0.5 group"
             >
               <span>Join UDAN</span>
-              <span aria-hidden="true">&rarr;</span>
+              <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-0.5">&rarr;</span>
             </Link>
 
             {/* Mobile Hamburger Toggle Button */}
@@ -291,7 +291,7 @@ export default function Navbar() {
               <Link
                 href="/account"
                 onClick={() => setMobileOpen(false)}
-                className="w-full text-center bg-[#63b849] hover:bg-[#4f9738] text-white py-2 rounded-full font-body font-bold text-[11px] uppercase tracking-wider shadow-xs"
+                className="w-full text-center bg-[#63b849] hover:bg-white text-white hover:text-[#63b849] border-2 border-[#63b849] py-2 rounded-full font-body font-bold text-[11px] uppercase tracking-wider transition-all duration-300 shadow-xs hover:shadow-[0_0_16px_rgba(99,184,73,0.65)]"
               >
                 Join UDAN Network / Sign In
               </Link>

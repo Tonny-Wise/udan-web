@@ -24,13 +24,10 @@ interface PillarDetail {
 
 export default function PillarsSection() {
   // Track expanded state for each pillar card (in-place Learn More / Learn Less)
-  const [expandedPillars, setExpandedPillars] = useState<Record<string, boolean>>({});
+  const [expandedPillar, setExpandedPillar] = useState<string | null>(null);
 
   const togglePillar = (id: string) => {
-    setExpandedPillars((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+    setExpandedPillar((prev) => (prev === id ? null : id));
   };
 
   /*
@@ -342,7 +339,7 @@ export default function PillarsSection() {
         {/* 5 Cards Grid with items-start for smooth in-place expansion */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5 items-start animate-fadeIn">
           {pillars.map((pillar) => {
-            const isExpanded = !!expandedPillars[pillar.id];
+            const isExpanded = expandedPillar === pillar.id;
 
             return (
               <div
