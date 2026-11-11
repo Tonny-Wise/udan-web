@@ -55,6 +55,7 @@ interface NewsItem {
   readTime: string;
   paragraphs: string[];
   keyTakeaways: string[];
+  is_featured: boolean;
 }
 
 interface Event {
@@ -112,6 +113,9 @@ export default function AdminPortal() {
   });
   const [newsImageFile, setNewsImageFile] = useState<File | null>(null);
   const [newsUploading, setNewsUploading] = useState(false);
+  // Edit state
+  const [editingNewsId, setEditingNewsId] = useState<string | null>(null);
+  const [editNews, setEditNews] = useState<{ title: string; excerpt: string; category: string; author: string; authorRole: string; readTime: string; paragraphs: string; keyTakeaways: string } | null>(null);
 
   // Events state: loaded from Supabase
   const [events, setEvents] = useState<Event[]>([]);
@@ -279,6 +283,7 @@ export default function AdminPortal() {
             readTime: parsed.readTime ?? "",
             paragraphs: Array.isArray(parsed.paragraphs) ? parsed.paragraphs : [],
             keyTakeaways: Array.isArray(parsed.keyTakeaways) ? parsed.keyTakeaways : [],
+            is_featured: parsed.is_featured ?? false,
           };
         })
       );
@@ -659,7 +664,6 @@ export default function AdminPortal() {
     setNewsError(null);
     try {
       const supabase = await getSupabase();
-      // Get current article content
       const { data: current, error: fetchError } = await supabase
         .from("news_articles")
         .select("content")
@@ -669,7 +673,6 @@ export default function AdminPortal() {
         setNewsError("Failed to fetch article: " + fetchError?.message);
         return;
       }
-      // Parse and update is_featured, unset all others
       let parsed: Record<string, unknown> = {};
       try { parsed = JSON.parse(current.content); } catch { /* ignore */ }
       parsed.is_featured = true;
@@ -688,7 +691,6 @@ export default function AdminPortal() {
         }
       }
 
-      // Set this one as featured
       const { error } = await supabase
         .from("news_articles")
         .update({ content: JSON.stringify(parsed) })
@@ -700,6 +702,36 @@ export default function AdminPortal() {
       await fetchNews();
     } catch (err: any) {
       setNewsError("Unexpected error setting featured: " + (err?.message ?? String(err)));
+    }
+  };
+
+  const unsetFeaturedNews = async (id: string) => {
+    setNewsError(null);
+    try {
+      const supabase = await getSupabase();
+      const { data: current, error: fetchError } = await supabase
+        .from("news_articles")
+        .select("content")
+        .eq("id", id)
+        .single();
+      if (fetchError || !current) {
+        setNewsError("Failed to fetch article: " + fetchError?.message);
+        return;
+      }
+      let parsed: Record<string, unknown> = {};
+      try { parsed = JSON.parse(current.content); } catch { /* ignore */ }
+      parsed.is_featured = false;
+      const { error } = await supabase
+        .from("news_articles")
+        .update({ content: JSON.stringify(parsed) })
+        .eq("id", id);
+      if (error) {
+        setNewsError("Failed to unset featured: " + error.message);
+        return;
+      }
+      await fetchNews();
+    } catch (err: any) {
+      setNewsError("Unexpected error unsetting featured: " + (err?.message ?? String(err)));
     }
   };
 
@@ -715,6 +747,38 @@ export default function AdminPortal() {
       await fetchNews();
     } catch (err: any) {
       setNewsError("Unexpected error deleting article: " + (err?.message ?? String(err)));
+    }
+  };
+
+  const saveEditNews = async (id: string) => {
+    if (!editNews) return;
+    setNewsError(null);
+    try {
+      const supabase = await getSupabase();
+      const { data: current } = await supabase.from("news_articles").select("content").eq("id", id).single();
+      let parsed: Record<string, unknown> = {};
+      try { if (current?.content) parsed = JSON.parse(current.content); } catch { /* ignore */ }
+
+      parsed.category = editNews.category;
+      parsed.author = editNews.author;
+      parsed.authorRole = editNews.authorRole;
+      parsed.readTime = editNews.readTime || "3 min read";
+      parsed.paragraphs = editNews.paragraphs.split("\n").map((s: string) => s.trim()).filter(Boolean);
+      parsed.keyTakeaways = editNews.keyTakeaways.split("\n").map((s: string) => s.trim()).filter(Boolean);
+      parsed.excerpt = editNews.excerpt;
+
+      const { error } = await supabase.from("news_articles").update({
+        title: editNews.title,
+        excerpt: editNews.excerpt || null,
+        content: JSON.stringify(parsed),
+      }).eq("id", id);
+
+      if (error) { setNewsError("Failed to save: " + error.message); return; }
+      setEditingNewsId(null);
+      setEditNews(null);
+      await fetchNews();
+    } catch (err: any) {
+      setNewsError("Unexpected error saving: " + (err?.message ?? String(err)));
     }
   };
 
@@ -1224,89 +1288,113 @@ export default function AdminPortal() {
                 </div>
               </div>
 
-              {/* Static (hardcoded) articles: always visible, read-only */}
-              <div className="bg-white rounded-xl p-5 shadow-sm">
-                <div className="flex items-center gap-2 mb-4">
-                  <h3 className="text-sm font-semibold text-[#0f172a]">Current Articles</h3>
-                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-[#64748b] font-medium">Built-in: visible on website</span>
-                </div>
-                <div className="space-y-3">
-                  {[
-                    { slug: "climate-action-awards-winners-2025", title: "Celebrating the 2025 Diaspora in Agribusiness for Climate Action Awards", category: "Awards & Events", date: "2025-12-20", author: "UDAN Secretariat", image: "/images/AF6A6131.JPG" },
-                    { slug: "sunland-hass-farm-kyegegwa", title: "Winner Spotlight: How Jasper Batureine Built a 1,750-Tree Climate-Smart Agroforestry Model", category: "Success Stories", date: "2025-12-19", author: "Andrew Bamugye", image: "/images/AF6A6742.JPG" },
-                    { slug: "un-fao-uganda-diaspora-collaboration", title: "UN-FAO and Government of Uganda Collaborate to Promote Diaspora Investments", category: "Policy & Partnerships", date: "2025-11-15", author: "Edward Tanyiima", image: "/images/AF6A6287.JPG" },
-                    { slug: "youth-matchmaking-call-for-applications-2025", title: "Call for Applications: 2025 Diaspora Youth Matchmaking Programme Officially Open", category: "Programs & Grants", date: "2025-10-01", author: "UDAN Youth Desk", image: "/images/AF6A6520.JPG" },
-                  ].map((a) => (
-                    <div key={a.slug} className="flex items-center gap-3 p-3 rounded-lg bg-slate-50 border border-slate-100">
-                      <img src={`http://localhost:3000${a.image}`} alt={a.title} className="w-14 h-14 object-cover rounded-lg flex-shrink-0" />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-0.5 flex-wrap">
-                          <span className="inline-flex px-2 py-0.5 rounded-full text-[10px] font-semibold bg-green-50 text-green-700">published</span>
-                          <span className="inline-flex px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-50 text-blue-700">{a.category}</span>
-                        </div>
-                        <p className="text-xs font-semibold text-[#0f172a] truncate">{a.title}</p>
-                        <p className="text-[11px] text-[#94a3b8] font-mono">/blog/{a.slug}</p>
-                        <p className="text-[11px] text-[#94a3b8]">By {a.author} · {a.date}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* DB articles */}
+              {/* DB articles: editable, deletable, featurable */}
               {news.length > 0 && (
                 <div className="bg-white rounded-xl p-5 shadow-sm">
-                  <h3 className="text-sm font-semibold text-[#0f172a] mb-4">Articles from Database</h3>
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  <h3 className="text-sm font-semibold text-[#0f172a] mb-4">All Articles ({news.length})</h3>
+                  <div className="space-y-4">
                     {news.map((article) => (
                       <div key={article.id} className="border border-slate-100 rounded-xl p-4">
-                        <div className="flex items-start justify-between mb-3">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-semibold ${article.status === "published" ? "bg-green-50 text-green-700" : "bg-yellow-50 text-yellow-700"}`}>
-                              {article.status}
-                            </span>
-                            {article.category && (
-                              <span className="inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700">
-                                {article.category}
-                              </span>
-                            )}
+                        {editingNewsId === article.id && editNews ? (
+                          /* ── EDIT MODE ── */
+                          <div className="space-y-3">
+                            <input value={editNews.title} onChange={(e) => setEditNews({ ...editNews, title: e.target.value })}
+                              className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm outline-none focus:border-[#22c55e]" placeholder="Title" />
+                            <div className="grid grid-cols-2 gap-2">
+                              <input value={editNews.category} onChange={(e) => setEditNews({ ...editNews, category: e.target.value })}
+                                className="px-3 py-2 border border-slate-200 rounded-lg text-sm outline-none focus:border-[#22c55e]" placeholder="Category" />
+                              <input value={editNews.author} onChange={(e) => setEditNews({ ...editNews, author: e.target.value })}
+                                className="px-3 py-2 border border-slate-200 rounded-lg text-sm outline-none focus:border-[#22c55e]" placeholder="Author" />
+                              <input value={editNews.authorRole} onChange={(e) => setEditNews({ ...editNews, authorRole: e.target.value })}
+                                className="px-3 py-2 border border-slate-200 rounded-lg text-sm outline-none focus:border-[#22c55e]" placeholder="Author Role" />
+                              <input value={editNews.readTime} onChange={(e) => setEditNews({ ...editNews, readTime: e.target.value })}
+                                className="px-3 py-2 border border-slate-200 rounded-lg text-sm outline-none focus:border-[#22c55e]" placeholder="Read time (e.g. 5 min read)" />
+                            </div>
+                            <textarea value={editNews.excerpt} onChange={(e) => setEditNews({ ...editNews, excerpt: e.target.value })}
+                              rows={2} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm outline-none focus:border-[#22c55e] resize-none" placeholder="Excerpt" />
+                            <textarea value={editNews.paragraphs} onChange={(e) => setEditNews({ ...editNews, paragraphs: e.target.value })}
+                              rows={6} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm outline-none focus:border-[#22c55e] resize-y font-mono" placeholder="Article body (one paragraph per line)" />
+                            <textarea value={editNews.keyTakeaways} onChange={(e) => setEditNews({ ...editNews, keyTakeaways: e.target.value })}
+                              rows={3} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm outline-none focus:border-[#22c55e] resize-y font-mono" placeholder="Key takeaways (one per line)" />
+                            <div className="flex gap-2">
+                              <button onClick={() => saveEditNews(article.id)}
+                                className="flex-1 py-2 bg-[#22c55e] text-white text-sm font-semibold rounded-lg hover:bg-green-600 transition-colors">
+                                Save Changes
+                              </button>
+                              <button onClick={() => { setEditingNewsId(null); setEditNews(null); }}
+                                className="px-4 py-2 border border-slate-200 text-sm font-semibold rounded-lg hover:bg-slate-50 transition-colors">
+                                Cancel
+                              </button>
+                            </div>
                           </div>
-                          <span className="text-xs text-[#94a3b8]">{article.created_at?.split("T")[0] ?? ""}</span>
-                        </div>
-                        <h4 className="font-semibold text-[#0f172a] mb-1 text-sm">{article.title}</h4>
-                        {article.slug && (
-                          <p className="text-[11px] text-[#94a3b8] font-mono mb-2">/blog/{article.slug}</p>
+                        ) : (
+                          /* ── VIEW MODE ── */
+                          <>
+                            <div className="flex items-start justify-between mb-2 gap-2">
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-semibold ${article.status === "published" ? "bg-green-50 text-green-700" : "bg-yellow-50 text-yellow-700"}`}>
+                                  {article.status}
+                                </span>
+                                {article.is_featured && (
+                                  <span className="inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-yellow-50 text-yellow-700">★ Featured</span>
+                                )}
+                                {article.category && (
+                                  <span className="inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700">{article.category}</span>
+                                )}
+                              </div>
+                              <span className="text-xs text-[#94a3b8] shrink-0">{article.created_at?.split("T")[0] ?? ""}</span>
+                            </div>
+                            {article.image_url && (
+                              <img src={article.image_url} alt={article.title} className="w-full h-32 object-cover rounded-lg mb-3" />
+                            )}
+                            <h4 className="font-semibold text-[#0f172a] mb-1 text-sm">{article.title}</h4>
+                            {article.slug && <p className="text-[11px] text-[#94a3b8] font-mono mb-1">/blog/{article.slug}</p>}
+                            {article.excerpt && <p className="text-xs text-[#64748b] line-clamp-2 mb-2">{article.excerpt}</p>}
+                            <div className="flex items-center gap-2 text-[11px] text-[#94a3b8] mb-3 flex-wrap">
+                              {article.author && <span>By {article.author}{article.authorRole ? ` · ${article.authorRole}` : ""}</span>}
+                              {article.readTime && <span>· {article.readTime}</span>}
+                            </div>
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <button onClick={() => {
+                                setEditingNewsId(article.id);
+                                setEditNews({
+                                  title: article.title,
+                                  excerpt: article.excerpt,
+                                  category: article.category,
+                                  author: article.author,
+                                  authorRole: article.authorRole,
+                                  readTime: article.readTime,
+                                  paragraphs: article.paragraphs.join("\n"),
+                                  keyTakeaways: article.keyTakeaways.join("\n"),
+                                });
+                              }} className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-300 text-[#0f172a] hover:bg-slate-50 transition-colors">
+                                Edit
+                              </button>
+                              {article.status !== "published" && (
+                                <button onClick={() => publishNews(article.id)}
+                                  className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-[#22c55e] text-[#22c55e] hover:bg-[#22c55e] hover:text-white transition-colors">
+                                  Publish
+                                </button>
+                              )}
+                              {article.status === "published" && !article.is_featured && (
+                                <button onClick={() => setFeaturedNews(article.id)}
+                                  className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-[#c6ac62] text-[#c6ac62] hover:bg-[#c6ac62] hover:text-white transition-colors">
+                                  Set Featured
+                                </button>
+                              )}
+                              {article.status === "published" && article.is_featured && (
+                                <button onClick={() => unsetFeaturedNews(article.id)}
+                                  className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-400 text-slate-500 hover:bg-slate-100 transition-colors">
+                                  ★ Unfeature
+                                </button>
+                              )}
+                              <button onClick={() => deleteNews(article.id)}
+                                className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-red-300 text-red-500 hover:bg-red-500 hover:text-white transition-colors">
+                                Delete
+                              </button>
+                            </div>
+                          </>
                         )}
-                        {article.excerpt && (
-                          <p className="text-xs text-[#64748b] line-clamp-2 mb-2">{article.excerpt}</p>
-                        )}
-                        <div className="flex items-center gap-3 text-[11px] text-[#94a3b8] mb-3 flex-wrap">
-                          {article.author && <span>By {article.author}{article.authorRole ? ` · ${article.authorRole}` : ""}</span>}
-                          {article.readTime && <span>· {article.readTime}</span>}
-                          {article.paragraphs.length > 0 && <span>· {article.paragraphs.length} para</span>}
-                          {article.keyTakeaways.length > 0 && <span>· {article.keyTakeaways.length} takeaways</span>}
-                        </div>
-                        {article.image_url && (
-                          <img src={article.image_url.startsWith("/") ? `http://localhost:3000${article.image_url}` : article.image_url} alt={article.title} className="w-full h-28 object-cover rounded-lg mb-3" />
-                        )}
-                        <div className="flex items-center gap-2 flex-wrap">
-                          {article.status !== "published" && (
-                            <button onClick={() => publishNews(article.id)}
-                              className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-[#22c55e] text-[#22c55e] hover:bg-[#22c55e] hover:text-white transition-colors">
-                              Publish
-                            </button>
-                          )}
-                          {article.status === "published" && (
-                            <button onClick={() => setFeaturedNews(article.id)}
-                              className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-[#c6ac62] text-[#c6ac62] hover:bg-[#c6ac62] hover:text-white transition-colors">
-                              {article.keyTakeaways.length > 0 ? "★ Set Featured" : "Set Featured"}
-                            </button>
-                          )}
-                          <button onClick={() => deleteNews(article.id)}
-                            className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-red-300 text-red-500 hover:bg-red-500 hover:text-white transition-colors">
-                            Delete
-                          </button>
-                        </div>
                       </div>
                     ))}
                   </div>

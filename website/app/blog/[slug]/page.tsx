@@ -111,7 +111,7 @@ function parseDbArticle(row: Record<string, unknown>): PostData | null {
       try {
         parsed = JSON.parse(row.content);
       } catch {
-        // Plain text content — treat as single paragraph
+        // Plain text content: treat as single paragraph
         parsed = { paragraphs: [row.content as string] };
       }
     }
@@ -140,11 +140,11 @@ export default async function BlogPostPage({
 
   let post: PostData | null = null;
 
-  // 1. Try to fetch from Supabase first
+  // Fetch from Supabase
   try {
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     );
     const { data } = await supabase
       .from("news_articles")
@@ -156,17 +156,15 @@ export default async function BlogPostPage({
       post = parseDbArticle(data as Record<string, unknown>);
     }
   } catch {
-    // Supabase unavailable — fall through to static data
+    // fall through
   }
 
-  // 2. Fall back to static hardcoded articles
+  // Fall back to static hardcoded articles if not in DB
   if (!post) {
     post = articlesDatabase[slug] ?? null;
   }
 
-  if (!post) {
-    notFound();
-  }
+  if (!post) notFound();
 
   return (
     <article className="bg-white font-body">
