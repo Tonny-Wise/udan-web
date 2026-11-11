@@ -46,7 +46,7 @@ export default function MembershipPage() {
       const data = await res.json();
       if (res.ok && data.success) {
         setStatus("success");
-        setFeedbackMsg("Your membership application has been submitted successfully! Check your email for confirmation.");
+        setFeedbackMsg("Your membership application has been submitted successfully!");
         setFormData({
           name: "",
           email: "",
