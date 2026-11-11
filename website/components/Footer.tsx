@@ -140,24 +140,24 @@ export default function Footer() {
               </h4>
               <ul className="space-y-2.5 text-[12px] text-gray-300">
                 <li className="flex items-start gap-2.5">
-                  <Image src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/location.png" alt="Location" width={16} height={16} className="w-4 h-4 object-contain mt-0.5 flex-none" />
+                  <Image src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/location.png" alt="Location" width={20} height={20} className="w-5 h-5 object-contain mt-0.5 flex-none" />
                   <span><strong>Location:</strong> Kampala, Uganda</span>
                 </li>
                 <li className="flex items-start gap-2.5">
-                  <svg className="w-4 h-4 text-[#63b849] mt-0.5 flex-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                  <svg className="w-5 h-5 text-[#63b849] mt-0.5 flex-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                     <circle cx="12" cy="12" r="10" />
                     <path strokeLinecap="round" strokeLinejoin="round" d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                   </svg>
                   <span><strong>Chapters:</strong> East Africa, Europe, North America, Middle East, Asia</span>
                 </li>
                 <li className="flex items-start gap-2.5">
-                  <Image src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/gmail.png" alt="Email" width={16} height={16} className="w-4 h-4 object-contain mt-0.5 flex-none" />
+                  <Image src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/gmail.png" alt="Email" width={20} height={20} className="w-5 h-5 object-contain mt-0.5 flex-none" />
                   <a href="mailto:info@udandiaspora.org" className="hover:text-[#63b849] transition-colors">
                     info@udandiaspora.org
                   </a>
                 </li>
                 <li className="flex items-start gap-2.5">
-                  <Image src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/phone.png" alt="Phone" width={16} height={16} className="w-4 h-4 object-contain mt-0.5 flex-none" />
+                  <Image src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/phone.png" alt="Phone" width={20} height={20} className="w-5 h-5 object-contain mt-0.5 flex-none" />
                   <span>
                     <a href="tel:+256781978239" className="hover:text-[#63b849] transition-colors">+256 781 978 239</a>
                     {" / "}

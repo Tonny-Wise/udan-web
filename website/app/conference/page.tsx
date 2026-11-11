@@ -5,6 +5,8 @@ import type { GalleryCategory } from "@/components/ConferenceGallery";
 import AwardWinnerModal from "@/components/AwardWinnerModal";
 import { createServiceRoleClient } from "@/lib/supabase/server";
 
+export const revalidate = 30; // refresh gallery every 30 seconds
+
 export const metadata = {
   title: "The Annual Diaspora in Agribusiness Conference | UDAN Diaspora",
   description:
@@ -131,7 +133,7 @@ export default async function ConferencePage() {
             })
           ),
         };
-      });
+      }).filter((cat) => cat.images.length > 0);
     }
   } catch {
     // Fall back to static data on error
