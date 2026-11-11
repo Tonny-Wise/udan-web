@@ -286,38 +286,51 @@ export default function PillarsSection() {
     },
   ];
 
+  const pillarEmojis: Record<string, string> = {
+    investments: "💰",
+    policy: "📋",
+    technology: "💡",
+    markets: "🌍",
+    capacity: "🎓",
+  };
+
   return (
-    <section id="pillars" className="py-16 sm:py-20 bg-gray-50 border-t border-b border-gray-100">
+    <section id="pillars" className="py-16 sm:py-20 bg-gradient-to-b from-white via-gray-50 to-white border-t border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl text-[#1b2238] tracking-tight mb-3">
+          <h2 className="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl text-[#1b2238] tracking-tight mb-3 animate-fadeIn">
             Five Strategic Pillars of Agribusiness Transformation
           </h2>
-          <p className="font-body text-gray-600 text-xs sm:text-sm leading-relaxed">
+          <p className="font-body text-gray-600 text-sm sm:text-base leading-relaxed">
             UDAN operates through five mutually reinforcing pillars designed to align diaspora capital, expertise, and networks with national development priorities.
           </p>
         </div>
 
         {/* 5 Cards Grid with items-start for smooth in-place expansion */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5 items-start animate-fadeIn">
           {pillars.map((pillar) => {
             const isExpanded = !!expandedPillars[pillar.id];
 
             return (
               <div
                 key={pillar.id}
-                className={`bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-all duration-300 border ${
+                className={`bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 border border-l-4 ${
                   isExpanded ? "border-[#1377a4] ring-1 ring-[#1377a4]/30" : "border-gray-100"
                 } flex flex-col justify-between group`}
+                style={{ borderLeftColor: pillar.accentColor }}
               >
                 <div>
+                  {/* Emoji icon above badge/number row */}
+                  <span className="text-2xl sm:text-3xl block mb-2" aria-hidden="true">
+                    {pillarEmojis[pillar.id]}
+                  </span>
                   <div className="flex items-center justify-between mb-3">
                     <span
                       className={`inline-block px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-wider ${pillar.bgColor} ${pillar.color}`}
                     >
                       {pillar.badge}
                     </span>
-                    <span className="font-heading text-lg font-bold text-gray-400 group-hover:text-[#1377a4] transition-colors">
+                    <span className="font-heading text-2xl font-black text-gray-400 group-hover:text-[#1377a4] transition-colors">
                       {pillar.number}
                     </span>
                   </div>

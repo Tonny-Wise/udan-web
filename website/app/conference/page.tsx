@@ -289,7 +289,7 @@ export default async function ConferencePage() {
         </div>
 
         <div className="max-w-7xl mx-auto relative z-10 text-center">
-          <h1 className="font-heading font-bold text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight mb-4 drop-shadow-md">
+          <h1 className="font-heading font-bold text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight mb-4 drop-shadow-md">
             The Annual Diaspora in Agribusiness Conference
           </h1>
           <p className="text-gray-200 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed drop-shadow">

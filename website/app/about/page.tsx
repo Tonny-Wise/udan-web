@@ -89,9 +89,9 @@ export default function AboutPage() {
   return (
     <div className="bg-white font-body">
       {/* Page Header Banner */}
-      <section className="bg-[#131c33] text-white py-16 sm:py-24 lg:py-32 px-4 sm:px-6 relative overflow-hidden">
+      <section className="bg-gradient-to-br from-[#1b2238] via-[#131c33] to-[#0e1a2e] text-white py-16 sm:py-24 lg:py-32 px-4 sm:px-6 relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10 text-center">
-          <h1 className="font-heading font-bold text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight mb-4">
+          <h1 className="font-heading font-bold text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight mb-4">
             About UDAN
           </h1>
           <p className="text-gray-300 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">

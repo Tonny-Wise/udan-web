@@ -29,14 +29,14 @@ export default function EndorsementsSection() {
   ];
 
   return (
-    <section id="endorsements" className="py-16 sm:py-20 bg-white border-b border-gray-100">
+    <section id="endorsements" className="py-16 sm:py-20 bg-[#131c33] border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <h2 className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl text-[#1b2238] tracking-tight mb-3">
+          <h2 className="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight mb-3 animate-fadeIn">
             Endorsements
           </h2>
-          <p className="font-body text-gray-600 text-xs sm:text-sm leading-relaxed">
+          <p className="font-body text-gray-300 text-xs sm:text-sm leading-relaxed">
             High-level messages and perspectives from strategic partners championing diaspora investment in Uganda&apos;s agricultural sector.
           </p>
         </div>
@@ -46,7 +46,7 @@ export default function EndorsementsSection() {
           {endorsements.map((item, idx) => (
             <div
               key={idx}
-              className="bg-[#fafbfc] rounded-2xl p-6 sm:p-7 border border-gray-200/80 shadow-sm hover:shadow-md transition-all flex flex-col justify-between relative group hover:border-[#c6ac62]/50"
+              className="bg-[#1b2a44] rounded-2xl p-6 sm:p-7 border border-white/10 shadow-sm hover:shadow-md transition-all flex flex-col justify-between relative group hover:border-[#c6ac62]/50"
             >
               {/* Decorative quotation mark */}
               <div className="absolute top-5 right-6 text-4xl text-[#c6ac62]/20 font-serif select-none pointer-events-none group-hover:text-[#c6ac62]/40 transition-colors">
@@ -54,12 +54,12 @@ export default function EndorsementsSection() {
               </div>
 
               {/* Quote Body */}
-              <p className="font-body italic text-[13px] sm:text-sm text-gray-700 leading-relaxed mb-6 relative z-10">
+              <p className="font-body italic text-sm sm:text-base text-gray-200 leading-relaxed mb-6 relative z-10">
                 &ldquo;{item.quote}&rdquo;
               </p>
 
               {/* Author / Endorser Info */}
-              <div className="pt-4 border-t border-gray-200/60 flex items-center gap-3.5 relative z-10">
+              <div className="pt-4 border-b border-white/10 flex items-center gap-3.5 relative z-10 pb-4">
                 <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-[#c6ac62] shrink-0 shadow-sm">
                   <Image
                     src={item.image}
@@ -70,13 +70,13 @@ export default function EndorsementsSection() {
                   />
                 </div>
                 <div>
-                  <h4 className="font-heading font-bold text-sm sm:text-base text-[#1b2238] leading-snug">
+                  <h4 className="font-heading font-bold text-sm sm:text-base text-white leading-snug">
                     {item.from}
                   </h4>
-                  <p className="text-[11.5px] text-[#1377a4] font-medium leading-tight mt-0.5">
+                  <p className="text-[11.5px] text-[#63b849] font-medium leading-tight mt-0.5">
                     {item.role}
                   </p>
-                  <p className="text-[10.5px] text-gray-500 font-medium">
+                  <p className="text-[10.5px] text-gray-400 font-medium">
                     {item.org}
                   </p>
                 </div>
