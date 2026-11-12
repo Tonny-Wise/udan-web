@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { contactAdminEmail } from "@/lib/emailTemplate";
 
 export async function POST(req: NextRequest) {
   try {
@@ -25,16 +26,15 @@ export async function POST(req: NextRequest) {
         const resend = new Resend(process.env.RESEND_API_KEY);
         await resend.emails.send({
           from: process.env.RESEND_FROM_EMAIL ?? "noreply@udandiaspora.org",
-          to: process.env.RESEND_TO_EMAIL ?? "contact@udandiaspora.org",
-          subject: `Contact Form: ${subject ?? "(no subject)"}`,
-          html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Message:</strong><br/>${message.replace(/\n/g, "<br>")}</p>`,
+          to: process.env.RESEND_TO_EMAIL ?? "info@udandiaspora.org",
           reply_to: email,
+          subject: `Contact Form: ${subject ?? "(no subject)"} - from ${name}`,
+          html: contactAdminEmail({ name, email, subject, message }),
         });
       } catch (emailErr) {
         console.error("Contact email failed:", emailErr);
       }
     } else {
-      // Log the contact message if email is not configured
       console.log(`Contact form submission from ${name} <${email}>: ${message}`);
     }
 

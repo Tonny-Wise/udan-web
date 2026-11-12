@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { membershipAdminEmail, membershipConfirmEmail } from "@/lib/emailTemplate";
 
 export async function POST(req: NextRequest) {
   try {
@@ -61,58 +62,39 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Send emails only if Resend API key is configured
+    // Send emails if Resend is configured
     if (process.env.RESEND_API_KEY) {
       try {
         const { Resend } = await import("resend");
         const resend = new Resend(process.env.RESEND_API_KEY);
-        const roleLabel =
-          registrationType === "buyer"
-            ? "Buyer"
-            : registrationType === "seller"
-            ? "Seller"
-            : registrationType || "Member";
 
+        const roleLabel =
+          registrationType === "buyer" ? "Buyer"
+          : registrationType === "seller" ? "Seller"
+          : registrationType || "Member";
+
+        const emailData = {
+          name, email, phone, gender, region, country,
+          occupation, company, agriInterests, membershipType,
+          registrationType, roleLabel,
+        };
+
+        // Confirmation to applicant
         await resend.emails.send({
           from: process.env.RESEND_FROM_EMAIL ?? "noreply@udandiaspora.org",
           to: email,
-          subject: `Welcome to UDAN Diaspora - Registered as ${roleLabel}!`,
-          html: `
-            <h2>Welcome, ${name}!</h2>
-            <p>Thank you for registering with UDAN Diaspora as a <strong>${roleLabel}</strong>.</p>
-            <p><strong>Registration Details:</strong></p>
-            <ul>
-              <li>Role: ${roleLabel}</li>
-              <li>Email: ${email}</li>
-              <li>Membership Type: ${membershipType}</li>
-              <li>Primary Interest: ${agriInterests}</li>
-            </ul>
-            <p>Your registration is pending approval. We will contact you shortly to confirm your membership status.</p>
-            <p>Best regards,<br/>UDAN Diaspora Team</p>
-          `,
+          subject: `Welcome to UDAN - Registered as ${roleLabel}`,
+          html: membershipConfirmEmail(emailData),
         });
 
+        // Admin notification
         await resend.emails.send({
           from: process.env.RESEND_FROM_EMAIL ?? "noreply@udandiaspora.org",
-          to: process.env.RESEND_TO_EMAIL ?? "contact@udandiaspora.org",
+          to: process.env.RESEND_TO_EMAIL ?? "info@udandiaspora.org",
           subject: `New Registration: ${name} (${roleLabel})`,
-          html: `
-            <h3>New Member Registration</h3>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
-            <p><strong>Registration Type:</strong> ${roleLabel}</p>
-            <p><strong>Gender:</strong> ${gender}</p>
-            <p><strong>Region:</strong> ${region}</p>
-            <p><strong>Country:</strong> ${country}</p>
-            <p><strong>Occupation:</strong> ${occupation || "Not provided"}</p>
-            <p><strong>Company:</strong> ${company || "Not provided"}</p>
-            <p><strong>Agribusiness Interests:</strong> ${agriInterests}</p>
-            <p><strong>Membership Type:</strong> ${membershipType}</p>
-          `,
+          html: membershipAdminEmail(emailData),
         });
       } catch (emailErr) {
-        // Log email failure but don't fail the registration
         console.error("Email sending failed (registration still saved):", emailErr);
       }
     }
