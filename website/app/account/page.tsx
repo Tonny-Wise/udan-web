@@ -136,8 +136,8 @@ export default function AccountPage() {
               {regMessage}
             </p>
             <p className="text-xs text-gray-600 mb-8">
-              An email confirmation has been sent to <span className="font-bold text-[#1b2238]">{regData.email}</span>. 
-              Please check your inbox for next steps and member portal access.
+              An email confirmation will be sent to <span className="font-bold text-[#1b2238]">{regData.email}</span>. 
+              Please check your inbox for next steps and B2B Business portal access.
             </p>
             <button
               onClick={() => {
