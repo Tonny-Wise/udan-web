@@ -370,8 +370,8 @@ export default async function ConferencePage() {
 
             <div className="lg:col-span-5 relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/5] bg-gray-100">
               <Image
-                src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/AF6A6131.JPG"
-                alt="Speke Resort Munyonyo Conference Hall"
+                src="/WhatsApp Image 2026-11-12 at 12.00.09.jpeg"
+                alt="Catalyzing Cross-Border Investment in Climate-Smart Agribusiness"
                 fill
                 sizes="(max-width: 1024px) 100vw, 40vw"
                 className="object-cover"

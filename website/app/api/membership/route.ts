@@ -21,6 +21,7 @@ export async function POST(req: NextRequest) {
       agriInterests,
       membershipType,
       registrationType,
+      isDiaspora,
     } = await req.json();
 
     if (!name || !email) {
@@ -76,7 +77,7 @@ export async function POST(req: NextRequest) {
         const emailData = {
           name, email, phone, gender, region, country,
           occupation, company, agriInterests, membershipType,
-          registrationType, roleLabel,
+          registrationType, roleLabel, isDiaspora,
         };
 
         // Confirmation to applicant

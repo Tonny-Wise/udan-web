@@ -116,6 +116,7 @@ export function membershipAdminEmail(data: {
   membershipType?: string;
   registrationType?: string;
   roleLabel: string;
+  isDiaspora?: string;
 }): string {
   const body = `
     ${heading("New Membership Registration")}
@@ -126,6 +127,7 @@ export function membershipAdminEmail(data: {
       row("Email", `<a href="mailto:${data.email}" style="color:#1377a4;">${data.email}</a>`),
       row("Phone", data.phone || "Not provided"),
       row("Role", data.roleLabel),
+      row("Diaspora Member", data.isDiaspora === "yes" ? "Yes" : data.isDiaspora === "no" ? "No (Based in Uganda)" : (data.isDiaspora || "Not specified")),
       row("Gender", data.gender || "Not provided"),
       row("Region", data.region || "Not provided"),
       row("Country", data.country || "Not provided"),
