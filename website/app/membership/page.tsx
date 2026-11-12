@@ -11,7 +11,7 @@ export default function MembershipPage() {
     phone: "",
     country: "United States",
     occupation: "",
-    category: "Ordinary Membership ($50/yr)",
+    category: "Ordinary Membership",
     interests: "Crop production",
     company: "",
     consent: false,
@@ -53,7 +53,7 @@ export default function MembershipPage() {
           phone: "",
           country: "United States",
           occupation: "",
-          category: "Ordinary Membership ($50/yr)",
+          category: "Ordinary Membership",
           interests: "Crop production",
           company: "",
           consent: false,
@@ -363,9 +363,9 @@ export default function MembershipPage() {
                       onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none focus:border-[#63b849]"
                     >
-                      <option>Ordinary Membership ($50/yr)</option>
-                      <option>Business Membership ($250/yr)</option>
-                      <option>Youth &amp; Student Membership ($25/yr)</option>
+                      <option>Ordinary Membership</option>
+                      <option>Business Membership</option>
+                      <option>Youth &amp; Student Membership</option>
                     </select>
                   </div>
                   <div>

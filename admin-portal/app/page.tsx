@@ -115,7 +115,8 @@ export default function AdminPortal() {
   const [newsUploading, setNewsUploading] = useState(false);
   // Edit state
   const [editingNewsId, setEditingNewsId] = useState<string | null>(null);
-  const [editNews, setEditNews] = useState<{ title: string; excerpt: string; category: string; author: string; authorRole: string; readTime: string; paragraphs: string; keyTakeaways: string } | null>(null);
+  const [editNews, setEditNews] = useState<{ title: string; excerpt: string; category: string; author: string; authorRole: string; readTime: string; paragraphs: string; keyTakeaways: string; imageUrl: string } | null>(null);
+  const [editNewsImageFile, setEditNewsImageFile] = useState<File | null>(null);
 
   // Events state: loaded from Supabase
   const [events, setEvents] = useState<Event[]>([]);
@@ -767,15 +768,33 @@ export default function AdminPortal() {
       parsed.keyTakeaways = editNews.keyTakeaways.split("\n").map((s: string) => s.trim()).filter(Boolean);
       parsed.excerpt = editNews.excerpt;
 
+      // Upload new image if one was selected
+      let finalImageUrl = editNews.imageUrl;
+      if (editNewsImageFile) {
+        const ext = editNewsImageFile.name.split(".").pop();
+        const fileName = `${editNews.title.toLowerCase().replace(/\s+/g, "-").slice(0, 40)}-${Date.now()}.${ext}`;
+        const { error: uploadError } = await supabase.storage
+          .from("news-photos")
+          .upload(fileName, editNewsImageFile, { cacheControl: "3600", upsert: false });
+        if (uploadError) {
+          setNewsError("Image upload failed: " + uploadError.message);
+          return;
+        }
+        const { data: urlData } = supabase.storage.from("news-photos").getPublicUrl(fileName);
+        finalImageUrl = urlData.publicUrl;
+      }
+
       const { error } = await supabase.from("news_articles").update({
         title: editNews.title,
         excerpt: editNews.excerpt || null,
+        image_url: finalImageUrl || null,
         content: JSON.stringify(parsed),
       }).eq("id", id);
 
       if (error) { setNewsError("Failed to save: " + error.message); return; }
       setEditingNewsId(null);
       setEditNews(null);
+      setEditNewsImageFile(null);
       await fetchNews();
     } catch (err: any) {
       setNewsError("Unexpected error saving: " + (err?.message ?? String(err)));
@@ -1316,12 +1335,32 @@ export default function AdminPortal() {
                               rows={6} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm outline-none focus:border-[#22c55e] resize-y font-mono" placeholder="Article body (one paragraph per line)" />
                             <textarea value={editNews.keyTakeaways} onChange={(e) => setEditNews({ ...editNews, keyTakeaways: e.target.value })}
                               rows={3} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm outline-none focus:border-[#22c55e] resize-y font-mono" placeholder="Key takeaways (one per line)" />
+                            {/* Cover image */}
+                            <div>
+                              <label className="block text-[11px] font-semibold text-[#64748b] uppercase tracking-wider mb-1">Cover Image</label>
+                              {editNews.imageUrl && !editNewsImageFile && (
+                                <div className="mb-2 relative">
+                                  <img src={editNews.imageUrl} alt="Current cover" className="w-full h-32 object-cover rounded-lg" />
+                                  <span className="absolute top-2 left-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded font-semibold">Current</span>
+                                </div>
+                              )}
+                              <input
+                                id="edit-news-file-input"
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => setEditNewsImageFile(e.target.files?.[0] ?? null)}
+                                className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm outline-none focus:border-[#22c55e] file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-[#22c55e]/10 file:text-[#22c55e] hover:file:bg-[#22c55e]/20"
+                              />
+                              {editNewsImageFile && (
+                                <p className="text-[11px] text-[#22c55e] mt-1 font-medium">New image: {editNewsImageFile.name}</p>
+                              )}
+                            </div>
                             <div className="flex gap-2">
                               <button onClick={() => saveEditNews(article.id)}
                                 className="flex-1 py-2 bg-[#22c55e] text-white text-sm font-semibold rounded-lg hover:bg-green-600 transition-colors">
                                 Save Changes
                               </button>
-                              <button onClick={() => { setEditingNewsId(null); setEditNews(null); }}
+                              <button onClick={() => { setEditingNewsId(null); setEditNews(null); setEditNewsImageFile(null); }}
                                 className="px-4 py-2 border border-slate-200 text-sm font-semibold rounded-lg hover:bg-slate-50 transition-colors">
                                 Cancel
                               </button>
@@ -1366,7 +1405,9 @@ export default function AdminPortal() {
                                   readTime: article.readTime,
                                   paragraphs: article.paragraphs.join("\n"),
                                   keyTakeaways: article.keyTakeaways.join("\n"),
+                                  imageUrl: article.image_url || "",
                                 });
+                                setEditNewsImageFile(null);
                               }} className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-300 text-[#0f172a] hover:bg-slate-50 transition-colors">
                                 Edit
                               </button>

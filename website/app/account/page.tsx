@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function AccountPage() {
-  const [registrationType, setRegistrationType] = useState<"chooser" | "buyer" | "seller" | "success" | null>(null);
+  const [registrationType, setRegistrationType] = useState<"chooser" | "buyer" | "seller" | "other" | "success" | null>(null);
   const [regStatus, setRegStatus] = useState<"idle" | "loading" | "error" | "success">("idle");
   const [regMessage, setRegMessage] = useState("");
 
@@ -20,20 +20,26 @@ export default function AccountPage() {
     occupation: "",
     agriInterests: "Crop production",
     company: "",
-    membershipType: "Ordinary Membership ($50/yr)",
-    registrationType: "", // "buyer" or "seller"
+    membershipType: "Ordinary Membership",
+    registrationType: "", // "buyer", "seller", or "other"
+    customRole: "",
     password: "",
     confirmPassword: "",
     consent: false,
   });
 
-  const handleChooseType = (type: "buyer" | "seller") => {
+  const handleChooseType = (type: "buyer" | "seller" | "other") => {
     setRegistrationType(type);
     setRegData({ ...regData, registrationType: type });
   };
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (registrationType === "other" && !regData.customRole.trim()) {
+      setRegStatus("error");
+      setRegMessage("Please specify your role or designation.");
+      return;
+    }
     if (regData.password !== regData.confirmPassword) {
       setRegStatus("error");
       setRegMessage("Passwords do not match. Please verify.");
@@ -47,6 +53,13 @@ export default function AccountPage() {
 
     setRegStatus("loading");
     setRegMessage("");
+
+    const effectiveRole =
+      registrationType === "other"
+        ? regData.customRole.trim()
+        : registrationType === "buyer"
+        ? "Buyer"
+        : "Seller";
 
     try {
       const res = await fetch("/api/membership", {
@@ -63,8 +76,8 @@ export default function AccountPage() {
           company: regData.company,
           agriInterests: regData.agriInterests,
           membershipType: regData.membershipType,
-          registrationType: registrationType,
-          interests: `Registered as ${registrationType === "buyer" ? "Buyer" : "Seller"} - Gender: ${regData.gender}, Region: ${regData.region} (${regData.country}), Occupation: ${regData.occupation || "N/A"}, Company: ${regData.company || "N/A"}, Focus: ${regData.agriInterests}, Type: ${regData.membershipType}`,
+          registrationType: effectiveRole,
+          interests: `Registered as ${effectiveRole} - Gender: ${regData.gender}, Region: ${regData.region} (${regData.country}), Occupation: ${regData.occupation || "N/A"}, Company: ${regData.company || "N/A"}, Focus: ${regData.agriInterests}, Type: ${regData.membershipType}`,
         }),
       });
 
@@ -72,7 +85,15 @@ export default function AccountPage() {
       if (res.ok && data.success) {
         setRegStatus("success");
         setRegistrationType("success");
-        setRegMessage(`Congratulations! You have successfully registered as a ${registrationType === "buyer" ? "Buyer" : "Seller"}.`);
+        setRegMessage(
+          `Congratulations! You have successfully registered as ${
+            registrationType === "buyer"
+              ? "a Buyer"
+              : registrationType === "seller"
+              ? "a Seller"
+              : effectiveRole
+          }.`
+        );
       } else {
         setRegStatus("error");
         setRegMessage(data.error || "Failed to register. Please try again.");
@@ -119,7 +140,26 @@ export default function AccountPage() {
               Please check your inbox for next steps and member portal access.
             </p>
             <button
-              onClick={() => setRegistrationType(null)}
+              onClick={() => {
+                setRegistrationType(null);
+                setRegData({
+                  fullName: "",
+                  gender: "Prefer not to say",
+                  email: "",
+                  phone: "",
+                  region: "North America",
+                  country: "United States",
+                  occupation: "",
+                  agriInterests: "Crop production",
+                  company: "",
+                  membershipType: "Ordinary Membership",
+                  registrationType: "",
+                  customRole: "",
+                  password: "",
+                  confirmPassword: "",
+                  consent: false,
+                });
+              }}
               className="pill-btn pill-green text-xs py-2.5 px-6"
             >
               Register Another Member
@@ -142,11 +182,14 @@ export default function AccountPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {/* BUYER CARD */}
               <button
+                type="button"
                 onClick={() => handleChooseType("buyer")}
-                className="group p-8 rounded-2xl border-2 border-gray-200 hover:border-[#1377a4] bg-white hover:bg-blue-50 transition-all duration-300 text-left cursor-pointer"
+                className="group p-8 rounded-2xl border-2 border-gray-200 hover:border-[#1377a4] bg-white hover:bg-blue-50/50 hover:shadow-md transition-all duration-300 text-left cursor-pointer"
               >
                 <div className="w-12 h-12 rounded-full bg-[#1377a4]/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <span className="text-xl">🛒</span>
+                  <svg className="w-6 h-6 text-[#1377a4]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
                 </div>
                 <h3 className="font-heading font-bold text-lg text-[#1b2238] mb-2">
                   I am a Buyer
@@ -162,11 +205,14 @@ export default function AccountPage() {
 
               {/* SELLER CARD */}
               <button
+                type="button"
                 onClick={() => handleChooseType("seller")}
-                className="group p-8 rounded-2xl border-2 border-gray-200 hover:border-[#63b849] bg-white hover:bg-green-50 transition-all duration-300 text-left cursor-pointer"
+                className="group p-8 rounded-2xl border-2 border-gray-200 hover:border-[#63b849] bg-white hover:bg-green-50/50 hover:shadow-md transition-all duration-300 text-left cursor-pointer"
               >
                 <div className="w-12 h-12 rounded-full bg-[#63b849]/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <span className="text-xl">🌾</span>
+                  <svg className="w-6 h-6 text-[#63b849]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
                 </div>
                 <h3 className="font-heading font-bold text-lg text-[#1b2238] mb-2">
                   I am a Seller
@@ -180,14 +226,42 @@ export default function AccountPage() {
                 </div>
               </button>
             </div>
+
+            {/* OTHERS CARD BELOW */}
+            <button
+              type="button"
+              onClick={() => handleChooseType("other")}
+              className="group w-full p-8 rounded-2xl border-2 border-gray-200 hover:border-[#e5851d] bg-white hover:bg-amber-50/40 hover:shadow-md transition-all duration-300 text-left cursor-pointer flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6"
+            >
+              <div className="flex items-start sm:items-center gap-5">
+                <div className="w-12 h-12 rounded-full bg-[#e5851d]/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                  <svg className="w-6 h-6 text-[#e5851d]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-heading font-bold text-lg text-[#1b2238] mb-1">
+                    Other Roles &amp; Stakeholders
+                  </h3>
+                  <p className="text-xs text-gray-600 max-w-xl">
+                    I am an investor, mentor, researcher, development partner, policymaker, student, or other agribusiness professional looking to connect with UDAN.
+                  </p>
+                </div>
+              </div>
+              <div className="text-[11px] font-bold uppercase tracking-wider text-[#e5851d] flex items-center gap-1 shrink-0 self-start sm:self-center">
+                Choose Others
+                <span className="group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+            </button>
           </div>
         )}
 
         {/* REGISTRATION FORM */}
-        {(registrationType === "buyer" || registrationType === "seller") && (
+        {(registrationType === "buyer" || registrationType === "seller" || registrationType === "other") && (
           <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-sm animate-fadeIn">
             <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200">
               <button
+                type="button"
                 onClick={() => setRegistrationType(null)}
                 className="text-gray-600 hover:text-gray-800 transition-colors"
               >
@@ -195,7 +269,7 @@ export default function AccountPage() {
               </button>
               <div>
                 <h2 className="font-heading font-bold text-xl text-[#1b2238]">
-                  Register as a {registrationType === "buyer" ? "Buyer" : "Seller"}
+                  Register as {registrationType === "buyer" ? "a Buyer" : registrationType === "seller" ? "a Seller" : "an Agribusiness Stakeholder"}
                 </h2>
                 <p className="text-xs text-gray-500">
                   Complete your profile to join the UDAN network
@@ -204,6 +278,25 @@ export default function AccountPage() {
             </div>
 
             <form onSubmit={handleRegister} className="space-y-4">
+              {/* SPECIFIC ROLE FIELD FOR OTHERS */}
+              {registrationType === "other" && (
+                <div className="p-4 bg-amber-50/70 border border-amber-200/80 rounded-xl">
+                  <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-1">
+                    Specify Your Role / Designation *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={regData.customRole}
+                    onChange={(e) => setRegData({ ...regData, customRole: e.target.value })}
+                    placeholder="e.g. Impact Investor, Development Partner, Agricultural Researcher, Mentor, Student"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none bg-white focus:border-[#e5851d] focus:ring-1 focus:ring-[#e5851d]"
+                  />
+                  <p className="text-[11px] text-gray-500 mt-1">
+                    Type your specific role or interest within the agribusiness ecosystem
+                  </p>
+                </div>
+              )}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-1">
@@ -357,9 +450,9 @@ export default function AccountPage() {
                     onChange={(e) => setRegData({ ...regData, membershipType: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none focus:border-[#63b849]"
                   >
-                    <option>Ordinary Membership ($50/yr)</option>
-                    <option>Business Membership ($250/yr)</option>
-                    <option>Youth &amp; Student Membership ($25/yr)</option>
+                    <option>Ordinary Membership</option>
+                    <option>Business Membership</option>
+                    <option>Youth &amp; Student Membership</option>
                   </select>
                 </div>
               </div>
@@ -414,7 +507,15 @@ export default function AccountPage() {
                 disabled={regStatus === "loading"}
                 className="w-full pill-btn pill-green text-xs justify-center py-3 font-bold uppercase tracking-wider disabled:opacity-50"
               >
-                {regStatus === "loading" ? "Registering..." : `Complete Registration as ${registrationType === "buyer" ? "Buyer" : "Seller"}`}
+                {regStatus === "loading"
+                  ? "Registering..."
+                  : `Complete Registration as ${
+                      registrationType === "buyer"
+                        ? "Buyer"
+                        : registrationType === "seller"
+                        ? "Seller"
+                        : regData.customRole || "Member"
+                    }`}
               </button>
 
               {regMessage && (

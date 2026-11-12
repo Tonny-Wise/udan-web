@@ -66,7 +66,12 @@ export async function POST(req: NextRequest) {
       try {
         const { Resend } = await import("resend");
         const resend = new Resend(process.env.RESEND_API_KEY);
-        const roleLabel = registrationType === "buyer" ? "Buyer" : "Seller";
+        const roleLabel =
+          registrationType === "buyer"
+            ? "Buyer"
+            : registrationType === "seller"
+            ? "Seller"
+            : registrationType || "Member";
 
         await resend.emails.send({
           from: process.env.RESEND_FROM_EMAIL ?? "noreply@udandiaspora.org",
