@@ -62,6 +62,7 @@ export default function AboutPage() {
       role: "Executive Member",
       org: "UDAN Executive Committee",
       bio: "Advancing youth and women in agribusiness, sustainable rural enterprises, and community outgrower integration models.",
+      image: "/Lydia Nakayenze- UDAN Executive.jpeg",
     },
     {
       name: "Pamela Anyoti Peronaci",
@@ -74,6 +75,7 @@ export default function AboutPage() {
       role: "Executive Member",
       org: "UDAN Executive Committee",
       bio: "Promoting digital technology deployment, farm mechanization, and operational excellence for scalable agri-enterprises.",
+      image: "/Mukasa-UDAN Executive.jpeg",
     },
   ];
 

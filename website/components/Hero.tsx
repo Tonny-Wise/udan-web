@@ -7,8 +7,8 @@ export default function Hero() {
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/gallery/homepage-hero.jpeg"
-          alt="UDAN Agribusiness Convening & Leaders"
+          src="/hero section bg.jpeg"
+          alt="UDAN Agribusiness Convening and Leaders"
           fill
           priority
           sizes="100vw"
