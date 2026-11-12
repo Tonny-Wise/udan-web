@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { notFound } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
 
 interface PostData {
@@ -101,7 +100,13 @@ const articlesDatabase: Record<string, PostData> = {
   },
 };
 
-// ── Parse content stored by admin portal ────────────────────────────────────
+// Registered aliases for slugs with colons, punctuation, or alternate title formats
+articlesDatabase["winner-spotlight:-how-jasper-batureine-built-a-1750-tree-climate-smart-agroforestry-model-in-kyegegwa"] = articlesDatabase["sunland-hass-farm-kyegegwa"];
+articlesDatabase["winner-spotlight-how-jasper-batureine-built-a-1750-tree-climate-smart-agroforestry-model-in-kyegegwa"] = articlesDatabase["sunland-hass-farm-kyegegwa"];
+articlesDatabase["celebrating-the-2025-diaspora-in-agribusiness-for-climate-action-awards:-champions-shaping-uganda's-future"] = articlesDatabase["climate-action-awards-winners-2025"];
+articlesDatabase["celebrating-the-2025-diaspora-in-agribusiness-for-climate-action-awards-champions-shaping-ugandas-future"] = articlesDatabase["climate-action-awards-winners-2025"];
+
+// -- Parse content stored by admin portal ------------------------------------
 function parseDbArticle(row: Record<string, unknown>): PostData | null {
   if (!row) return null;
   try {
@@ -136,11 +141,30 @@ export default async function BlogPostPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const { slug } = await params;
+  const { slug: rawSlug } = await params;
+
+  let decodedSlug = rawSlug;
+  try {
+    decodedSlug = decodeURIComponent(rawSlug);
+  } catch {
+    // ignore
+  }
+
+  const normalized = decodedSlug.toLowerCase().trim();
+  const slugCandidates = Array.from(
+    new Set([
+      rawSlug,
+      decodedSlug,
+      normalized,
+      normalized.replace(/:/g, ""),
+      normalized.replace(/[^a-z0-9-]/g, ""),
+      normalized.replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, ""),
+    ])
+  ).filter(Boolean);
 
   let post: PostData | null = null;
 
-  // Fetch from Supabase
+  // 1. Fetch from Supabase
   try {
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -149,22 +173,61 @@ export default async function BlogPostPage({
     const { data } = await supabase
       .from("news_articles")
       .select("*")
-      .eq("slug", slug)
+      .in("slug", slugCandidates)
       .eq("status", "published")
-      .single();
-    if (data) {
-      post = parseDbArticle(data as Record<string, unknown>);
+      .limit(1);
+
+    if (data && data.length > 0) {
+      post = parseDbArticle(data[0] as Record<string, unknown>);
     }
   } catch {
     // fall through
   }
 
-  // Fall back to static hardcoded articles if not in DB
+  // 2. Fall back to static hardcoded articles if not in DB
   if (!post) {
-    post = articlesDatabase[slug] ?? null;
+    for (const candidate of slugCandidates) {
+      if (articlesDatabase[candidate]) {
+        post = articlesDatabase[candidate];
+        break;
+      }
+    }
   }
 
-  if (!post) notFound();
+  // 3. Fall back by title matching in articlesDatabase
+  if (!post) {
+    const matched = Object.values(articlesDatabase).find((item) => {
+      const itemSlug = item.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+      return slugCandidates.some(c => itemSlug === c || itemSlug.includes(c) || c.includes(itemSlug));
+    });
+    if (matched) post = matched;
+  }
+
+  if (!post) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center bg-white px-4 py-20 font-body">
+        <div className="max-w-xl mx-auto text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#f0f9ed] text-[#63b849] font-heading text-3xl font-bold mb-4 border border-[#63b849]/20">
+            404
+          </div>
+          <h1 className="font-heading font-bold text-2xl sm:text-3xl text-[#1b2238] mb-3">
+            Article Not Found
+          </h1>
+          <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-6">
+            We could not find an article matching that link. It may have been updated, renamed, or is temporarily unavailable.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Link href="/blog" className="pill-btn pill-blue text-xs px-5 py-2">
+              Browse All Articles
+            </Link>
+            <Link href="/" className="pill-btn pill-green text-xs px-5 py-2">
+              Return Home
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <article className="bg-white font-body">
