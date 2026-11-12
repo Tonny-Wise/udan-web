@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function AccountPage() {
-  const [registrationType, setRegistrationType] = useState<"chooser" | "buyer" | "seller" | "other" | "success" | null>(null);
+  const [registrationType, setRegistrationType] = useState<"success" | null>(null);
   const [regStatus, setRegStatus] = useState<"idle" | "loading" | "error" | "success">("idle");
   const [regMessage, setRegMessage] = useState("");
 
@@ -21,21 +21,22 @@ export default function AccountPage() {
     agriInterests: "Crop production",
     company: "",
     membershipType: "Ordinary Membership",
-    registrationType: "", // "buyer", "seller", or "other"
+    registrationType: "buyer" as "buyer" | "seller" | "other",
     customRole: "",
+    isDiaspora: "" as "" | "yes" | "no",
     password: "",
     confirmPassword: "",
     consent: false,
   });
 
-  const handleChooseType = (type: "buyer" | "seller" | "other") => {
-    setRegistrationType(type);
-    setRegData({ ...regData, registrationType: type });
-  };
-
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (registrationType === "other" && !regData.customRole.trim()) {
+    if (!regData.isDiaspora) {
+      setRegStatus("error");
+      setRegMessage("Please indicate whether you are a member of the Ugandan diaspora.");
+      return;
+    }
+    if (regData.registrationType === "other" && !regData.customRole.trim()) {
       setRegStatus("error");
       setRegMessage("Please specify your role or designation.");
       return;
@@ -55,9 +56,9 @@ export default function AccountPage() {
     setRegMessage("");
 
     const effectiveRole =
-      registrationType === "other"
-        ? regData.customRole.trim()
-        : registrationType === "buyer"
+      regData.registrationType === "other"
+        ? regData.customRole.trim() || "Other Stakeholder"
+        : regData.registrationType === "buyer"
         ? "Buyer"
         : "Seller";
 
@@ -77,7 +78,8 @@ export default function AccountPage() {
           agriInterests: regData.agriInterests,
           membershipType: regData.membershipType,
           registrationType: effectiveRole,
-          interests: `Registered as ${effectiveRole} - Gender: ${regData.gender}, Region: ${regData.region} (${regData.country}), Occupation: ${regData.occupation || "N/A"}, Company: ${regData.company || "N/A"}, Focus: ${regData.agriInterests}, Type: ${regData.membershipType}`,
+          isDiaspora: regData.isDiaspora,
+          interests: `Registered as ${effectiveRole} - Diaspora: ${regData.isDiaspora === "yes" ? "Yes" : "No"}, Gender: ${regData.gender}, Region: ${regData.region} (${regData.country}), Occupation: ${regData.occupation || "N/A"}, Company: ${regData.company || "N/A"}, Focus: ${regData.agriInterests}, Type: ${regData.membershipType}`,
         }),
       });
 
@@ -87,9 +89,9 @@ export default function AccountPage() {
         setRegistrationType("success");
         setRegMessage(
           `Congratulations! You have successfully registered as ${
-            registrationType === "buyer"
+            regData.registrationType === "buyer"
               ? "a Buyer"
-              : registrationType === "seller"
+              : regData.registrationType === "seller"
               ? "a Seller"
               : effectiveRole
           }.`
@@ -153,8 +155,9 @@ export default function AccountPage() {
                   agriInterests: "Crop production",
                   company: "",
                   membershipType: "Ordinary Membership",
-                  registrationType: "",
+                  registrationType: "buyer",
                   customRole: "",
+                  isDiaspora: "",
                   password: "",
                   confirmPassword: "",
                   consent: false,
@@ -167,119 +170,155 @@ export default function AccountPage() {
           </div>
         )}
 
-        {/* ROLE CHOOSER */}
-        {registrationType === null && (
-          <div className="animate-fadeIn space-y-8">
-            <div className="text-center">
-              <h2 className="font-heading font-bold text-2xl text-[#1b2238] mb-2">
-                What describes you best?
-              </h2>
-              <p className="text-xs text-gray-600">
-                Choose your primary role in the agribusiness network
-              </p>
-            </div>
+        {/* ROLE CHOOSER TILES (COMMENTED OUT - FORM DISPLAYED DIRECTLY)
+        <div className="animate-fadeIn space-y-8">
+          <div className="text-center">
+            <h2 className="font-heading font-bold text-2xl text-[#1b2238] mb-2">
+              What describes you best?
+            </h2>
+            <p className="text-xs text-gray-600">
+              Choose your primary role in the agribusiness network
+            </p>
+          </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {/* BUYER CARD */}
-              <button
-                type="button"
-                onClick={() => handleChooseType("buyer")}
-                className="group p-8 rounded-2xl border-2 border-gray-200 hover:border-[#1377a4] bg-white hover:bg-blue-50/50 hover:shadow-md transition-all duration-300 text-left cursor-pointer"
-              >
-                <div className="w-12 h-12 rounded-full bg-[#1377a4]/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <svg className="w-6 h-6 text-[#1377a4]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                </div>
-                <h3 className="font-heading font-bold text-lg text-[#1b2238] mb-2">
-                  I am a Buyer
-                </h3>
-                <p className="text-xs text-gray-600 mb-6">
-                  I am looking to source quality agricultural products, connect with suppliers, and explore investment opportunities.
-                </p>
-                <div className="text-[11px] font-bold uppercase tracking-wider text-[#1377a4] flex items-center gap-1">
-                  Choose Buyer
-                  <span className="group-hover:translate-x-1 transition-transform">→</span>
-                </div>
-              </button>
-
-              {/* SELLER CARD */}
-              <button
-                type="button"
-                onClick={() => handleChooseType("seller")}
-                className="group p-8 rounded-2xl border-2 border-gray-200 hover:border-[#63b849] bg-white hover:bg-green-50/50 hover:shadow-md transition-all duration-300 text-left cursor-pointer"
-              >
-                <div className="w-12 h-12 rounded-full bg-[#63b849]/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <svg className="w-6 h-6 text-[#63b849]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <h3 className="font-heading font-bold text-lg text-[#1b2238] mb-2">
-                  I am a Seller
-                </h3>
-                <p className="text-xs text-gray-600 mb-6">
-                  I am an agripreneur or agribusiness enterprise looking to reach buyers, showcase my business, and scale operations.
-                </p>
-                <div className="text-[11px] font-bold uppercase tracking-wider text-[#63b849] flex items-center gap-1">
-                  Choose Seller
-                  <span className="group-hover:translate-x-1 transition-transform">→</span>
-                </div>
-              </button>
-            </div>
-
-            {/* OTHERS CARD BELOW */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <button
               type="button"
-              onClick={() => handleChooseType("other")}
-              className="group w-full p-8 rounded-2xl border-2 border-gray-200 hover:border-[#e5851d] bg-white hover:bg-amber-50/40 hover:shadow-md transition-all duration-300 text-left cursor-pointer flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6"
+              className="group p-8 rounded-2xl border-2 border-gray-200 hover:border-[#1377a4] bg-white hover:bg-blue-50/50 hover:shadow-md transition-all duration-300 text-left cursor-pointer"
             >
-              <div className="flex items-start sm:items-center gap-5">
-                <div className="w-12 h-12 rounded-full bg-[#e5851d]/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                  <svg className="w-6 h-6 text-[#e5851d]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-heading font-bold text-lg text-[#1b2238] mb-1">
-                    Other Roles &amp; Stakeholders
-                  </h3>
-                  <p className="text-xs text-gray-600 max-w-xl">
-                    I am an investor, mentor, researcher, development partner, policymaker, student, or other agribusiness professional looking to connect with UDAN.
-                  </p>
-                </div>
+              <div className="w-12 h-12 rounded-full bg-[#1377a4]/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <svg className="w-6 h-6 text-[#1377a4]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
               </div>
-              <div className="text-[11px] font-bold uppercase tracking-wider text-[#e5851d] flex items-center gap-1 shrink-0 self-start sm:self-center">
-                Choose Others
+              <h3 className="font-heading font-bold text-lg text-[#1b2238] mb-2">
+                I am a Buyer
+              </h3>
+              <p className="text-xs text-gray-600 mb-6">
+                I am looking to source quality agricultural products, connect with suppliers, and explore investment opportunities.
+              </p>
+              <div className="text-[11px] font-bold uppercase tracking-wider text-[#1377a4] flex items-center gap-1">
+                Choose Buyer
+                <span className="group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+            </button>
+
+            <button
+              type="button"
+              className="group p-8 rounded-2xl border-2 border-gray-200 hover:border-[#63b849] bg-white hover:bg-green-50/50 hover:shadow-md transition-all duration-300 text-left cursor-pointer"
+            >
+              <div className="w-12 h-12 rounded-full bg-[#63b849]/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <svg className="w-6 h-6 text-[#63b849]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+              </div>
+              <h3 className="font-heading font-bold text-lg text-[#1b2238] mb-2">
+                I am a Seller
+              </h3>
+              <p className="text-xs text-gray-600 mb-6">
+                I am an agripreneur or agribusiness enterprise looking to reach buyers, showcase my business, and scale operations.
+              </p>
+              <div className="text-[11px] font-bold uppercase tracking-wider text-[#63b849] flex items-center gap-1">
+                Choose Seller
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </div>
             </button>
           </div>
-        )}
 
-        {/* REGISTRATION FORM */}
-        {(registrationType === "buyer" || registrationType === "seller" || registrationType === "other") && (
-          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-sm animate-fadeIn">
-            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200">
-              <button
-                type="button"
-                onClick={() => setRegistrationType(null)}
-                className="text-gray-600 hover:text-gray-800 transition-colors"
-              >
-                ←
-              </button>
+          <button
+            type="button"
+            className="group w-full p-8 rounded-2xl border-2 border-gray-200 hover:border-[#e5851d] bg-white hover:bg-amber-50/40 hover:shadow-md transition-all duration-300 text-left cursor-pointer flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6"
+          >
+            <div className="flex items-start sm:items-center gap-5">
+              <div className="w-12 h-12 rounded-full bg-[#e5851d]/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                <svg className="w-6 h-6 text-[#e5851d]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
               <div>
-                <h2 className="font-heading font-bold text-xl text-[#1b2238]">
-                  Register as {registrationType === "buyer" ? "a Buyer" : registrationType === "seller" ? "a Seller" : "an Agribusiness Stakeholder"}
-                </h2>
-                <p className="text-xs text-gray-500">
-                  Complete your profile to join the UDAN network
+                <h3 className="font-heading font-bold text-lg text-[#1b2238] mb-1">
+                  Other Roles &amp; Stakeholders
+                </h3>
+                <p className="text-xs text-gray-600 max-w-xl">
+                  I am an investor, mentor, researcher, development partner, policymaker, student, or other agribusiness professional looking to connect with UDAN.
                 </p>
               </div>
             </div>
+            <div className="text-[11px] font-bold uppercase tracking-wider text-[#e5851d] flex items-center gap-1 shrink-0 self-start sm:self-center">
+              Choose Others
+              <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </div>
+          </button>
+        </div>
+        */}
+
+        {/* REGISTRATION FORM */}
+        {registrationType !== "success" && (
+          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-sm animate-fadeIn">
+            <div className="mb-6 pb-4 border-b border-gray-200">
+              <h2 className="font-heading font-bold text-xl text-[#1b2238]">
+                Register with UDAN
+              </h2>
+              <p className="text-xs text-gray-500">
+                Complete your profile to join the Uganda Diaspora in Agribusiness Network
+              </p>
+            </div>
 
             <form onSubmit={handleRegister} className="space-y-4">
+              {/* DIASPORA QUESTION */}
+              <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-2">
+                  Are you a member of the Ugandan diaspora? *
+                </label>
+                <div className="flex flex-wrap gap-6">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="isDiaspora"
+                      value="yes"
+                      checked={regData.isDiaspora === "yes"}
+                      onChange={() => setRegData({ ...regData, isDiaspora: "yes" })}
+                      className="accent-[#63b849]"
+                    />
+                    <span className="text-sm text-[#1b2238] font-medium">Yes, I am in the diaspora</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="isDiaspora"
+                      value="no"
+                      checked={regData.isDiaspora === "no"}
+                      onChange={() => setRegData({ ...regData, isDiaspora: "no" })}
+                      className="accent-[#63b849]"
+                    />
+                    <span className="text-sm text-[#1b2238] font-medium">No, I am based in Uganda</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* REGISTRATION ROLE SELECTOR */}
+              <div>
+                <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-1">
+                  I am registering as *
+                </label>
+                <select
+                  value={regData.registrationType}
+                  onChange={(e) =>
+                    setRegData({
+                      ...regData,
+                      registrationType: e.target.value as "buyer" | "seller" | "other",
+                    })
+                  }
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none focus:border-[#63b849]"
+                >
+                  <option value="buyer">Buyer / Investor</option>
+                  <option value="seller">Seller / Agripreneur</option>
+                  <option value="other">Other Stakeholder / Partner</option>
+                </select>
+              </div>
+
               {/* SPECIFIC ROLE FIELD FOR OTHERS */}
-              {registrationType === "other" && (
+              {regData.registrationType === "other" && (
                 <div className="p-4 bg-amber-50/70 border border-amber-200/80 rounded-xl">
                   <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-1">
                     Specify Your Role / Designation *
@@ -510,9 +549,9 @@ export default function AccountPage() {
                 {regStatus === "loading"
                   ? "Registering..."
                   : `Complete Registration as ${
-                      registrationType === "buyer"
+                      regData.registrationType === "buyer"
                         ? "Buyer"
-                        : registrationType === "seller"
+                        : regData.registrationType === "seller"
                         ? "Seller"
                         : regData.customRole || "Member"
                     }`}
