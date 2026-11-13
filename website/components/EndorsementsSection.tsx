@@ -6,7 +6,7 @@ export default function EndorsementsSection() {
       from: "Ambassador MJ Muhindo",
       role: "Head of Diaspora Department",
       org: "Ministry of Foreign Affairs (MoFA)",
-      image: "/Use this for ambassador.jpeg",
+      image: "/Use this for ambassador 2.jpeg",
       quote:
         "The Ministry of Foreign Affairs views the Ugandan diaspora as indispensable partners in nation-building. Through UDAN, we are creating institutional avenues where diaspora expertise and capital can transform our agricultural landscapes, generate youth employment, and drive export revenue.",
     },
@@ -14,7 +14,7 @@ export default function EndorsementsSection() {
       from: "Edward Tanyiima",
       role: "National Policy Officer",
       org: "UN-FAO Uganda",
-      image: "/Edward tanyima.jpeg",
+      image: "/Edward tanyima 2.jpeg",
       quote:
         "FAO is proud to partner with UDAN and the Government of Uganda to promote diaspora investments in agriculture. Aligning diaspora financial flows with climate-smart practices and youth entrepreneurship is vital for sustainable food systems transformation.",
     },

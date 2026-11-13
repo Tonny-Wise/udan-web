@@ -143,7 +143,7 @@ export default async function ConferencePage() {
       name: "Ambassador MJ Muhindo",
       title: "Head of Diaspora Department, Ministry of Foreign Affairs",
       topic: "Diaspora Diplomacy & Bilateral Trade Partnerships",
-      image: "/Use this for ambassador.jpeg",
+      image: "/Use this for ambassador 2.jpeg",
     },
     {
       name: "Andrew Bamugye",
@@ -155,7 +155,7 @@ export default async function ConferencePage() {
       name: "Edward Tanyiima",
       title: "National Policy Officer, UN-FAO Uganda",
       topic: "Agrifood Innovation & Climate Resilience in Value Chains",
-      image: "/Edward tanyima.jpeg",
+      image: "/Edward tanyima 2.jpeg",
     },
   ];
 
