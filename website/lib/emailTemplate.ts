@@ -35,7 +35,7 @@ function base(formTitle: string, bodyHtml: string): string {
           <tr>
             <td style="background:#f8fafc;border-top:1px solid #e2e8f0;padding:20px 32px;text-align:center;">
               <p style="margin:0 0 4px;font-size:12px;color:#64748b;">Uganda Diaspora in Agribusiness Network (UDAN)</p>
-              <p style="margin:0 0 4px;font-size:12px;color:#64748b;">Kampala, Uganda &nbsp;|&nbsp; <a href="mailto:info@udandiaspora.org" style="color:#1377a4;text-decoration:none;">info@udandiaspora.org</a></p>
+              <p style="margin:0 0 4px;font-size:12px;color:#64748b;">Kampala, Uganda &nbsp;|&nbsp; <a href="mailto:udan.ug.org@gmail.com" style="color:#1377a4;text-decoration:none;">udan.ug.org@gmail.com</a></p>
               <p style="margin:8px 0 0;font-size:11px;color:#94a3b8;"><a href="${SITE_URL}" style="color:#94a3b8;">udandiaspora.org</a></p>
             </td>
           </tr>

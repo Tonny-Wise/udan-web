@@ -152,8 +152,8 @@ export default function Footer() {
                 </li>
                 <li className="flex items-start gap-2.5">
                   <Image src="https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/logos/gmail.png" alt="Email" width={20} height={20} className="w-5 h-5 object-contain mt-0.5 flex-none" />
-                  <a href="mailto:info@udandiaspora.org" className="hover:text-[#63b849] transition-colors">
-                    info@udandiaspora.org
+                  <a href="mailto:udan.ug.org@gmail.com" className="hover:text-[#63b849] transition-colors">
+                    udan.ug.org@gmail.com
                   </a>
                 </li>
                 <li className="flex items-start gap-2.5">

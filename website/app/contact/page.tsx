@@ -138,7 +138,7 @@ export default function ContactPage() {
                 <div>
                   <h4 className="font-heading font-bold text-base text-[#1b2238]">Official Inquiries</h4>
                   <p className="text-xs text-gray-600">
-                    General Inquiries: <a href="mailto:info@udandiaspora.org" className="text-[#1377a4] font-semibold">info@udandiaspora.org</a><br />
+                    General Inquiries: <a href="mailto:udan.ug.org@gmail.com" className="text-[#1377a4] font-semibold">udan.ug.org@gmail.com</a><br />
                     Executive Desk: <a href="mailto:secretariat@udandiaspora.org" className="text-[#1377a4] font-semibold">secretariat@udandiaspora.org</a>
                   </p>
                 </div>

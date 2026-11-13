@@ -91,7 +91,7 @@ export async function POST(req: NextRequest) {
         // Admin notification
         await resend.emails.send({
           from: process.env.RESEND_FROM_EMAIL ?? "noreply@udandiaspora.org",
-          to: process.env.RESEND_TO_EMAIL ?? "info@udandiaspora.org",
+          to: process.env.RESEND_TO_EMAIL ?? "udan.ug.org@gmail.com",
           subject: `New Registration: ${name} (${roleLabel})`,
           html: membershipAdminEmail(emailData),
         });

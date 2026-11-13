@@ -81,7 +81,7 @@ export default function Navbar() {
           </div>
           <div className="flex items-center gap-3 text-gray-300 flex-none text-[9px] sm:text-[10px]">
             <Link href="/contact" className="hidden sm:inline hover:text-white transition-colors">
-              info@udandiaspora.org
+              udan.ug.org@gmail.com
             </Link>
             <span className="hidden sm:inline text-gray-500">|</span>
             <Link href="/account" className="text-[#c6ac62] font-bold hover:underline flex items-center gap-1">

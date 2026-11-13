@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
         const resend = new Resend(process.env.RESEND_API_KEY);
         await resend.emails.send({
           from: process.env.RESEND_FROM_EMAIL ?? "noreply@udandiaspora.org",
-          to: process.env.RESEND_TO_EMAIL ?? "info@udandiaspora.org",
+          to: process.env.RESEND_TO_EMAIL ?? "udan.ug.org@gmail.com",
           reply_to: email,
           subject: `Contact Form: ${subject ?? "(no subject)"} - from ${name}`,
           html: contactAdminEmail({ name, email, subject, message }),
