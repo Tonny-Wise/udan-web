@@ -151,6 +151,16 @@ h1, h2, h3, h4, h5, h6 {
   -webkit-transform: rotateY(180deg);
 }
 
+/* Remove glow/focus ring from radio buttons */
+input[type="radio"]:focus,
+input[type="radio"]:focus-visible,
+input[type="radio"]:active {
+  outline: none !important;
+  box-shadow: none !important;
+  --tw-ring-shadow: none !important;
+  --tw-ring-offset-shadow: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     scroll-behavior: auto !important;

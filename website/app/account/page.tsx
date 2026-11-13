@@ -266,63 +266,32 @@ export default function AccountPage() {
 
             <form onSubmit={handleRegister} className="space-y-4">
               {/* DIASPORA QUESTION */}
-              <div className="p-4 sm:p-5 bg-gray-50/80 rounded-xl border border-gray-200">
-                <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-2.5">
+              <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-2">
                   Are you a member of the Ugandan diaspora? *
                 </label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <label
-                    htmlFor="account-diaspora-yes"
-                    className={`flex items-center gap-3 p-3.5 rounded-xl border-2 transition-all cursor-pointer ${
-                      regData.isDiaspora === "yes"
-                        ? "border-[#63b849] bg-[#f0f9ed] shadow-sm ring-1 ring-[#63b849]/30"
-                        : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50/70"
-                    }`}
-                  >
+                <div className="flex flex-wrap gap-6">
+                  <label className="flex items-center gap-2 cursor-pointer select-none">
                     <input
-                      id="account-diaspora-yes"
                       type="radio"
                       name="isDiaspora"
                       value="yes"
                       checked={regData.isDiaspora === "yes"}
                       onChange={() => setRegData({ ...regData, isDiaspora: "yes" })}
-                      className="w-4 h-4 accent-[#63b849] text-[#63b849] focus:ring-[#63b849] shrink-0 cursor-pointer"
+                      className="accent-[#63b849] cursor-pointer outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 ring-0 shadow-none"
                     />
-                    <div className="flex flex-col select-none">
-                      <span className={`text-xs sm:text-sm font-bold ${regData.isDiaspora === "yes" ? "text-[#1b2238]" : "text-gray-800"}`}>
-                        Yes, I am in the diaspora
-                      </span>
-                      <span className="text-[11px] text-gray-500 mt-0.5 leading-tight">
-                        Living or operating outside Uganda
-                      </span>
-                    </div>
+                    <span className="text-sm text-[#1b2238] font-medium">Yes, I am in the diaspora</span>
                   </label>
-
-                  <label
-                    htmlFor="account-diaspora-no"
-                    className={`flex items-center gap-3 p-3.5 rounded-xl border-2 transition-all cursor-pointer ${
-                      regData.isDiaspora === "no"
-                        ? "border-[#63b849] bg-[#f0f9ed] shadow-sm ring-1 ring-[#63b849]/30"
-                        : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50/70"
-                    }`}
-                  >
+                  <label className="flex items-center gap-2 cursor-pointer select-none">
                     <input
-                      id="account-diaspora-no"
                       type="radio"
                       name="isDiaspora"
                       value="no"
                       checked={regData.isDiaspora === "no"}
                       onChange={() => setRegData({ ...regData, isDiaspora: "no" })}
-                      className="w-4 h-4 accent-[#63b849] text-[#63b849] focus:ring-[#63b849] shrink-0 cursor-pointer"
+                      className="accent-[#63b849] cursor-pointer outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 ring-0 shadow-none"
                     />
-                    <div className="flex flex-col select-none">
-                      <span className={`text-xs sm:text-sm font-bold ${regData.isDiaspora === "no" ? "text-[#1b2238]" : "text-gray-800"}`}>
-                        No, I am based in Uganda
-                      </span>
-                      <span className="text-[11px] text-gray-500 mt-0.5 leading-tight">
-                        Resident or domestic agribusiness enterprise
-                      </span>
-                    </div>
+                    <span className="text-sm text-[#1b2238] font-medium">No, I am based in Uganda</span>
                   </label>
                 </div>
               </div>
