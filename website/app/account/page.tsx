@@ -266,32 +266,63 @@ export default function AccountPage() {
 
             <form onSubmit={handleRegister} className="space-y-4">
               {/* DIASPORA QUESTION */}
-              <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-2">
+              <div className="p-4 sm:p-5 bg-gray-50/80 rounded-xl border border-gray-200">
+                <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-2.5">
                   Are you a member of the Ugandan diaspora? *
                 </label>
-                <div className="flex flex-wrap gap-6">
-                  <label className="flex items-center gap-2 cursor-pointer">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <label
+                    htmlFor="account-diaspora-yes"
+                    className={`flex items-center gap-3 p-3.5 rounded-xl border-2 transition-all cursor-pointer ${
+                      regData.isDiaspora === "yes"
+                        ? "border-[#63b849] bg-[#f0f9ed] shadow-sm ring-1 ring-[#63b849]/30"
+                        : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50/70"
+                    }`}
+                  >
                     <input
+                      id="account-diaspora-yes"
                       type="radio"
                       name="isDiaspora"
                       value="yes"
                       checked={regData.isDiaspora === "yes"}
                       onChange={() => setRegData({ ...regData, isDiaspora: "yes" })}
-                      className="accent-[#63b849]"
+                      className="w-4 h-4 accent-[#63b849] text-[#63b849] focus:ring-[#63b849] shrink-0 cursor-pointer"
                     />
-                    <span className="text-sm text-[#1b2238] font-medium">Yes, I am in the diaspora</span>
+                    <div className="flex flex-col select-none">
+                      <span className={`text-xs sm:text-sm font-bold ${regData.isDiaspora === "yes" ? "text-[#1b2238]" : "text-gray-800"}`}>
+                        Yes, I am in the diaspora
+                      </span>
+                      <span className="text-[11px] text-gray-500 mt-0.5 leading-tight">
+                        Living or operating outside Uganda
+                      </span>
+                    </div>
                   </label>
-                  <label className="flex items-center gap-2 cursor-pointer">
+
+                  <label
+                    htmlFor="account-diaspora-no"
+                    className={`flex items-center gap-3 p-3.5 rounded-xl border-2 transition-all cursor-pointer ${
+                      regData.isDiaspora === "no"
+                        ? "border-[#63b849] bg-[#f0f9ed] shadow-sm ring-1 ring-[#63b849]/30"
+                        : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50/70"
+                    }`}
+                  >
                     <input
+                      id="account-diaspora-no"
                       type="radio"
                       name="isDiaspora"
                       value="no"
                       checked={regData.isDiaspora === "no"}
                       onChange={() => setRegData({ ...regData, isDiaspora: "no" })}
-                      className="accent-[#63b849]"
+                      className="w-4 h-4 accent-[#63b849] text-[#63b849] focus:ring-[#63b849] shrink-0 cursor-pointer"
                     />
-                    <span className="text-sm text-[#1b2238] font-medium">No, I am based in Uganda</span>
+                    <div className="flex flex-col select-none">
+                      <span className={`text-xs sm:text-sm font-bold ${regData.isDiaspora === "no" ? "text-[#1b2238]" : "text-gray-800"}`}>
+                        No, I am based in Uganda
+                      </span>
+                      <span className="text-[11px] text-gray-500 mt-0.5 leading-tight">
+                        Resident or domestic agribusiness enterprise
+                      </span>
+                    </div>
                   </label>
                 </div>
               </div>

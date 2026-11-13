@@ -400,16 +400,14 @@ export default async function ConferencePage() {
                     alt={spk.name}
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    className={`object-cover group-hover:scale-105 transition-transform duration-300 ${
-                      spk.name === "Ambassador MJ Muhindo" ? "translate-y-2" : ""
-                    }`}
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
                 <div className="p-6 flex-1 flex flex-col justify-between">
                   <div>
                     <h3 className="font-heading font-bold text-xl text-[#1b2238] mb-1">{spk.name}</h3>
-                    <div className="text-xs font-bold text-[#1377a4] mb-3">{spk.title}</div>
+                    <div className="text-xs font-bold text-[#1377a4] mb-3 min-h-[2rem] flex items-center">{spk.title}</div>
                     <div className="p-3 bg-gray-50 rounded text-xs text-gray-700 italic border border-gray-100">
                       Key Topic: &ldquo;{spk.topic}&rdquo;
                     </div>
