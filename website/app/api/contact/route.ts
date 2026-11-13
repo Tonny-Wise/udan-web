@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 import { contactAdminEmail } from "@/lib/emailTemplate";
 
 export async function POST(req: NextRequest) {
@@ -20,6 +21,25 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // 1. Save to Supabase
+    try {
+      if (process.env.NEXT_PUBLIC_SUPABASE_URL) {
+        const supabase = createClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL,
+          process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+        );
+        await supabase.from("contact_submissions").insert({
+          name,
+          email,
+          subject: subject || null,
+          message,
+        });
+      }
+    } catch {
+      // Fall through if table does not exist
+    }
+
+    // 2. Send email via Resend
     if (process.env.RESEND_API_KEY) {
       try {
         const { Resend } = await import("resend");

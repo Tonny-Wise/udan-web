@@ -546,15 +546,7 @@ export default function AccountPage() {
                 disabled={regStatus === "loading"}
                 className="w-full pill-btn pill-green text-xs justify-center py-3 font-bold uppercase tracking-wider disabled:opacity-50"
               >
-                {regStatus === "loading"
-                  ? "Registering..."
-                  : `Complete Registration as ${
-                      regData.registrationType === "buyer"
-                        ? "Buyer"
-                        : regData.registrationType === "seller"
-                        ? "Seller"
-                        : regData.customRole || "Member"
-                    }`}
+                {regStatus === "loading" ? "Registering..." : "Complete Registration"}
               </button>
 
               {regMessage && (
