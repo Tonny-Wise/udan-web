@@ -6,7 +6,7 @@ export default function EndorsementsSection() {
       from: "Ambassador MJ Muhindo",
       role: "Head of Diaspora Department",
       org: "Ministry of Foreign Affairs (MoFA)",
-      image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/executives/johnny-muthahi.jpeg",
+      image: "/Use this for ambassador.jpeg",
       quote:
         "The Ministry of Foreign Affairs views the Ugandan diaspora as indispensable partners in nation-building. Through UDAN, we are creating institutional avenues where diaspora expertise and capital can transform our agricultural landscapes, generate youth employment, and drive export revenue.",
     },
@@ -14,7 +14,7 @@ export default function EndorsementsSection() {
       from: "Edward Tanyiima",
       role: "National Policy Officer",
       org: "UN-FAO Uganda",
-      image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/executives/edward-tanyima.jpeg",
+      image: "/Edward tanyima.jpeg",
       quote:
         "FAO is proud to partner with UDAN and the Government of Uganda to promote diaspora investments in agriculture. Aligning diaspora financial flows with climate-smart practices and youth entrepreneurship is vital for sustainable food systems transformation.",
     },
@@ -22,7 +22,7 @@ export default function EndorsementsSection() {
       from: "Andrew Bamugye",
       role: "Executive Secretary",
       org: "UDAN Secretariat",
-      image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/executives/andrew-bamugye.jpeg",
+      image: "/Andrew- UDAN Executive.jpeg",
       quote:
         "Our mission at UDAN is to replace the historical risk and uncertainty of informal remittances with transparent, professionally managed agribusiness opportunities. Together with our partners, we are building a legacy of green growth and generational wealth.",
     },

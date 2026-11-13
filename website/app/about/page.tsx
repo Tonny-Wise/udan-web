@@ -37,13 +37,14 @@ export default function AboutPage() {
       role: "Executive Secretary",
       org: "UDAN Secretariat",
       bio: "Leading UDAN's day-to-day operations, strategic partnerships, and diaspora investment facilitation. Dedicated to creating structured, accountable pipelines that convert remittances into productive agricultural assets.",
-      image: "https://akcpppgfytrztkpyysvg.supabase.co/storage/v1/object/public/executives/andrew-bamugye.jpeg",
+      image: "/Andrew- UDAN Executive.jpeg",
     },
     {
       name: "Christopher Olobo",
       role: "Executive Member",
       org: "UDAN Executive Committee",
       bio: "Advising on strategic agribusiness investments, diaspora financing pipelines, and commercial agribusiness structuring across Uganda.",
+      image: "/Christopher-UDAN Executive.jpeg",
     },
     {
       name: "Jacob Lubaale",
@@ -69,6 +70,7 @@ export default function AboutPage() {
       role: "Executive Member",
       org: "UDAN Executive Committee",
       bio: "Spearheading international export promotion, specialty agricultural trade corridors, and diaspora market connections.",
+      image: "/Pamela- UDAN Executive.jpeg",
     },
     {
       name: "Mukasa Muawiya",
@@ -270,17 +272,14 @@ export default function AboutPage() {
                   </div>
 
                   {/* Member Details */}
-                  <div className="p-4 flex-1 flex flex-col justify-between text-center">
+                  <div className="p-4 flex-1 flex flex-col justify-center text-center">
                     <div>
                       <h4 className="font-heading font-bold text-sm sm:text-base text-[#1b2238] leading-snug">
                         {leader.name}
                       </h4>
-                      <div className="text-[11px] font-semibold text-[#1377a4] mt-0.5 mb-2">
+                      <div className="text-[11px] font-semibold text-[#1377a4] mt-0.5">
                         {leader.role}
                       </div>
-                      <p className="text-[11px] text-gray-600 leading-relaxed">
-                        {leader.bio}
-                      </p>
                     </div>
                   </div>
                 </div>

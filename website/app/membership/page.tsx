@@ -238,7 +238,6 @@ export default function MembershipPage() {
         <section id="register" className="scroll-mt-32">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div className="lg:col-span-5 space-y-5">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#63b849]">Online Onboarding</span>
               <h2 className="font-heading font-bold text-3xl sm:text-4xl text-[#1b2238]">
                 Join UDAN Today
               </h2>
