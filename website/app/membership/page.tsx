@@ -322,26 +322,50 @@ export default function MembershipPage() {
                       Are you a member of the Ugandan diaspora? *
                     </label>
                     <div className="flex flex-wrap gap-6">
-                      <label className="flex items-center gap-2 cursor-pointer select-none">
+                      <label className="flex items-center gap-2.5 cursor-pointer select-none">
                         <input
                           type="radio"
                           name="isDiaspora"
                           value="yes"
                           checked={regData.isDiaspora === "yes"}
                           onChange={() => setRegData({ ...regData, isDiaspora: "yes" })}
-                          className="accent-[#63b849] cursor-pointer outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 ring-0 shadow-none"
+                          className="sr-only"
                         />
+                        <span
+                          aria-hidden="true"
+                          className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 transition-colors ${
+                            regData.isDiaspora === "yes"
+                              ? "border-[#4f9738] bg-white"
+                              : "border-gray-400 bg-white"
+                          }`}
+                        >
+                          {regData.isDiaspora === "yes" && (
+                            <span className="w-2 h-2 rounded-full bg-[#4f9738]" />
+                          )}
+                        </span>
                         <span className="text-sm text-[#1b2238] font-medium">Yes, I am in the diaspora</span>
                       </label>
-                      <label className="flex items-center gap-2 cursor-pointer select-none">
+                      <label className="flex items-center gap-2.5 cursor-pointer select-none">
                         <input
                           type="radio"
                           name="isDiaspora"
                           value="no"
                           checked={regData.isDiaspora === "no"}
                           onChange={() => setRegData({ ...regData, isDiaspora: "no" })}
-                          className="accent-[#63b849] cursor-pointer outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 ring-0 shadow-none"
+                          className="sr-only"
                         />
+                        <span
+                          aria-hidden="true"
+                          className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 transition-colors ${
+                            regData.isDiaspora === "no"
+                              ? "border-[#4f9738] bg-white"
+                              : "border-gray-400 bg-white"
+                          }`}
+                        >
+                          {regData.isDiaspora === "no" && (
+                            <span className="w-2 h-2 rounded-full bg-[#4f9738]" />
+                          )}
+                        </span>
                         <span className="text-sm text-[#1b2238] font-medium">No, I am based in Uganda</span>
                       </label>
                     </div>
