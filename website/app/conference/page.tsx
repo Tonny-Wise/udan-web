@@ -394,13 +394,13 @@ export default async function ConferencePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {speakers.map((spk, idx) => (
               <div key={idx} className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group">
-                <div className="relative h-48 sm:h-64 w-full bg-gray-100 overflow-hidden">
+                <div className="relative h-56 sm:h-72 w-full bg-gray-100 overflow-hidden">
                   <Image
                     src={spk.image}
                     alt={spk.name}
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="object-cover object-top group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>

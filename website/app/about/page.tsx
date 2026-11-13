@@ -253,7 +253,7 @@ export default function AboutPage() {
                         alt={leader.name}
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 25vw"
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="object-cover object-top group-hover:scale-105 transition-transform duration-300"
                       />
                     ) : (
                       <div className="w-full h-full bg-gradient-to-br from-[#131c33] via-[#1b2b4e] to-[#0f4b66] flex flex-col items-center justify-center text-white p-4">
