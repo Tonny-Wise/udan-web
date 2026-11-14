@@ -51,6 +51,7 @@ export default function AboutPage() {
       role: "Executive Member",
       org: "UDAN Executive Committee",
       bio: "Supporting global diaspora membership coordination, value chain expansion, and technical knowledge transfer.",
+      image: "/Jacob - UDAN.jpeg",
     },
     {
       name: "Livingstone Kyeyune",
