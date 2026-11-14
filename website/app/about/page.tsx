@@ -58,6 +58,7 @@ export default function AboutPage() {
       role: "Executive Member",
       org: "UDAN Executive Committee",
       bio: "Driving commercial agriculture partnerships, agro-processing integration, and direct market access channels.",
+      image: "/Livingstone.jpeg",
     },
     {
       name: "Lydia Nakayenze",
