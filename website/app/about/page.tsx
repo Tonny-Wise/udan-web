@@ -36,6 +36,7 @@ export default function AboutPage() {
       name: "Andrew Bamugye",
       role: "Executive Secretary",
       org: "UDAN Secretariat",
+      country: "Kenya",
       bio: "Leading UDAN's day-to-day operations, strategic partnerships, and diaspora investment facilitation. Dedicated to creating structured, accountable pipelines that convert remittances into productive agricultural assets.",
       image: "/Andrew- UDAN Executive.jpeg",
     },
@@ -43,6 +44,7 @@ export default function AboutPage() {
       name: "Christopher Olobo",
       role: "Executive Member",
       org: "UDAN Executive Committee",
+      country: "Kenya",
       bio: "Advising on strategic agribusiness investments, diaspora financing pipelines, and commercial agribusiness structuring across Uganda.",
       image: "/Christopher-UDAN Executive.jpeg",
     },
@@ -50,6 +52,7 @@ export default function AboutPage() {
       name: "Jacob Lubaale",
       role: "Executive Member",
       org: "UDAN Executive Committee",
+      country: "United Kingdom",
       bio: "Supporting global diaspora membership coordination, value chain expansion, and technical knowledge transfer.",
       image: "/Jacob - UDAN.jpeg",
     },
@@ -57,6 +60,7 @@ export default function AboutPage() {
       name: "Livingstone Kyeyune",
       role: "Executive Member",
       org: "UDAN Executive Committee",
+      country: "Japan",
       bio: "Driving commercial agriculture partnerships, agro-processing integration, and direct market access channels.",
       image: "/Livingstone.jpeg",
     },
@@ -64,6 +68,7 @@ export default function AboutPage() {
       name: "Lydia Nakayenze",
       role: "Executive Member",
       org: "UDAN Executive Committee",
+      country: "Germany",
       bio: "Advancing youth and women in agribusiness, sustainable rural enterprises, and community outgrower integration models.",
       image: "/Lydia Nakayenze- UDAN Executive.jpeg",
     },
@@ -71,6 +76,7 @@ export default function AboutPage() {
       name: "Pamela Anyoti Peronaci",
       role: "Executive Member",
       org: "UDAN Executive Committee",
+      country: "Belgium",
       bio: "Spearheading international export promotion, specialty agricultural trade corridors, and diaspora market connections.",
       image: "/Pamela- UDAN Executive.jpeg",
     },
@@ -78,6 +84,7 @@ export default function AboutPage() {
       name: "Mukasa Muawiya",
       role: "Executive Member",
       org: "UDAN Executive Committee",
+      country: "UAE",
       bio: "Promoting digital technology deployment, farm mechanization, and operational excellence for scalable agri-enterprises.",
       image: "/Mukasa-UDAN Executive.jpeg",
     },
@@ -279,7 +286,15 @@ export default function AboutPage() {
                       <h4 className="font-heading font-bold text-sm sm:text-base text-[#1b2238] leading-snug">
                         {leader.name}
                       </h4>
-                      <div className="text-[11px] font-semibold text-[#1377a4] mt-0.5">
+                      {"country" in leader && leader.country && (
+                        <div className="text-[11px] font-medium text-gray-500 flex items-center justify-center gap-1 mt-0.5">
+                          <svg className="w-3 h-3 text-[#1377a4] shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                          </svg>
+                          <span>{leader.country}</span>
+                        </div>
+                      )}
+                      <div className="text-[11px] font-semibold text-[#1377a4] mt-1">
                         {leader.role}
                       </div>
                     </div>
