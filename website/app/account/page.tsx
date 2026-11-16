@@ -2,6 +2,11 @@
 
 import { useState, useEffect, useCallback } from "react";
 
+interface OtherDocument {
+  file: File;
+  name: string;
+}
+
 interface UdanFormData {
   sectionA: {
     fullName: string;
@@ -106,8 +111,7 @@ interface UdanFormData {
   sectionHI: {
     businessPlanFile: File | null;
     businessPlanFileName: string;
-    otherDocuments: File | null;
-    otherDocumentsFileName: string;
+    otherDocuments: OtherDocument[];
     usefulLinks: string;
     websiteUrl: string;
   };
@@ -211,8 +215,7 @@ const initialFormData: UdanFormData = {
   sectionHI: {
     businessPlanFile: null,
     businessPlanFileName: "",
-    otherDocuments: null,
-    otherDocumentsFileName: "",
+    otherDocuments: [],
     usefulLinks: "",
     websiteUrl: "",
   },
@@ -289,7 +292,7 @@ export default function AccountPage() {
           formData.sectionC.expertiseOther;
         return hasExpertise;
       case 3:
-        return formData.sectionD.hasBusiness !== "";
+        return formData.sectionD.hasBusiness !== "" && (formData.sectionD.hasBusiness === "no" || formData.sectionD.yearsExperience !== "");
       case 4:
         return !!(formData.sectionE.businessDescription && formData.sectionE.targetCustomers);
       case 5:
@@ -358,7 +361,7 @@ export default function AccountPage() {
 
     try {
       let businessPlanUrl = "";
-      let otherDocumentsUrl = "";
+      const otherDocumentsUrls: string[] = [];
 
       if (formData.sectionHI.businessPlanFile) {
         const uploadRes = await uploadFile(
@@ -369,13 +372,14 @@ export default function AccountPage() {
         if (uploadRes) businessPlanUrl = uploadRes;
       }
 
-      if (formData.sectionHI.otherDocuments) {
+      // Upload all other documents
+      for (const doc of formData.sectionHI.otherDocuments) {
         const uploadRes = await uploadFile(
-          formData.sectionHI.otherDocuments,
+          doc.file,
           "other_documents",
           formData.sectionA.email
         );
-        if (uploadRes) otherDocumentsUrl = uploadRes;
+        if (uploadRes) otherDocumentsUrls.push(uploadRes);
       }
 
       const res = await fetch("/api/diaspora-application", {
@@ -384,7 +388,7 @@ export default function AccountPage() {
         body: JSON.stringify({
           ...formData,
           businessPlanUrl,
-          otherDocumentsUrl,
+          otherDocumentsUrls,
         }),
       });
 
@@ -1608,26 +1612,53 @@ export default function AccountPage() {
                     )}
                   </div>
                   <div>
-                    <label className="block text-xs font-bold mb-1">Other Documents</label>
+                    <label className="block text-xs font-bold mb-1">Other Documents (Multiple)</label>
                     <input
                       type="file"
                       accept=".pdf,.doc,.docx,.xls,.xlsx"
+                      multiple
                       onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
+                        const files = e.target.files;
+                        if (files) {
+                          const newDocs = Array.from(files).map((file) => ({
+                            file,
+                            name: file.name,
+                          }));
                           updateFormData({
                             sectionHI: {
                               ...formData.sectionHI,
-                              otherDocuments: file,
-                              otherDocumentsFileName: file.name,
+                              otherDocuments: [...formData.sectionHI.otherDocuments, ...newDocs],
                             },
                           });
+                          // Reset input
+                          e.target.value = "";
                         }
                       }}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
                     />
-                    {formData.sectionHI.otherDocumentsFileName && (
-                      <p className="text-xs text-gray-600 mt-1">📎 {formData.sectionHI.otherDocumentsFileName}</p>
+                    <p className="text-xs text-gray-500 mt-1">You can select multiple files at once</p>
+                    {formData.sectionHI.otherDocuments.length > 0 && (
+                      <div className="mt-2 space-y-1">
+                        {formData.sectionHI.otherDocuments.map((doc, idx) => (
+                          <div key={idx} className="flex items-center justify-between bg-gray-50 p-2 rounded">
+                            <span className="text-xs text-gray-600">📎 {doc.name}</span>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                updateFormData({
+                                  sectionHI: {
+                                    ...formData.sectionHI,
+                                    otherDocuments: formData.sectionHI.otherDocuments.filter((_, i) => i !== idx),
+                                  },
+                                });
+                              }}
+                              className="text-xs text-red-600 hover:text-red-800 font-semibold"
+                            >
+                              Remove
+                            </button>
+                          </div>
+                        ))}
+                      </div>
                     )}
                   </div>
                   <input
