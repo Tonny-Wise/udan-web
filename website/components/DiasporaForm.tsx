@@ -439,14 +439,16 @@ export default function DiasporaForm() {
           <div className="w-16 h-16 rounded-full bg-[#63b849] text-white flex items-center justify-center mx-auto mb-6 text-3xl font-bold">
             ✓
           </div>
-          <h2 className="font-heading font-bold text-2xl sm:text-3xl text-[#1b2238] mb-3">Application Received!</h2>
+          <h2 className="font-heading font-bold text-2xl sm:text-3xl text-[#1b2238] mb-3">Congratulations!</h2>
+          <p className="text-sm text-gray-700 max-w-md mx-auto mb-2 font-semibold">
+            You are now a member of UDAN
+          </p>
           <p className="text-sm text-gray-700 max-w-md mx-auto mb-2">
-            Thank you for applying to the Uganda Diaspora Agribusiness Network.
+            Welcome to the Uganda Diaspora Agribusiness Network.
           </p>
           <p className="text-xs text-gray-600 mb-8">
             A confirmation email has been sent to{" "}
-            <span className="font-bold text-[#1b2238]">{formData.sectionA.email}</span>. We will review your
-            application and contact you within 5-7 business days.
+            <span className="font-bold text-[#1b2238]">{formData.sectionA.email}</span>. You now have access to the UDAN B2B platform, regional chapter resources, and member-exclusive opportunities.
           </p>
           <button
             onClick={() => {
