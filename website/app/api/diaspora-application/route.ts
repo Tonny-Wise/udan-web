@@ -138,12 +138,14 @@ export async function POST(req: NextRequest) {
       form_progress: 100,
       form_saved_at: new Date().toISOString(),
       status: "submitted",
+      registration_type: "Diaspora Application", // Default for diaspora form
     });
 
     if (dbError) {
       console.error("Database error:", dbError);
+      console.error("Error details:", JSON.stringify(dbError, null, 2));
       return NextResponse.json(
-        { error: "Failed to save application. Please try again." },
+        { error: "Failed to save application. Please try again.", details: dbError?.message },
         { status: 500 }
       );
     }
