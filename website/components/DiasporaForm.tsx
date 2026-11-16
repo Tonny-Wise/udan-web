@@ -483,7 +483,6 @@ export default function DiasporaForm() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {currentStep === 0 && (
               <div className="space-y-5">
-                <h3 className="text-lg font-bold text-[#1b2238] mb-4">A. Personal Information</h3>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -703,7 +702,6 @@ export default function DiasporaForm() {
 
             {currentStep === 1 && (
               <div className="space-y-4">
-                <h3 className="text-lg font-bold text-[#1b2238] mb-4">B. Education & Training</h3>
                 
                 <div>
                   <label className="block text-xs font-semibold text-gray-700 mb-1">Level of Education *</label>
@@ -743,7 +741,6 @@ export default function DiasporaForm() {
 
             {currentStep === 2 && (
               <div className="space-y-4">
-                <h3 className="text-lg font-bold text-[#1b2238] mb-4">C. Area of Expertise</h3>
                 <p className="text-xs text-gray-600 mb-4">Select all areas where you have expertise *:</p>
 
                 <div className="space-y-3">
@@ -848,7 +845,6 @@ export default function DiasporaForm() {
 
             {currentStep === 3 && (
               <div className="space-y-4">
-                <h3 className="text-lg font-bold text-[#1b2238] mb-4">D. Business Description</h3>
                 
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <label className="block text-xs font-semibold text-gray-700 mb-3">Do you have an agribusiness in Uganda? *</label>
@@ -1156,7 +1152,6 @@ export default function DiasporaForm() {
 
             {currentStep === 4 && (
               <div className="space-y-4">
-                <h3 className="text-lg font-bold text-[#1b2238] mb-4">E. Business Model</h3>
                 
                 <div>
                   <label className="block text-xs font-semibold text-gray-700 mb-1">Business Description *</label>
@@ -1235,7 +1230,6 @@ export default function DiasporaForm() {
 
             {currentStep === 5 && (
               <div className="space-y-4">
-                <h3 className="text-lg font-bold text-[#1b2238] mb-4">F. Strategy & Plans</h3>
                 
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <label className="block text-xs font-semibold text-gray-700 mb-3">Do you have a formal business plan? *</label>
@@ -1285,7 +1279,6 @@ export default function DiasporaForm() {
 
             {currentStep === 6 && (
               <div className="space-y-4">
-                <h3 className="text-lg font-bold text-[#1b2238] mb-4">G. Interests & Collaboration</h3>
                 
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <label className="block text-xs font-semibold text-gray-700 mb-3">Would you like to join the UDAN network? *</label>
@@ -1498,7 +1491,6 @@ export default function DiasporaForm() {
 
             {currentStep === 7 && (
               <div className="space-y-4">
-                <h3 className="text-lg font-bold text-[#1b2238] mb-4">H. Mentorship</h3>
                 
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <label className="block text-xs font-semibold text-gray-700 mb-3">Are you willing to mentor others? *</label>
@@ -1678,7 +1670,6 @@ export default function DiasporaForm() {
 
             {currentStep === 8 && (
               <div className="space-y-4">
-                <h3 className="text-lg font-bold text-[#1b2238] mb-4">I. Files & Links</h3>
                 
                 <div>
                   <label className="block text-xs font-semibold text-gray-700 mb-1">Business Plan (PDF/Word)</label>
