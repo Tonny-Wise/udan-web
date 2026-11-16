@@ -483,103 +483,138 @@ export default function DiasporaForm() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {currentStep === 0 && (
               <div className="space-y-5">
+                <h3 className="text-lg font-bold text-[#1b2238] mb-4">A. Personal Information</h3>
+                
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">Full Name *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Enter your full name"
+                      value={formData.sectionA.fullName}
+                      onChange={(e) => updateFormData({ sectionA: { ...formData.sectionA, fullName: e.target.value } })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">Surname *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Enter your surname"
+                      value={formData.sectionA.surname}
+                      onChange={(e) => updateFormData({ sectionA: { ...formData.sectionA, surname: e.target.value } })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">Date of Birth</label>
+                    <input
+                      type="date"
+                      value={formData.sectionA.dateOfBirth}
+                      onChange={(e) =>
+                        updateFormData({ sectionA: { ...formData.sectionA, dateOfBirth: e.target.value } })
+                      }
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">Gender</label>
+                    <select
+                      value={formData.sectionA.gender}
+                      onChange={(e) => updateFormData({ sectionA: { ...formData.sectionA, gender: e.target.value } })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                    >
+                      <option value="">Select gender</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Address</label>
                   <input
                     type="text"
-                    required
-                    placeholder="Full Name"
-                    value={formData.sectionA.fullName}
-                    onChange={(e) => updateFormData({ sectionA: { ...formData.sectionA, fullName: e.target.value } })}
-                    className="px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
-                  />
-                  <input
-                    type="text"
-                    required
-                    placeholder="Surname *"
-                    value={formData.sectionA.surname}
-                    onChange={(e) => updateFormData({ sectionA: { ...formData.sectionA, surname: e.target.value } })}
-                    className="px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                    placeholder="Enter your address"
+                    value={formData.sectionA.address}
+                    onChange={(e) => updateFormData({ sectionA: { ...formData.sectionA, address: e.target.value } })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
                   />
                 </div>
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">Email Address *</label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="Enter your email"
+                      value={formData.sectionA.email}
+                      onChange={(e) => updateFormData({ sectionA: { ...formData.sectionA, email: e.target.value } })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">Telephone Number *</label>
+                    <input
+                      type="tel"
+                      required
+                      placeholder="Enter your phone number"
+                      value={formData.sectionA.phone}
+                      onChange={(e) => updateFormData({ sectionA: { ...formData.sectionA, phone: e.target.value } })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">Country of Residence *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Enter your country"
+                      value={formData.sectionA.country}
+                      onChange={(e) =>
+                        updateFormData({ sectionA: { ...formData.sectionA, country: e.target.value } })
+                      }
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-700 mb-1">Home District in Uganda</label>
+                    <input
+                      type="text"
+                      placeholder="Enter your home district"
+                      value={formData.sectionA.homeDistrict}
+                      onChange={(e) =>
+                        updateFormData({ sectionA: { ...formData.sectionA, homeDistrict: e.target.value } })
+                      }
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Diaspora Association/Group</label>
                   <input
-                    type="date"
-                    placeholder="Date of Birth"
-                    value={formData.sectionA.dateOfBirth}
+                    type="text"
+                    placeholder="Enter association or group name (if any)"
+                    value={formData.sectionA.diasporaAssociation}
                     onChange={(e) =>
-                      updateFormData({ sectionA: { ...formData.sectionA, dateOfBirth: e.target.value } })
+                      updateFormData({ sectionA: { ...formData.sectionA, diasporaAssociation: e.target.value } })
                     }
-                    className="px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
-                  />
-                  <select
-                    value={formData.sectionA.gender}
-                    onChange={(e) => updateFormData({ sectionA: { ...formData.sectionA, gender: e.target.value } })}
-                    className="px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
-                  >
-                    <option value="">Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </div>
-                <input
-                  type="text"
-                  placeholder="Address"
-                  value={formData.sectionA.address}
-                  onChange={(e) => updateFormData({ sectionA: { ...formData.sectionA, address: e.target.value } })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
-                />
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <input
-                    type="email"
-                    required
-                    placeholder="Email *"
-                    value={formData.sectionA.email}
-                    onChange={(e) => updateFormData({ sectionA: { ...formData.sectionA, email: e.target.value } })}
-                    className="px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
-                  />
-                  <input
-                    type="tel"
-                    required
-                    placeholder="Telephone *"
-                    value={formData.sectionA.phone}
-                    onChange={(e) => updateFormData({ sectionA: { ...formData.sectionA, phone: e.target.value } })}
-                    className="px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
                   />
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    required
-                    placeholder="Country of Residence *"
-                    value={formData.sectionA.country}
-                    onChange={(e) =>
-                      updateFormData({ sectionA: { ...formData.sectionA, country: e.target.value } })
-                    }
-                    className="px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Home District in Uganda"
-                    value={formData.sectionA.homeDistrict}
-                    onChange={(e) =>
-                      updateFormData({ sectionA: { ...formData.sectionA, homeDistrict: e.target.value } })
-                    }
-                    className="px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
-                  />
-                </div>
-                <input
-                  type="text"
-                  placeholder="Diaspora Association/Group (if any)"
-                  value={formData.sectionA.diasporaAssociation}
-                  onChange={(e) =>
-                    updateFormData({ sectionA: { ...formData.sectionA, diasporaAssociation: e.target.value } })
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
-                />
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <label className="block text-xs font-bold text-[#1b2238] uppercase mb-2">
-                    Diaspora network?
+                  <label className="block text-xs font-semibold text-gray-700 mb-3">
+                    Are you part of a diaspora network?
                   </label>
                   <div className="flex gap-4">
                     {["yes", "no"].map((val) => (
@@ -609,7 +644,7 @@ export default function DiasporaForm() {
                   {formData.sectionA.diasporaNetwork === "yes" && (
                     <input
                       type="text"
-                      placeholder="Network name"
+                      placeholder="Enter network name"
                       value={formData.sectionA.diasporaNetworkName}
                       onChange={(e) =>
                         updateFormData({
@@ -621,8 +656,8 @@ export default function DiasporaForm() {
                   )}
                 </div>
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <label className="block text-xs font-bold text-[#1b2238] uppercase mb-2">
-                    Agribusiness network?
+                  <label className="block text-xs font-semibold text-gray-700 mb-3">
+                    Are you part of an agribusiness network?
                   </label>
                   <div className="flex gap-4">
                     {["yes", "no"].map((val) => (
@@ -652,7 +687,7 @@ export default function DiasporaForm() {
                   {formData.sectionA.agribusinessNetwork === "yes" && (
                     <input
                       type="text"
-                      placeholder="Network name"
+                      placeholder="Enter network name"
                       value={formData.sectionA.agribusinessNetworkName}
                       onChange={(e) =>
                         updateFormData({
@@ -668,37 +703,49 @@ export default function DiasporaForm() {
 
             {currentStep === 1 && (
               <div className="space-y-4">
-                <select
-                  required
-                  value={formData.sectionB.educationLevel}
-                  onChange={(e) =>
-                    updateFormData({ sectionB: { ...formData.sectionB, educationLevel: e.target.value } })
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
-                >
-                  <option value="">Education Level *</option>
-                  <option value="Primary">Primary</option>
-                  <option value="Secondary">Secondary</option>
-                  <option value="Vocational">Vocational/Technical</option>
-                  <option value="Diploma">Diploma</option>
-                  <option value="Degree">Degree</option>
-                  <option value="Masters">Masters</option>
-                  <option value="PhD">PhD</option>
-                </select>
-                <textarea
-                  placeholder="Training in Agriculture (last 5 years)"
-                  value={formData.sectionB.agricultureTraining}
-                  onChange={(e) =>
-                    updateFormData({ sectionB: { ...formData.sectionB, agricultureTraining: e.target.value } })
-                  }
-                  rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
-                />
+                <h3 className="text-lg font-bold text-[#1b2238] mb-4">B. Education & Training</h3>
+                
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Level of Education *</label>
+                  <select
+                    required
+                    value={formData.sectionB.educationLevel}
+                    onChange={(e) =>
+                      updateFormData({ sectionB: { ...formData.sectionB, educationLevel: e.target.value } })
+                    }
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                  >
+                    <option value="">Select education level</option>
+                    <option value="Primary">Primary</option>
+                    <option value="Secondary">Secondary</option>
+                    <option value="Vocational">Vocational/Technical</option>
+                    <option value="Diploma">Diploma</option>
+                    <option value="Degree">Degree</option>
+                    <option value="Masters">Masters</option>
+                    <option value="PhD">PhD</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Agricultural Training (Last 5 Years)</label>
+                  <textarea
+                    placeholder="Describe any training in agriculture or agribusiness you have received in the last 5 years"
+                    value={formData.sectionB.agricultureTraining}
+                    onChange={(e) =>
+                      updateFormData({ sectionB: { ...formData.sectionB, agricultureTraining: e.target.value } })
+                    }
+                    rows={4}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                  />
+                </div>
               </div>
             )}
 
             {currentStep === 2 && (
               <div className="space-y-4">
+                <h3 className="text-lg font-bold text-[#1b2238] mb-4">C. Area of Expertise</h3>
+                <p className="text-xs text-gray-600 mb-4">Select all areas where you have expertise *:</p>
+
                 <div className="space-y-3">
                   <Checkbox
                     label="Crop production"
@@ -707,6 +754,20 @@ export default function DiasporaForm() {
                       updateFormData({ sectionC: { ...formData.sectionC, expertiseCrop: checked } })
                     }
                   />
+                  {formData.sectionC.expertiseCrop && (
+                    <div className="ml-6">
+                      <label className="block text-xs font-semibold text-gray-700 mb-1">Crop Commodity</label>
+                      <input
+                        type="text"
+                        placeholder="e.g., Coffee, Maize, Tea"
+                        value={formData.sectionC.cropCommodity}
+                        onChange={(e) =>
+                          updateFormData({ sectionC: { ...formData.sectionC, cropCommodity: e.target.value } })
+                        }
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                      />
+                    </div>
+                  )}
                   <Checkbox
                     label="Livestock"
                     checked={formData.sectionC.expertiseLivestock}
@@ -743,17 +804,20 @@ export default function DiasporaForm() {
                     }
                   />
                   {formData.sectionC.expertiseServices && (
-                    <input
-                      type="text"
-                      placeholder="Specify services"
-                      value={formData.sectionC.expertiseServicesSpecify}
-                      onChange={(e) =>
-                        updateFormData({
-                          sectionC: { ...formData.sectionC, expertiseServicesSpecify: e.target.value },
-                        })
-                      }
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none ml-6"
-                    />
+                    <div className="ml-6">
+                      <label className="block text-xs font-semibold text-gray-700 mb-1">Specify Services</label>
+                      <input
+                        type="text"
+                        placeholder="Describe the services"
+                        value={formData.sectionC.expertiseServicesSpecify}
+                        onChange={(e) =>
+                          updateFormData({
+                            sectionC: { ...formData.sectionC, expertiseServicesSpecify: e.target.value },
+                          })
+                        }
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                      />
+                    </div>
                   )}
                   <Checkbox
                     label="Other"
@@ -763,37 +827,31 @@ export default function DiasporaForm() {
                     }
                   />
                   {formData.sectionC.expertiseOther && (
-                    <input
-                      type="text"
-                      placeholder="Specify other"
-                      value={formData.sectionC.expertiseOtherSpecify}
-                      onChange={(e) =>
-                        updateFormData({
-                          sectionC: { ...formData.sectionC, expertiseOtherSpecify: e.target.value },
-                        })
-                      }
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none ml-6"
-                    />
+                    <div className="ml-6">
+                      <label className="block text-xs font-semibold text-gray-700 mb-1">Please Specify</label>
+                      <input
+                        type="text"
+                        placeholder="Describe other expertise"
+                        value={formData.sectionC.expertiseOtherSpecify}
+                        onChange={(e) =>
+                          updateFormData({
+                            sectionC: { ...formData.sectionC, expertiseOtherSpecify: e.target.value },
+                          })
+                        }
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                      />
+                    </div>
                   )}
                 </div>
-                {formData.sectionC.expertiseCrop && (
-                  <input
-                    type="text"
-                    placeholder="Crop commodity (e.g., Coffee, Maize)"
-                    value={formData.sectionC.cropCommodity}
-                    onChange={(e) =>
-                      updateFormData({ sectionC: { ...formData.sectionC, cropCommodity: e.target.value } })
-                    }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
-                  />
-                )}
               </div>
             )}
 
             {currentStep === 3 && (
               <div className="space-y-4">
+                <h3 className="text-lg font-bold text-[#1b2238] mb-4">D. Business Description</h3>
+                
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <label className="block text-xs font-bold mb-2">Have agribusiness in Uganda? *</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-3">Do you have an agribusiness in Uganda? *</label>
                   <div className="flex gap-4">
                     {["yes", "no"].map((val) => (
                       <label key={val} className="flex items-center gap-2">
@@ -1098,70 +1156,89 @@ export default function DiasporaForm() {
 
             {currentStep === 4 && (
               <div className="space-y-4">
-                <textarea
-                  required
-                  placeholder="Business description *"
-                  value={formData.sectionE.businessDescription}
-                  onChange={(e) =>
-                    updateFormData({
-                      sectionE: { ...formData.sectionE, businessDescription: e.target.value },
-                    })
-                  }
-                  rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
-                />
-                <textarea
-                  required
-                  placeholder="Target customers *"
-                  value={formData.sectionE.targetCustomers}
-                  onChange={(e) =>
-                    updateFormData({
-                      sectionE: { ...formData.sectionE, targetCustomers: e.target.value },
-                    })
-                  }
-                  rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
-                />
-                <textarea
-                  placeholder="Major suppliers"
-                  value={formData.sectionE.majorSuppliers}
-                  onChange={(e) =>
-                    updateFormData({
-                      sectionE: { ...formData.sectionE, majorSuppliers: e.target.value },
-                    })
-                  }
-                  rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
-                />
-                <textarea
-                  placeholder="Partners"
-                  value={formData.sectionE.partners}
-                  onChange={(e) =>
-                    updateFormData({
-                      sectionE: { ...formData.sectionE, partners: e.target.value },
-                    })
-                  }
-                  rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
-                />
-                <textarea
-                  placeholder="Target market"
-                  value={formData.sectionE.targetMarket}
-                  onChange={(e) =>
-                    updateFormData({
-                      sectionE: { ...formData.sectionE, targetMarket: e.target.value },
-                    })
-                  }
-                  rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
-                />
+                <h3 className="text-lg font-bold text-[#1b2238] mb-4">E. Business Model</h3>
+                
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Business Description *</label>
+                  <textarea
+                    required
+                    placeholder="Describe your business, its operations, and main activities"
+                    value={formData.sectionE.businessDescription}
+                    onChange={(e) =>
+                      updateFormData({
+                        sectionE: { ...formData.sectionE, businessDescription: e.target.value },
+                      })
+                    }
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Target Customers *</label>
+                  <textarea
+                    required
+                    placeholder="Who are your main customers? (e.g., retailers, wholesalers, farmers, consumers)"
+                    value={formData.sectionE.targetCustomers}
+                    onChange={(e) =>
+                      updateFormData({
+                        sectionE: { ...formData.sectionE, targetCustomers: e.target.value },
+                      })
+                    }
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Major Suppliers</label>
+                  <textarea
+                    placeholder="Who are your main suppliers or input providers?"
+                    value={formData.sectionE.majorSuppliers}
+                    onChange={(e) =>
+                      updateFormData({
+                        sectionE: { ...formData.sectionE, majorSuppliers: e.target.value },
+                      })
+                    }
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Partners</label>
+                  <textarea
+                    placeholder="Do you have partners? (e.g., NGOs, government agencies, cooperatives, other businesses)"
+                    value={formData.sectionE.partners}
+                    onChange={(e) =>
+                      updateFormData({
+                        sectionE: { ...formData.sectionE, partners: e.target.value },
+                      })
+                    }
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Target Market</label>
+                  <textarea
+                    placeholder="Where do you sell? (geographic areas, regions, or markets)"
+                    value={formData.sectionE.targetMarket}
+                    onChange={(e) =>
+                      updateFormData({
+                        sectionE: { ...formData.sectionE, targetMarket: e.target.value },
+                      })
+                    }
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                  />
+                </div>
               </div>
             )}
 
             {currentStep === 5 && (
               <div className="space-y-4">
+                <h3 className="text-lg font-bold text-[#1b2238] mb-4">F. Strategy & Plans</h3>
+                
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <label className="block text-xs font-bold mb-2">Business plan? *</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-3">Do you have a formal business plan? *</label>
                   <div className="flex gap-4">
                     {["yes", "no"].map((val) => (
                       <label key={val} className="flex items-center gap-2">
@@ -1188,25 +1265,30 @@ export default function DiasporaForm() {
                     ))}
                   </div>
                 </div>
-                <textarea
-                  required
-                  placeholder="Growth plans (next 3 years) *"
-                  value={formData.sectionF.growthPlans}
-                  onChange={(e) =>
-                    updateFormData({
-                      sectionF: { ...formData.sectionF, growthPlans: e.target.value },
-                    })
-                  }
-                  rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
-                />
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Growth Plans (Next 3 Years) *</label>
+                  <textarea
+                    required
+                    placeholder="Describe your plans for growth and expansion in the next 3 years"
+                    value={formData.sectionF.growthPlans}
+                    onChange={(e) =>
+                      updateFormData({
+                        sectionF: { ...formData.sectionF, growthPlans: e.target.value },
+                      })
+                    }
+                    rows={4}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                  />
+                </div>
               </div>
             )}
 
             {currentStep === 6 && (
               <div className="space-y-4">
+                <h3 className="text-lg font-bold text-[#1b2238] mb-4">G. Interests & Collaboration</h3>
+                
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <label className="block text-xs font-bold mb-2">Join UDAN network? *</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-3">Would you like to join the UDAN network? *</label>
                   <div className="flex gap-4 mb-2">
                     {["yes", "no"].map((val) => (
                       <label key={val} className="flex items-center gap-2">
@@ -1233,23 +1315,30 @@ export default function DiasporaForm() {
                     ))}
                   </div>
                   {formData.sectionG.joinNetwork && (
-                    <textarea
-                      placeholder={
-                        formData.sectionG.joinNetwork === "yes" ? "Your expectations" : "Why not interested"
-                      }
-                      value={formData.sectionG.networkExpectations}
-                      onChange={(e) =>
-                        updateFormData({
-                          sectionG: { ...formData.sectionG, networkExpectations: e.target.value },
-                        })
-                      }
-                      rows={3}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none mt-2"
-                    />
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-700 mb-1">
+                        {formData.sectionG.joinNetwork === "yes" ? "Your Expectations from UDAN" : "Why are you not interested?"}
+                      </label>
+                      <textarea
+                        placeholder={
+                          formData.sectionG.joinNetwork === "yes"
+                            ? "Tell us what you hope to gain from joining UDAN"
+                            : "Please explain your reasons"
+                        }
+                        value={formData.sectionG.networkExpectations}
+                        onChange={(e) =>
+                          updateFormData({
+                            sectionG: { ...formData.sectionG, networkExpectations: e.target.value },
+                          })
+                        }
+                        rows={3}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none mt-2"
+                      />
+                    </div>
                   )}
                 </div>
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <label className="block text-xs font-bold mb-2">Willing to invest?</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-3">Are you willing to invest in agribusiness ventures?</label>
                   <div className="flex gap-4 mb-2">
                     {["yes", "no"].map((val) => (
                       <label key={val} className="flex items-center gap-2">
@@ -1276,9 +1365,10 @@ export default function DiasporaForm() {
                     ))}
                   </div>
                   {formData.sectionG.willingInvest === "yes" && (
-                    <div className="space-y-2 mt-2">
+                    <div className="space-y-2 mt-3">
+                      <label className="block text-xs font-semibold text-gray-700">Investment Interests (Select all that apply):</label>
                       <Checkbox
-                        label="Crop"
+                        label="Crop production"
                         checked={formData.sectionG.investSubsectorCrop}
                         onChange={(c) =>
                           updateFormData({
@@ -1296,7 +1386,7 @@ export default function DiasporaForm() {
                         }
                       />
                       <Checkbox
-                        label="Fish"
+                        label="Fish farming"
                         checked={formData.sectionG.investSubsectorFish}
                         onChange={(c) =>
                           updateFormData({
@@ -1326,7 +1416,7 @@ export default function DiasporaForm() {
                   )}
                 </div>
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <label className="block text-xs font-bold mb-2">Collaboration interest?</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-3">Are you interested in collaboration opportunities?</label>
                   <div className="flex gap-4 mb-2">
                     {["yes", "no"].map((val) => (
                       <label key={val} className="flex items-center gap-2">
@@ -1353,7 +1443,8 @@ export default function DiasporaForm() {
                     ))}
                   </div>
                   {formData.sectionG.interestCollaboration === "yes" && (
-                    <div className="space-y-2 mt-2">
+                    <div className="space-y-2 mt-3">
+                      <label className="block text-xs font-semibold text-gray-700">Types of Collaboration (Select all that apply):</label>
                       <Checkbox
                         label="Supplier access"
                         checked={formData.sectionG.collabSuppliers}
@@ -1407,8 +1498,10 @@ export default function DiasporaForm() {
 
             {currentStep === 7 && (
               <div className="space-y-4">
+                <h3 className="text-lg font-bold text-[#1b2238] mb-4">H. Mentorship</h3>
+                
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <label className="block text-xs font-bold mb-2">Willing to mentor? *</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-3">Are you willing to mentor others? *</label>
                   <div className="flex gap-4">
                     {["yes", "no"].map((val) => (
                       <label key={val} className="flex items-center gap-2">
@@ -1437,27 +1530,30 @@ export default function DiasporaForm() {
                 </div>
                 {formData.sectionG.willingMentor === "yes" && (
                   <>
-                    <select
-                      value={formData.sectionG.mentorSubsector}
-                      onChange={(e) =>
-                        updateFormData({
-                          sectionG: { ...formData.sectionG, mentorSubsector: e.target.value },
-                        })
-                      }
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
-                    >
-                      <option value="">Subsector</option>
-                      <option value="Crop">Crop</option>
-                      <option value="Livestock">Livestock</option>
-                      <option value="Fish">Fish</option>
-                      <option value="Forestry">Forestry</option>
-                      <option value="Agritech">Agritech</option>
-                    </select>
                     <div>
-                      <label className="text-xs font-bold block mb-2">Areas of engagement</label>
+                      <label className="block text-xs font-semibold text-gray-700 mb-1">Primary Mentorship Subsector</label>
+                      <select
+                        value={formData.sectionG.mentorSubsector}
+                        onChange={(e) =>
+                          updateFormData({
+                            sectionG: { ...formData.sectionG, mentorSubsector: e.target.value },
+                          })
+                        }
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                      >
+                        <option value="">Select subsector</option>
+                        <option value="Crop">Crop</option>
+                        <option value="Livestock">Livestock</option>
+                        <option value="Fish">Fish</option>
+                        <option value="Forestry">Forestry</option>
+                        <option value="Agritech">Agritech</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-700 mb-3">Areas of Mentorship Engagement (Select all that apply):</label>
                       <div className="space-y-2">
                         <Checkbox
-                          label="Crop prod."
+                          label="Crop production"
                           checked={formData.sectionG.mentorEngagementCrop}
                           onChange={(c) =>
                             updateFormData({
@@ -1475,7 +1571,7 @@ export default function DiasporaForm() {
                           }
                         />
                         <Checkbox
-                          label="Management"
+                          label="Business management"
                           checked={formData.sectionG.mentorEngagementManagement}
                           onChange={(c) =>
                             updateFormData({
@@ -1493,7 +1589,7 @@ export default function DiasporaForm() {
                           }
                         />
                         <Checkbox
-                          label="Staff mgmt"
+                          label="Staff management"
                           checked={formData.sectionG.mentorEngagementStaff}
                           onChange={(c) =>
                             updateFormData({
@@ -1502,7 +1598,7 @@ export default function DiasporaForm() {
                           }
                         />
                         <Checkbox
-                          label="Tech"
+                          label="Technology/Innovation"
                           checked={formData.sectionG.mentorEngagementTech}
                           onChange={(c) =>
                             updateFormData({
@@ -1513,7 +1609,7 @@ export default function DiasporaForm() {
                       </div>
                     </div>
                     <div className="bg-gray-50 p-4 rounded-lg">
-                      <label className="block text-xs font-bold mb-2">Past mentorship?</label>
+                      <label className="block text-xs font-semibold text-gray-700 mb-3">Do you have experience with past mentorship?</label>
                       <div className="flex gap-4">
                         {["yes", "no"].map((val) => (
                           <label key={val} className="flex items-center gap-2">
@@ -1540,35 +1636,41 @@ export default function DiasporaForm() {
                         ))}
                       </div>
                     </div>
-                    <select
-                      value={formData.sectionG.mentorshipFrequency}
-                      onChange={(e) =>
-                        updateFormData({
-                          sectionG: { ...formData.sectionG, mentorshipFrequency: e.target.value },
-                        })
-                      }
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
-                    >
-                      <option value="">Engagement type</option>
-                      <option value="in-person">In-person</option>
-                      <option value="online">Online</option>
-                      <option value="both">Both</option>
-                    </select>
-                    <select
-                      value={formData.sectionG.mentorshipHours}
-                      onChange={(e) =>
-                        updateFormData({
-                          sectionG: { ...formData.sectionG, mentorshipHours: e.target.value },
-                        })
-                      }
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
-                    >
-                      <option value="">Hours/month</option>
-                      <option value="1-2">1–2</option>
-                      <option value="3-4">3–4</option>
-                      <option value="5-6">5–6</option>
-                      <option value="7+">7+</option>
-                    </select>
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-700 mb-1">Preferred Engagement Type</label>
+                      <select
+                        value={formData.sectionG.mentorshipFrequency}
+                        onChange={(e) =>
+                          updateFormData({
+                            sectionG: { ...formData.sectionG, mentorshipFrequency: e.target.value },
+                          })
+                        }
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                      >
+                        <option value="">Select engagement type</option>
+                        <option value="in-person">In-person</option>
+                        <option value="online">Online</option>
+                        <option value="both">Both in-person and online</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-700 mb-1">Hours Available per Month</label>
+                      <select
+                        value={formData.sectionG.mentorshipHours}
+                        onChange={(e) =>
+                          updateFormData({
+                            sectionG: { ...formData.sectionG, mentorshipHours: e.target.value },
+                          })
+                        }
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                      >
+                        <option value="">Select hours per month</option>
+                        <option value="1-2">1–2 hours</option>
+                        <option value="3-4">3–4 hours</option>
+                        <option value="5-6">5–6 hours</option>
+                        <option value="7+">7+ hours</option>
+                      </select>
+                    </div>
                   </>
                 )}
               </div>
@@ -1576,8 +1678,10 @@ export default function DiasporaForm() {
 
             {currentStep === 8 && (
               <div className="space-y-4">
+                <h3 className="text-lg font-bold text-[#1b2238] mb-4">I. Files & Links</h3>
+                
                 <div>
-                  <label className="block text-xs font-bold mb-1">Business Plan (PDF/Word)</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Business Plan (PDF/Word)</label>
                   <input
                     type="file"
                     accept=".pdf,.doc,.docx"
@@ -1600,7 +1704,7 @@ export default function DiasporaForm() {
                   )}
                 </div>
                 <div>
-                  <label className="block text-xs font-bold mb-1">Other Documents (Multiple)</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Other Supporting Documents (Multiple files allowed)</label>
                   <input
                     type="file"
                     accept=".pdf,.doc,.docx,.xls,.xlsx"
@@ -1624,7 +1728,7 @@ export default function DiasporaForm() {
                     }}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
                   />
-                  <p className="text-xs text-gray-500 mt-1">You can select multiple files at once</p>
+                  <p className="text-xs text-gray-500 mt-1">You can select multiple files at once. Supported formats: PDF, Word, Excel</p>
                   {formData.sectionHI.otherDocuments.length > 0 && (
                     <div className="mt-2 space-y-1">
                       {formData.sectionHI.otherDocuments.map((doc, idx) => (
@@ -1649,28 +1753,34 @@ export default function DiasporaForm() {
                     </div>
                   )}
                 </div>
-                <input
-                  type="url"
-                  placeholder="Website URL"
-                  value={formData.sectionHI.websiteUrl}
-                  onChange={(e) =>
-                    updateFormData({
-                      sectionHI: { ...formData.sectionHI, websiteUrl: e.target.value },
-                    })
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
-                />
-                <textarea
-                  placeholder="Useful links (one per line)"
-                  value={formData.sectionHI.usefulLinks}
-                  onChange={(e) =>
-                    updateFormData({
-                      sectionHI: { ...formData.sectionHI, usefulLinks: e.target.value },
-                    })
-                  }
-                  rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
-                />
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Website URL</label>
+                  <input
+                    type="url"
+                    placeholder="https://example.com"
+                    value={formData.sectionHI.websiteUrl}
+                    onChange={(e) =>
+                      updateFormData({
+                        sectionHI: { ...formData.sectionHI, websiteUrl: e.target.value },
+                      })
+                    }
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Useful Links & References</label>
+                  <textarea
+                    placeholder="Paste any useful links related to your business (one per line)"
+                    value={formData.sectionHI.usefulLinks}
+                    onChange={(e) =>
+                      updateFormData({
+                        sectionHI: { ...formData.sectionHI, usefulLinks: e.target.value },
+                      })
+                    }
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                  />
+                </div>
               </div>
             )}
 
