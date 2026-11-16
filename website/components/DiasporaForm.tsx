@@ -483,7 +483,6 @@ export default function DiasporaForm() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {currentStep === 0 && (
               <div className="space-y-5">
-                
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-semibold text-gray-700 mb-1">Full Name *</label>
@@ -702,7 +701,6 @@ export default function DiasporaForm() {
 
             {currentStep === 1 && (
               <div className="space-y-4">
-                
                 <div>
                   <label className="block text-xs font-semibold text-gray-700 mb-1">Level of Education *</label>
                   <select
@@ -845,7 +843,6 @@ export default function DiasporaForm() {
 
             {currentStep === 3 && (
               <div className="space-y-4">
-                
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <label className="block text-xs font-semibold text-gray-700 mb-3">Do you have an agribusiness in Uganda? *</label>
                   <div className="flex gap-4">
@@ -1152,7 +1149,6 @@ export default function DiasporaForm() {
 
             {currentStep === 4 && (
               <div className="space-y-4">
-                
                 <div>
                   <label className="block text-xs font-semibold text-gray-700 mb-1">Business Description *</label>
                   <textarea
@@ -1230,7 +1226,6 @@ export default function DiasporaForm() {
 
             {currentStep === 5 && (
               <div className="space-y-4">
-                
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <label className="block text-xs font-semibold text-gray-700 mb-3">Do you have a formal business plan? *</label>
                   <div className="flex gap-4">
@@ -1279,7 +1274,6 @@ export default function DiasporaForm() {
 
             {currentStep === 6 && (
               <div className="space-y-4">
-                
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <label className="block text-xs font-semibold text-gray-700 mb-3">Would you like to join the UDAN network? *</label>
                   <div className="flex gap-4 mb-2">
@@ -1491,7 +1485,6 @@ export default function DiasporaForm() {
 
             {currentStep === 7 && (
               <div className="space-y-4">
-                
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <label className="block text-xs font-semibold text-gray-700 mb-3">Are you willing to mentor others? *</label>
                   <div className="flex gap-4">
@@ -1670,7 +1663,6 @@ export default function DiasporaForm() {
 
             {currentStep === 8 && (
               <div className="space-y-4">
-                
                 <div>
                   <label className="block text-xs font-semibold text-gray-700 mb-1">Business Plan (PDF/Word)</label>
                   <input
