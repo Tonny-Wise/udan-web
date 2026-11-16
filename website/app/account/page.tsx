@@ -223,6 +223,7 @@ export default function AccountPage() {
   const [formData, setFormData] = useState<UdanFormData>(initialFormData);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [submitMessage, setSubmitMessage] = useState("");
+  const [saveStatus, setSaveStatus] = useState<"idle" | "saved">("idle");
   const [hasAutoLoaded, setHasAutoLoaded] = useState(false);
 
   const steps = [
@@ -239,8 +240,8 @@ export default function AccountPage() {
 
   useEffect(() => {
     if (hasAutoLoaded) return;
-    const userEmail = formData.sectionA.email || "udan_diaspora_form";
-    const storageKey = `udan_diaspora_form_${userEmail}`;
+    // Use constant storage key independent of email to ensure reliable data recovery
+    const storageKey = "udan_diaspora_form_draft";
     const saved = localStorage.getItem(storageKey);
     if (saved) {
       try {
@@ -251,11 +252,11 @@ export default function AccountPage() {
       }
     }
     setHasAutoLoaded(true);
-  }, [hasAutoLoaded, formData.sectionA.email]);
+  }, [hasAutoLoaded]);
 
   const saveToLocalStorage = useCallback((data: UdanFormData) => {
-    const userEmail = data.sectionA.email || "udan_diaspora_form";
-    const storageKey = `udan_diaspora_form_${userEmail}`;
+    // Use constant storage key independent of email to ensure reliable data recovery
+    const storageKey = "udan_diaspora_form_draft";
     localStorage.setItem(storageKey, JSON.stringify(data));
   }, []);
 
@@ -317,6 +318,13 @@ export default function AccountPage() {
     } else {
       setSubmitMessage("Please complete all required fields (*) in this section");
     }
+  };
+
+  const handleSaveContinueLater = () => {
+    saveToLocalStorage(formData);
+    setSaveStatus("saved");
+    // Clear the saved notification after 3 seconds
+    setTimeout(() => setSaveStatus("idle"), 3000);
   };
 
   const uploadFile = async (file: File, type: string, email: string): Promise<string | null> => {
@@ -383,7 +391,7 @@ export default function AccountPage() {
       const data = await res.json();
       if (res.ok && data.success) {
         setSubmitStatus("success");
-        localStorage.removeItem(`udan_diaspora_form_${formData.sectionA.email}`);
+        localStorage.removeItem("udan_diaspora_form_draft");
         setFormData(initialFormData);
         setCurrentStep(0);
       } else {
@@ -1655,6 +1663,13 @@ export default function AccountPage() {
                   className="flex-1 px-4 py-2 border border-gray-300 text-[#1b2238] text-xs font-bold rounded-full hover:bg-gray-50 disabled:opacity-50"
                 >
                   Previous
+                </button>
+                <button
+                  type="button"
+                  onClick={handleSaveContinueLater}
+                  className="flex-1 px-4 py-2 border border-[#63b849] text-[#63b849] text-xs font-bold rounded-full hover:bg-[#f0f9ed]"
+                >
+                  {saveStatus === "saved" ? "✓ Saved" : "Save & Continue Later"}
                 </button>
                 {currentStep === steps.length - 1 ? (
                   <button
