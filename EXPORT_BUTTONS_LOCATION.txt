@@ -1,0 +1,66 @@
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     ADMIN PORTAL - EXPORT BUTTONS LOCATION                  │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                               │
+│   URL: http://localhost:3001                                                │
+│                                                                               │
+│   ┌─ Tab Navigation ──────────────────────────────────────────────────────┐ │
+│   │ ▸ Registrations ◀ (CLICK HERE)                                        │ │
+│   │   Gallery                                                              │ │
+│   │   News                                                                 │ │
+│   │   Events                                                               │ │
+│   │   Settings                                                             │ │
+│   └───────────────────────────────────────────────────────────────────────┘ │
+│                                                                               │
+│   ┌─ Registrations View ──────────────────────────────────────────────────┐ │
+│   │                                                                         │ │
+│   │  📊 📈 📄  ◀──────────────── EXPORT BUTTONS (HERE!)                   │ │
+│   │  │  │  │                                                               │ │
+│   │  │  │  └── PDF Export                                                 │ │
+│   │  │  └────── Excel Export                                              │ │
+│   │  └───────── CSV Export                                                │ │
+│   │                                                                         │ │
+│   │ ┌─────────────────────────────────────────────────────────────────┐   │ │
+│   │ │ Member Registrations Table                                      │   │ │
+│   │ ├─────────────────────────────────────────────────────────────────┤   │ │
+│   │ │ Name │ Role │ Company │ Email │ Region │ Status │ Actions    │   │ │
+│   │ ├─────────────────────────────────────────────────────────────────┤   │ │
+│   │ │ Jasper... │ Seller │ Sunland... │ j@ex... │ West │ Approved  │   │ │
+│   │ │ Andrew... │ Buyer  │ UDAN       │ a@ex... │ N.A. │ Approved  │   │ │
+│   │ │ ...                                                               │   │ │
+│   │ └─────────────────────────────────────────────────────────────────┘   │ │
+│   │                                                                         │ │
+│   └───────────────────────────────────────────────────────────────────────┘ │
+│                                                                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+WHAT THE BUTTONS DO:
+
+📊 CSV BUTTON (Blue)
+   └─ Downloads: udan-registrations-2026-11-16.csv
+   └─ Format: Comma-separated values
+   └─ Opens in: Excel, Google Sheets, any spreadsheet
+   └─ Size: ~5-10 KB
+
+📈 EXCEL BUTTON (Green)
+   └─ Downloads: udan-registrations-2026-11-16.xlsx
+   └─ Format: Microsoft Excel (.xlsx)
+   └─ Features: Styled headers, auto-fitted columns
+   └─ Size: ~50-100 KB
+
+📄 PDF BUTTON (Orange)
+   └─ Downloads: udan-registrations-2026-11-16.pdf
+   └─ Format: Portable Document Format
+   └─ Features: Professional report layout, table view
+   └─ Size: ~100-200 KB
+
+═══════════════════════════════════════════════════════════════════════════════
+
+QUICK TEST:
+
+1. Open browser: http://localhost:3001
+2. Look for the Registrations tab
+3. Find the buttons near "Member Registrations" header
+4. Click any button to download
+
+Done! 🎉

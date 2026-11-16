@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
 
@@ -22,15 +23,31 @@ interface Registration {
 }
 
 export default function AdminRegistrationsPage() {
+  const router = useRouter();
   const [registrations, setRegistrations] = useState<Registration[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterStatus, setFilterStatus] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
   const [exporting, setExporting] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    fetchRegistrations();
-  }, []);
+    // Check if user has admin token cookie
+    const checkAuth = () => {
+      const cookies = document.cookie.split(";");
+      const hasAdminToken = cookies.some((c) => c.trim().startsWith("admin_token="));
+      
+      if (!hasAdminToken) {
+        router.push("/admin");
+        return;
+      }
+      
+      setIsAuthenticated(true);
+      fetchRegistrations();
+    };
+
+    checkAuth();
+  }, [router]);
 
   const fetchRegistrations = async () => {
     try {
@@ -52,6 +69,12 @@ export default function AdminRegistrationsPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleLogout = () => {
+    // Clear admin token cookie
+    document.cookie = "admin_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+    router.push("/admin");
   };
 
   const handleExport = async (format: "csv" | "excel" | "pdf") => {
@@ -100,6 +123,14 @@ export default function AdminRegistrationsPage() {
     return matchesStatus && matchesSearch;
   });
 
+  if (!isAuthenticated) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-gray-500">Redirecting to login...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-white font-body min-h-screen">
       {/* Header */}
@@ -114,12 +145,20 @@ export default function AdminRegistrationsPage() {
                 View and manage all UDAN membership registrations
               </p>
             </div>
-            <Link
-              href="/"
-              className="text-xs font-bold text-[#63b849] hover:underline"
-            >
-              ← Back to Home
-            </Link>
+            <div className="flex gap-3 items-center">
+              <button
+                onClick={handleLogout}
+                className="text-xs font-bold text-red-400 hover:text-red-300 transition"
+              >
+                Logout
+              </button>
+              <Link
+                href="/"
+                className="text-xs font-bold text-[#63b849] hover:underline"
+              >
+                ← Home
+              </Link>
+            </div>
           </div>
         </div>
       </section>

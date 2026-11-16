@@ -36,20 +36,81 @@ export async function GET(req: NextRequest): Promise<Response> {
       );
     }
 
-    // Prepare data for export
+    // Prepare data for export - organized by section
     const exportData = members.map((m: any) => ({
+      // Basic Info
       "Full Name": m.full_name || "",
+      Surname: m.surname || "",
       Email: m.email || "",
       Phone: m.phone || "",
+      Status: m.status || "",
+      
+      // Section A: Personal Information
       Gender: m.gender || "",
-      Region: m.region || "",
+      "Date of Birth": m.date_of_birth || "",
+      Address: m.address || "",
       Country: m.country || "",
+      "Home District": m.home_district || "",
+      "Diaspora Association": m.diaspora_association || "",
+      "In Diaspora Network": m.diaspora_network ? "Yes" : "No",
+      "Diaspora Network Name": m.diaspora_network_name || "",
+      "In Agribusiness Network": m.agribusiness_network ? "Yes" : "No",
+      "Agribusiness Network Name": m.agribusiness_network_name || "",
+      
+      // Section B: Education
+      "Education Level": m.education_level || "",
+      "Agriculture Training": m.agriculture_training ? "Yes" : "No",
+      
+      // Section C: Expertise
+      "Expertise - Crop": m.expertise_crop ? "Yes" : "No",
+      "Expertise - Livestock": m.expertise_livestock ? "Yes" : "No",
+      "Expertise - Aquaculture": m.expertise_aquaculture ? "Yes" : "No",
+      "Expertise - Horticulture": m.expertise_horticulture ? "Yes" : "No",
+      "Expertise - Forestry": m.expertise_forestry ? "Yes" : "No",
+      "Expertise - Services": m.expertise_services ? "Yes" : "No",
+      "Crop Commodity": m.crop_commodity || "",
+      
+      // Section D: Business
+      "Has Business": m.has_business ? "Yes" : "No",
+      "Business Name": m.business_name || "",
+      "Business Registration": m.business_registration || "",
+      "Business Location": m.business_location_type || "",
+      "Years Experience": m.years_experience || "",
+      "Permanent Employees": m.employees_permanent || 0,
+      "Temporary Employees": m.employees_temporary || 0,
+      
+      // Section E: Business Model
+      "Business Description": m.business_description ? "Yes" : "No",
+      "Target Customers": m.target_customers ? "Yes" : "No",
+      "Target Market": m.target_market ? "Yes" : "No",
+      
+      // Section F: Strategy
+      "Has Business Plan": m.has_business_plan ? "Yes" : "No",
+      "Growth Plans": m.growth_plans ? "Yes" : "No",
+      
+      // Section G: Interest
+      "Join Network": m.join_network ? "Yes" : "No",
+      "Willing to Invest": m.willing_invest ? "Yes" : "No",
+      "Interest in Collaboration": m.interest_collaboration ? "Yes" : "No",
+      
+      // Section G: Mentorship
+      "Willing to Mentor": m.willing_mentor ? "Yes" : "No",
+      "Mentor Subsector": m.mentor_subsector || "",
+      "Past Mentorship": m.past_mentorship ? "Yes" : "No",
+      "Mentorship Hours": m.mentorship_hours || "",
+      
+      // Files & Links
+      "Has Business Plan File": m.business_plan_file ? "Yes" : "No",
+      "Has Other Documents": m.other_documents ? "Yes" : "No",
+      "Website URL": m.website_url || "",
+      
+      // Legacy fields (backward compatibility)
+      Region: m.region || "",
       Occupation: m.occupation || "",
       Company: m.company || "",
       "Agri Interests": m.agri_interests || "",
       "Membership Type": m.membership_type || "",
       "Registration Type": m.registration_type || "",
-      Status: m.status || "",
       "Created At": m.created_at ? new Date(m.created_at).toLocaleDateString() : "",
     }));
 

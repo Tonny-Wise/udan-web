@@ -1,587 +1,1689 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
+import { useState, useEffect, useCallback } from "react";
 
-export default function AccountPage() {
-  const [registrationType, setRegistrationType] = useState<"success" | null>(null);
-  const [regStatus, setRegStatus] = useState<"idle" | "loading" | "error" | "success">("idle");
-  const [regMessage, setRegMessage] = useState("");
+interface UdanFormData {
+  sectionA: {
+    fullName: string;
+    surname: string;
+    dateOfBirth: string;
+    gender: string;
+    address: string;
+    email: string;
+    phone: string;
+    country: string;
+    homeDistrict: string;
+    diasporaAssociation: string;
+    diasporaNetwork: string;
+    diasporaNetworkName: string;
+    agribusinessNetwork: string;
+    agribusinessNetworkName: string;
+  };
+  sectionB: {
+    educationLevel: string;
+    agricultureTraining: string;
+  };
+  sectionC: {
+    expertiseCrop: boolean;
+    expertiseLivestock: boolean;
+    expertiseAquaculture: boolean;
+    expertiseHorticulture: boolean;
+    expertiseForestry: boolean;
+    expertiseServices: boolean;
+    expertiseServicesSpecify: string;
+    expertiseOther: boolean;
+    expertiseOtherSpecify: string;
+    cropCommodity: string;
+  };
+  sectionD: {
+    hasBusiness: string;
+    businessName: string;
+    businessRegistration: string;
+    businessLocationType: string;
+    enterpriseTypeCrop: boolean;
+    enterpriseTypeLivestock: boolean;
+    enterpriseTypeFish: boolean;
+    enterpriseTypeForestry: boolean;
+    enterpriseTypeTech: boolean;
+    enterpriseTypeOther: boolean;
+    enterpriseTypeOtherSpecify: string;
+    valueChainProduction: boolean;
+    valueChainAggregation: boolean;
+    valueChainProcessing: boolean;
+    valueChainDistribution: boolean;
+    valueChainInputs: boolean;
+    valueChainServices: boolean;
+    valueChainServicesSpecify: string;
+    roleOwner: boolean;
+    roleFinancier: boolean;
+    rolePermanent: boolean;
+    roleTemporary: boolean;
+    roleCooperative: boolean;
+    roleOther: boolean;
+    roleOtherSpecify: string;
+    yearsExperience: string;
+    employeesPermanent: string;
+    employeesTemporary: string;
+  };
+  sectionE: {
+    businessDescription: string;
+    targetCustomers: string;
+    majorSuppliers: string;
+    partners: string;
+    targetMarket: string;
+  };
+  sectionF: {
+    hasBusinessPlan: string;
+    growthPlans: string;
+  };
+  sectionG: {
+    joinNetwork: string;
+    networkExpectations: string;
+    willingInvest: string;
+    investSubsectorCrop: boolean;
+    investSubsectorLivestock: boolean;
+    investSubsectorFish: boolean;
+    investSubsectorForestry: boolean;
+    investSubsectorTech: boolean;
+    interestCollaboration: string;
+    collabSuppliers: boolean;
+    collabCustomers: boolean;
+    collabYouthMonitoring: boolean;
+    collabCommunityInvestment: boolean;
+    collabMentorship: boolean;
+    willingMentor: string;
+    mentorSubsector: string;
+    mentorEngagementCrop: boolean;
+    mentorEngagementProcessing: boolean;
+    mentorEngagementManagement: boolean;
+    mentorEngagementMarket: boolean;
+    mentorEngagementStaff: boolean;
+    mentorEngagementTech: boolean;
+    pastMentorship: string;
+    mentorshipHours: string;
+    mentorshipFrequency: string;
+  };
+  sectionHI: {
+    businessPlanFile: File | null;
+    businessPlanFileName: string;
+    otherDocuments: File | null;
+    otherDocumentsFileName: string;
+    usefulLinks: string;
+    websiteUrl: string;
+  };
+}
 
-  // Registration state
-  const [regData, setRegData] = useState({
+const initialFormData: UdanFormData = {
+  sectionA: {
     fullName: "",
-    gender: "Prefer not to say",
+    surname: "",
+    dateOfBirth: "",
+    gender: "",
+    address: "",
     email: "",
     phone: "",
-    region: "North America",
-    country: "United States",
-    occupation: "",
-    agriInterests: "Crop production",
-    company: "",
-    membershipType: "Ordinary Membership",
-    registrationType: "buyer" as "buyer" | "seller" | "other",
-    customRole: "",
-    isDiaspora: "" as "" | "yes" | "no",
-    password: "",
-    confirmPassword: "",
-    consent: false,
-  });
+    country: "",
+    homeDistrict: "",
+    diasporaAssociation: "",
+    diasporaNetwork: "",
+    diasporaNetworkName: "",
+    agribusinessNetwork: "",
+    agribusinessNetworkName: "",
+  },
+  sectionB: { educationLevel: "", agricultureTraining: "" },
+  sectionC: {
+    expertiseCrop: false,
+    expertiseLivestock: false,
+    expertiseAquaculture: false,
+    expertiseHorticulture: false,
+    expertiseForestry: false,
+    expertiseServices: false,
+    expertiseServicesSpecify: "",
+    expertiseOther: false,
+    expertiseOtherSpecify: "",
+    cropCommodity: "",
+  },
+  sectionD: {
+    hasBusiness: "",
+    businessName: "",
+    businessRegistration: "",
+    businessLocationType: "",
+    enterpriseTypeCrop: false,
+    enterpriseTypeLivestock: false,
+    enterpriseTypeFish: false,
+    enterpriseTypeForestry: false,
+    enterpriseTypeTech: false,
+    enterpriseTypeOther: false,
+    enterpriseTypeOtherSpecify: "",
+    valueChainProduction: false,
+    valueChainAggregation: false,
+    valueChainProcessing: false,
+    valueChainDistribution: false,
+    valueChainInputs: false,
+    valueChainServices: false,
+    valueChainServicesSpecify: "",
+    roleOwner: false,
+    roleFinancier: false,
+    rolePermanent: false,
+    roleTemporary: false,
+    roleCooperative: false,
+    roleOther: false,
+    roleOtherSpecify: "",
+    yearsExperience: "",
+    employeesPermanent: "",
+    employeesTemporary: "",
+  },
+  sectionE: {
+    businessDescription: "",
+    targetCustomers: "",
+    majorSuppliers: "",
+    partners: "",
+    targetMarket: "",
+  },
+  sectionF: { hasBusinessPlan: "", growthPlans: "" },
+  sectionG: {
+    joinNetwork: "",
+    networkExpectations: "",
+    willingInvest: "",
+    investSubsectorCrop: false,
+    investSubsectorLivestock: false,
+    investSubsectorFish: false,
+    investSubsectorForestry: false,
+    investSubsectorTech: false,
+    interestCollaboration: "",
+    collabSuppliers: false,
+    collabCustomers: false,
+    collabYouthMonitoring: false,
+    collabCommunityInvestment: false,
+    collabMentorship: false,
+    willingMentor: "",
+    mentorSubsector: "",
+    mentorEngagementCrop: false,
+    mentorEngagementProcessing: false,
+    mentorEngagementManagement: false,
+    mentorEngagementMarket: false,
+    mentorEngagementStaff: false,
+    mentorEngagementTech: false,
+    pastMentorship: "",
+    mentorshipHours: "",
+    mentorshipFrequency: "",
+  },
+  sectionHI: {
+    businessPlanFile: null,
+    businessPlanFileName: "",
+    otherDocuments: null,
+    otherDocumentsFileName: "",
+    usefulLinks: "",
+    websiteUrl: "",
+  },
+};
 
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!regData.isDiaspora) {
-      setRegStatus("error");
-      setRegMessage("Please indicate whether you are a member of the Ugandan diaspora.");
-      return;
-    }
-    if (regData.registrationType === "other" && !regData.customRole.trim()) {
-      setRegStatus("error");
-      setRegMessage("Please specify your role or designation.");
-      return;
-    }
-    if (regData.password !== regData.confirmPassword) {
-      setRegStatus("error");
-      setRegMessage("Passwords do not match. Please verify.");
-      return;
-    }
-    if (!regData.consent) {
-      setRegStatus("error");
-      setRegMessage("Please consent to the membership data processing terms.");
-      return;
-    }
+export default function AccountPage() {
+  const [currentStep, setCurrentStep] = useState(0);
+  const [formData, setFormData] = useState<UdanFormData>(initialFormData);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [submitMessage, setSubmitMessage] = useState("");
+  const [hasAutoLoaded, setHasAutoLoaded] = useState(false);
 
-    setRegStatus("loading");
-    setRegMessage("");
+  const steps = [
+    "Personal Information",
+    "Education",
+    "Expertise",
+    "Business Description",
+    "Business Model",
+    "Strategy & Plans",
+    "Interests",
+    "Mentorship",
+    "Files & Links",
+  ];
 
-    const effectiveRole =
-      regData.registrationType === "other"
-        ? regData.customRole.trim() || "Other Stakeholder"
-        : regData.registrationType === "buyer"
-        ? "Buyer"
-        : "Seller";
+  useEffect(() => {
+    if (hasAutoLoaded) return;
+    const userEmail = formData.sectionA.email || "udan_diaspora_form";
+    const storageKey = `udan_diaspora_form_${userEmail}`;
+    const saved = localStorage.getItem(storageKey);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        setFormData(parsed);
+      } catch (e) {
+        console.error("Failed to load form data:", e);
+      }
+    }
+    setHasAutoLoaded(true);
+  }, [hasAutoLoaded, formData.sectionA.email]);
+
+  const saveToLocalStorage = useCallback((data: UdanFormData) => {
+    const userEmail = data.sectionA.email || "udan_diaspora_form";
+    const storageKey = `udan_diaspora_form_${userEmail}`;
+    localStorage.setItem(storageKey, JSON.stringify(data));
+  }, []);
+
+  const updateFormData = useCallback((updates: Partial<UdanFormData>) => {
+    const newData = { ...formData, ...updates };
+    setFormData(newData);
+    saveToLocalStorage(newData);
+  }, [formData, saveToLocalStorage]);
+
+  const validateSection = (step: number): boolean => {
+    switch (step) {
+      case 0:
+        return !!(
+          formData.sectionA.fullName &&
+          formData.sectionA.surname &&
+          formData.sectionA.email &&
+          formData.sectionA.phone &&
+          formData.sectionA.country
+        );
+      case 1:
+        return !!formData.sectionB.educationLevel;
+      case 2:
+        const hasExpertise =
+          formData.sectionC.expertiseCrop ||
+          formData.sectionC.expertiseLivestock ||
+          formData.sectionC.expertiseAquaculture ||
+          formData.sectionC.expertiseHorticulture ||
+          formData.sectionC.expertiseForestry ||
+          formData.sectionC.expertiseServices ||
+          formData.sectionC.expertiseOther;
+        return hasExpertise;
+      case 3:
+        return formData.sectionD.hasBusiness !== "";
+      case 4:
+        return !!(formData.sectionE.businessDescription && formData.sectionE.targetCustomers);
+      case 5:
+        return formData.sectionF.hasBusinessPlan !== "";
+      case 6:
+        return formData.sectionG.joinNetwork !== "";
+      case 7:
+        return formData.sectionG.willingMentor !== "";
+      case 8:
+        return true;
+      default:
+        return true;
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentStep > 0) setCurrentStep(currentStep - 1);
+  };
+
+  const handleNext = () => {
+    if (validateSection(currentStep)) {
+      if (currentStep < steps.length - 1) {
+        setCurrentStep(currentStep + 1);
+        setSubmitMessage("");
+      }
+    } else {
+      setSubmitMessage("Please complete all required fields (*) in this section");
+    }
+  };
+
+  const uploadFile = async (file: File, type: string, email: string): Promise<string | null> => {
+    const formDataUpload = new FormData();
+    formDataUpload.append("file", file);
+    formDataUpload.append("type", type);
+    formDataUpload.append("email", email);
 
     try {
-      const res = await fetch("/api/membership", {
+      const res = await fetch("/api/upload-diaspora-file", {
+        method: "POST",
+        body: formDataUpload,
+      });
+      const data = await res.json();
+      return data.filePath || null;
+    } catch (err) {
+      console.error("File upload error:", err);
+      return null;
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validateSection(currentStep)) {
+      setSubmitMessage("Please complete all required fields");
+      return;
+    }
+
+    setSubmitStatus("loading");
+    setSubmitMessage("");
+
+    try {
+      let businessPlanUrl = "";
+      let otherDocumentsUrl = "";
+
+      if (formData.sectionHI.businessPlanFile) {
+        const uploadRes = await uploadFile(
+          formData.sectionHI.businessPlanFile,
+          "business_plan",
+          formData.sectionA.email
+        );
+        if (uploadRes) businessPlanUrl = uploadRes;
+      }
+
+      if (formData.sectionHI.otherDocuments) {
+        const uploadRes = await uploadFile(
+          formData.sectionHI.otherDocuments,
+          "other_documents",
+          formData.sectionA.email
+        );
+        if (uploadRes) otherDocumentsUrl = uploadRes;
+      }
+
+      const res = await fetch("/api/diaspora-application", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: regData.fullName,
-          email: regData.email,
-          phone: regData.phone,
-          gender: regData.gender,
-          region: regData.region,
-          country: regData.country,
-          occupation: regData.occupation,
-          company: regData.company,
-          agriInterests: regData.agriInterests,
-          membershipType: regData.membershipType,
-          registrationType: effectiveRole,
-          isDiaspora: regData.isDiaspora,
-          interests: `Registered as ${effectiveRole} - Diaspora: ${regData.isDiaspora === "yes" ? "Yes" : "No"}, Gender: ${regData.gender}, Region: ${regData.region} (${regData.country}), Occupation: ${regData.occupation || "N/A"}, Company: ${regData.company || "N/A"}, Focus: ${regData.agriInterests}, Type: ${regData.membershipType}`,
+          ...formData,
+          businessPlanUrl,
+          otherDocumentsUrl,
         }),
       });
 
       const data = await res.json();
       if (res.ok && data.success) {
-        setRegStatus("success");
-        setRegistrationType("success");
-        setRegMessage(
-          `Congratulations! You have successfully registered as ${
-            regData.registrationType === "buyer"
-              ? "a Buyer"
-              : regData.registrationType === "seller"
-              ? "a Seller"
-              : effectiveRole
-          }.`
-        );
+        setSubmitStatus("success");
+        localStorage.removeItem(`udan_diaspora_form_${formData.sectionA.email}`);
+        setFormData(initialFormData);
+        setCurrentStep(0);
       } else {
-        setRegStatus("error");
-        setRegMessage(data.error || "Failed to register. Please try again.");
+        setSubmitStatus("error");
+        setSubmitMessage(data.error || "Failed to submit application");
       }
-    } catch {
-      setRegStatus("error");
-      setRegMessage("An unexpected error occurred. Please try again.");
+    } catch (err) {
+      console.error("Submission error:", err);
+      setSubmitStatus("error");
+      setSubmitMessage("An error occurred while submitting the application");
     }
   };
 
+  const Checkbox = ({
+    label,
+    checked,
+    onChange,
+  }: {
+    label: string;
+    checked: boolean;
+    onChange: (checked: boolean) => void;
+  }) => (
+    <label className="flex items-center gap-2.5 cursor-pointer select-none">
+      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} className="sr-only" />
+      <span
+        aria-hidden="true"
+        className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-all ${
+          checked ? "border-[#63b849] bg-[#63b849]" : "border-gray-300 bg-white"
+        }`}
+      >
+        {checked && <span className="text-white text-xs">✓</span>}
+      </span>
+      <span className="text-sm text-[#1b2238]">{label}</span>
+    </label>
+  );
+
   return (
-    <div className="bg-white font-body min-h-[85vh]">
-      {/* Banner */}
+    <div className="bg-white font-body min-h-[100vh]">
       <section className="bg-[#131c33] text-white py-12 sm:py-16 px-4 sm:px-6 relative overflow-hidden">
         <div className="max-w-4xl mx-auto relative z-10 text-center">
           <h1 className="font-heading font-bold text-2xl sm:text-4xl text-white tracking-tight mb-2">
-            {registrationType === "success" ? "Registration Confirmed" : "Register with UDAN"}
+            {submitStatus === "success" ? "Application Submitted" : "UDAN Diaspora Application Form"}
           </h1>
           <p className="text-gray-300 text-xs sm:text-sm max-w-xl mx-auto">
-            {registrationType === "success"
-              ? "Your account has been created successfully"
-              : "Join the Uganda Diaspora in Agribusiness Network. Choose your role to get started."}
+            {submitStatus === "success"
+              ? "Thank you for applying to the Uganda Diaspora Agribusiness Network"
+              : `Step ${currentStep + 1} of ${steps.length}: ${steps[currentStep]}`}
           </p>
         </div>
-        <div className="brand-ribbon w-full absolute bottom-0 left-0" />
       </section>
 
-      {/* Main Container */}
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
-        {/* SUCCESS STATE */}
-        {registrationType === "success" && (
-          <div className="bg-gradient-to-br from-[#f0f9ed] to-[#e8f5e1] rounded-2xl p-8 sm:p-12 border border-[#63b849]/40 text-center animate-fadeIn">
+        {submitStatus === "success" && (
+          <div className="bg-gradient-to-br from-[#f0f9ed] to-[#e8f5e1] rounded-2xl p-8 sm:p-12 border border-[#63b849]/40 text-center">
             <div className="w-16 h-16 rounded-full bg-[#63b849] text-white flex items-center justify-center mx-auto mb-6 text-3xl font-bold">
               ✓
             </div>
-            <h2 className="font-heading font-bold text-2xl sm:text-3xl text-[#1b2238] mb-3">
-              Registration Successful!
-            </h2>
-            <p className="text-sm text-gray-700 max-w-md mx-auto mb-6">
-              {regMessage}
+            <h2 className="font-heading font-bold text-2xl sm:text-3xl text-[#1b2238] mb-3">Application Received!</h2>
+            <p className="text-sm text-gray-700 max-w-md mx-auto mb-2">
+              Thank you for applying to the Uganda Diaspora Agribusiness Network.
             </p>
             <p className="text-xs text-gray-600 mb-8">
-              An email confirmation will be sent to <span className="font-bold text-[#1b2238]">{regData.email}</span>. 
-              Please check your inbox for next steps and B2B Business portal access.
+              A confirmation email has been sent to{" "}
+              <span className="font-bold text-[#1b2238]">{formData.sectionA.email}</span>. We will review your
+              application and contact you within 5-7 business days.
             </p>
             <button
               onClick={() => {
-                setRegistrationType(null);
-                setRegData({
-                  fullName: "",
-                  gender: "Prefer not to say",
-                  email: "",
-                  phone: "",
-                  region: "North America",
-                  country: "United States",
-                  occupation: "",
-                  agriInterests: "Crop production",
-                  company: "",
-                  membershipType: "Ordinary Membership",
-                  registrationType: "buyer",
-                  customRole: "",
-                  isDiaspora: "",
-                  password: "",
-                  confirmPassword: "",
-                  consent: false,
-                });
+                setFormData(initialFormData);
+                setCurrentStep(0);
+                setSubmitStatus("idle");
               }}
-              className="pill-btn pill-green text-xs py-2.5 px-6"
+              className="inline-flex items-center justify-center px-6 py-2.5 bg-[#63b849] text-white text-xs font-bold rounded-full hover:bg-[#558c3d] transition-colors"
             >
-              Register Another Member
+              Start New Application
             </button>
           </div>
         )}
 
-        {/* ROLE CHOOSER TILES (COMMENTED OUT - FORM DISPLAYED DIRECTLY)
-        <div className="animate-fadeIn space-y-8">
-          <div className="text-center">
-            <h2 className="font-heading font-bold text-2xl text-[#1b2238] mb-2">
-              What describes you best?
-            </h2>
-            <p className="text-xs text-gray-600">
-              Choose your primary role in the agribusiness network
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <button
-              type="button"
-              className="group p-8 rounded-2xl border-2 border-gray-200 hover:border-[#1377a4] bg-white hover:bg-blue-50/50 hover:shadow-md transition-all duration-300 text-left cursor-pointer"
-            >
-              <div className="w-12 h-12 rounded-full bg-[#1377a4]/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <svg className="w-6 h-6 text-[#1377a4]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
+        {submitStatus !== "success" && (
+          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-sm">
+            <div className="mb-8">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="font-heading font-bold text-lg text-[#1b2238]">{steps[currentStep]}</h2>
+                <span className="text-xs font-semibold text-gray-600">
+                  Step {currentStep + 1} of {steps.length}
+                </span>
               </div>
-              <h3 className="font-heading font-bold text-lg text-[#1b2238] mb-2">
-                I am a Buyer
-              </h3>
-              <p className="text-xs text-gray-600 mb-6">
-                I am looking to source quality agricultural products, connect with suppliers, and explore investment opportunities.
-              </p>
-              <div className="text-[11px] font-bold uppercase tracking-wider text-[#1377a4] flex items-center gap-1">
-                Choose Buyer
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
-              </div>
-            </button>
-
-            <button
-              type="button"
-              className="group p-8 rounded-2xl border-2 border-gray-200 hover:border-[#63b849] bg-white hover:bg-green-50/50 hover:shadow-md transition-all duration-300 text-left cursor-pointer"
-            >
-              <div className="w-12 h-12 rounded-full bg-[#63b849]/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <svg className="w-6 h-6 text-[#63b849]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-              </div>
-              <h3 className="font-heading font-bold text-lg text-[#1b2238] mb-2">
-                I am a Seller
-              </h3>
-              <p className="text-xs text-gray-600 mb-6">
-                I am an agripreneur or agribusiness enterprise looking to reach buyers, showcase my business, and scale operations.
-              </p>
-              <div className="text-[11px] font-bold uppercase tracking-wider text-[#63b849] flex items-center gap-1">
-                Choose Seller
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
-              </div>
-            </button>
-          </div>
-
-          <button
-            type="button"
-            className="group w-full p-8 rounded-2xl border-2 border-gray-200 hover:border-[#e5851d] bg-white hover:bg-amber-50/40 hover:shadow-md transition-all duration-300 text-left cursor-pointer flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6"
-          >
-            <div className="flex items-start sm:items-center gap-5">
-              <div className="w-12 h-12 rounded-full bg-[#e5851d]/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                <svg className="w-6 h-6 text-[#e5851d]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="font-heading font-bold text-lg text-[#1b2238] mb-1">
-                  Other Roles &amp; Stakeholders
-                </h3>
-                <p className="text-xs text-gray-600 max-w-xl">
-                  I am an investor, mentor, researcher, development partner, policymaker, student, or other agribusiness professional looking to connect with UDAN.
-                </p>
+              <div className="w-full bg-gray-200 rounded-full h-2">
+                <div
+                  className="bg-[#63b849] h-2 rounded-full transition-all duration-300"
+                  style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
+                />
               </div>
             </div>
-            <div className="text-[11px] font-bold uppercase tracking-wider text-[#e5851d] flex items-center gap-1 shrink-0 self-start sm:self-center">
-              Choose Others
-              <span className="group-hover:translate-x-1 transition-transform">→</span>
-            </div>
-          </button>
-        </div>
-        */}
 
-        {/* REGISTRATION FORM */}
-        {registrationType !== "success" && (
-          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-sm animate-fadeIn">
-            <div className="mb-6 pb-4 border-b border-gray-200">
-              <h2 className="font-heading font-bold text-xl text-[#1b2238]">
-                Register with UDAN
-              </h2>
-              <p className="text-xs text-gray-500">
-                Complete your profile to join the Uganda Diaspora in Agribusiness Network
-              </p>
-            </div>
-
-            <form onSubmit={handleRegister} className="space-y-4">
-              {/* DIASPORA QUESTION */}
-              <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-2">
-                  Are you a member of the Ugandan diaspora? *
-                </label>
-                <div className="flex flex-wrap gap-6">
-                  <label className="flex items-center gap-2.5 cursor-pointer select-none">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {currentStep === 0 && (
+                <div className="space-y-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <input
-                      type="radio"
-                      name="isDiaspora"
-                      value="yes"
-                      checked={regData.isDiaspora === "yes"}
-                      onChange={() => setRegData({ ...regData, isDiaspora: "yes" })}
-                      className="sr-only"
+                      type="text"
+                      required
+                      placeholder="Full Name"
+                      value={formData.sectionA.fullName}
+                      onChange={(e) => updateFormData({ sectionA: { ...formData.sectionA, fullName: e.target.value } })}
+                      className="px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
                     />
-                    <span
-                      aria-hidden="true"
-                      className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 transition-colors ${
-                        regData.isDiaspora === "yes"
-                          ? "border-[#4f9738] bg-white"
-                          : "border-gray-400 bg-white"
-                      }`}
-                    >
-                      {regData.isDiaspora === "yes" && (
-                        <span className="w-2 h-2 rounded-full bg-[#4f9738]" />
-                      )}
-                    </span>
-                    <span className="text-sm text-[#1b2238] font-medium">Yes, I am in the diaspora</span>
-                  </label>
-                  <label className="flex items-center gap-2.5 cursor-pointer select-none">
                     <input
-                      type="radio"
-                      name="isDiaspora"
-                      value="no"
-                      checked={regData.isDiaspora === "no"}
-                      onChange={() => setRegData({ ...regData, isDiaspora: "no" })}
-                      className="sr-only"
+                      type="text"
+                      required
+                      placeholder="Surname *"
+                      value={formData.sectionA.surname}
+                      onChange={(e) => updateFormData({ sectionA: { ...formData.sectionA, surname: e.target.value } })}
+                      className="px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
                     />
-                    <span
-                      aria-hidden="true"
-                      className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 transition-colors ${
-                        regData.isDiaspora === "no"
-                          ? "border-[#4f9738] bg-white"
-                          : "border-gray-400 bg-white"
-                      }`}
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <input
+                      type="date"
+                      placeholder="Date of Birth"
+                      value={formData.sectionA.dateOfBirth}
+                      onChange={(e) =>
+                        updateFormData({ sectionA: { ...formData.sectionA, dateOfBirth: e.target.value } })
+                      }
+                      className="px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                    />
+                    <select
+                      value={formData.sectionA.gender}
+                      onChange={(e) => updateFormData({ sectionA: { ...formData.sectionA, gender: e.target.value } })}
+                      className="px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
                     >
-                      {regData.isDiaspora === "no" && (
-                        <span className="w-2 h-2 rounded-full bg-[#4f9738]" />
-                      )}
-                    </span>
-                    <span className="text-sm text-[#1b2238] font-medium">No, I am based in Uganda</span>
-                  </label>
-                </div>
-              </div>
-
-              {/* REGISTRATION ROLE SELECTOR */}
-              <div>
-                <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-1">
-                  I am registering as *
-                </label>
-                <select
-                  value={regData.registrationType}
-                  onChange={(e) =>
-                    setRegData({
-                      ...regData,
-                      registrationType: e.target.value as "buyer" | "seller" | "other",
-                    })
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none focus:border-[#63b849]"
-                >
-                  <option value="buyer">Buyer / Investor</option>
-                  <option value="seller">Seller / Agripreneur</option>
-                  <option value="other">Other Stakeholder / Partner</option>
-                </select>
-              </div>
-
-              {/* SPECIFIC ROLE FIELD FOR OTHERS */}
-              {regData.registrationType === "other" && (
-                <div className="p-4 bg-amber-50/70 border border-amber-200/80 rounded-xl">
-                  <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-1">
-                    Specify Your Role / Designation *
-                  </label>
+                      <option value="">Gender</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
                   <input
                     type="text"
-                    required
-                    value={regData.customRole}
-                    onChange={(e) => setRegData({ ...regData, customRole: e.target.value })}
-                    placeholder="e.g. Impact Investor, Development Partner, Agricultural Researcher, Mentor, Student"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none bg-white focus:border-[#e5851d] focus:ring-1 focus:ring-[#e5851d]"
+                    placeholder="Address"
+                    value={formData.sectionA.address}
+                    onChange={(e) => updateFormData({ sectionA: { ...formData.sectionA, address: e.target.value } })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
                   />
-                  <p className="text-[11px] text-gray-500 mt-1">
-                    Type your specific role or interest within the agribusiness ecosystem
-                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <input
+                      type="email"
+                      required
+                      placeholder="Email *"
+                      value={formData.sectionA.email}
+                      onChange={(e) => updateFormData({ sectionA: { ...formData.sectionA, email: e.target.value } })}
+                      className="px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                    />
+                    <input
+                      type="tel"
+                      required
+                      placeholder="Telephone *"
+                      value={formData.sectionA.phone}
+                      onChange={(e) => updateFormData({ sectionA: { ...formData.sectionA, phone: e.target.value } })}
+                      className="px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                    />
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <input
+                      type="text"
+                      required
+                      placeholder="Country of Residence *"
+                      value={formData.sectionA.country}
+                      onChange={(e) =>
+                        updateFormData({ sectionA: { ...formData.sectionA, country: e.target.value } })
+                      }
+                      className="px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Home District in Uganda"
+                      value={formData.sectionA.homeDistrict}
+                      onChange={(e) =>
+                        updateFormData({ sectionA: { ...formData.sectionA, homeDistrict: e.target.value } })
+                      }
+                      className="px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                    />
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Diaspora Association/Group (if any)"
+                    value={formData.sectionA.diasporaAssociation}
+                    onChange={(e) =>
+                      updateFormData({ sectionA: { ...formData.sectionA, diasporaAssociation: e.target.value } })
+                    }
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                  />
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <label className="block text-xs font-bold text-[#1b2238] uppercase mb-2">
+                      Diaspora network?
+                    </label>
+                    <div className="flex gap-4">
+                      {["yes", "no"].map((val) => (
+                        <label key={val} className="flex items-center gap-2">
+                          <input
+                            type="radio"
+                            value={val}
+                            checked={formData.sectionA.diasporaNetwork === val}
+                            onChange={(e) =>
+                              updateFormData({
+                                sectionA: { ...formData.sectionA, diasporaNetwork: e.target.value },
+                              })
+                            }
+                            className="sr-only"
+                          />
+                          <span
+                            className={`w-4 h-4 rounded-full border-2 ${
+                              formData.sectionA.diasporaNetwork === val
+                                ? "border-[#63b849] bg-[#63b849]"
+                                : "border-gray-300"
+                            }`}
+                          />
+                          <span className="text-xs text-[#1b2238]">{val === "yes" ? "Yes" : "No"}</span>
+                        </label>
+                      ))}
+                    </div>
+                    {formData.sectionA.diasporaNetwork === "yes" && (
+                      <input
+                        type="text"
+                        placeholder="Network name"
+                        value={formData.sectionA.diasporaNetworkName}
+                        onChange={(e) =>
+                          updateFormData({
+                            sectionA: { ...formData.sectionA, diasporaNetworkName: e.target.value },
+                          })
+                        }
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none mt-2"
+                      />
+                    )}
+                  </div>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <label className="block text-xs font-bold text-[#1b2238] uppercase mb-2">
+                      Agribusiness network?
+                    </label>
+                    <div className="flex gap-4">
+                      {["yes", "no"].map((val) => (
+                        <label key={val} className="flex items-center gap-2">
+                          <input
+                            type="radio"
+                            value={val}
+                            checked={formData.sectionA.agribusinessNetwork === val}
+                            onChange={(e) =>
+                              updateFormData({
+                                sectionA: { ...formData.sectionA, agribusinessNetwork: e.target.value },
+                              })
+                            }
+                            className="sr-only"
+                          />
+                          <span
+                            className={`w-4 h-4 rounded-full border-2 ${
+                              formData.sectionA.agribusinessNetwork === val
+                                ? "border-[#63b849] bg-[#63b849]"
+                                : "border-gray-300"
+                            }`}
+                          />
+                          <span className="text-xs text-[#1b2238]">{val === "yes" ? "Yes" : "No"}</span>
+                        </label>
+                      ))}
+                    </div>
+                    {formData.sectionA.agribusinessNetwork === "yes" && (
+                      <input
+                        type="text"
+                        placeholder="Network name"
+                        value={formData.sectionA.agribusinessNetworkName}
+                        onChange={(e) =>
+                          updateFormData({
+                            sectionA: { ...formData.sectionA, agribusinessNetworkName: e.target.value },
+                          })
+                        }
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none mt-2"
+                      />
+                    )}
+                  </div>
                 </div>
               )}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-1">
-                    Full Names *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={regData.fullName}
-                    onChange={(e) => setRegData({ ...regData, fullName: e.target.value })}
-                    placeholder="e.g. Jasper Batureine"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none focus:border-[#63b849] focus:ring-1 focus:ring-[#63b849]"
-                  />
-                </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-1">
-                    Gender
-                  </label>
+              {currentStep === 1 && (
+                <div className="space-y-4">
                   <select
-                    value={regData.gender}
-                    onChange={(e) => setRegData({ ...regData, gender: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none focus:border-[#63b849]"
-                  >
-                    <option>Male</option>
-                    <option>Female</option>
-                    <option>Prefer not to say</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-1">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
                     required
-                    value={regData.email}
-                    onChange={(e) => setRegData({ ...regData, email: e.target.value })}
-                    placeholder="e.g. jasper@example.com"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none focus:border-[#63b849] focus:ring-1 focus:ring-[#63b849]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-1">
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    value={regData.phone}
-                    onChange={(e) => setRegData({ ...regData, phone: e.target.value })}
-                    placeholder="+1 (555) 000-0000"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none focus:border-[#63b849]"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-1">
-                    Regional Chapter
-                  </label>
-                  <select
-                    value={regData.region}
-                    onChange={(e) => setRegData({ ...regData, region: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none focus:border-[#63b849]"
+                    value={formData.sectionB.educationLevel}
+                    onChange={(e) =>
+                      updateFormData({ sectionB: { ...formData.sectionB, educationLevel: e.target.value } })
+                    }
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
                   >
-                    <option>North America (USA, Canada)</option>
-                    <option>Europe (UK, Germany, Netherlands, Sweden, Norway)</option>
-                    <option>Middle East (UAE, Qatar, Saudi Arabia)</option>
-                    <option>East Africa (Uganda, Kenya, Tanzania, Rwanda, Burundi)</option>
-                    <option>Southern &amp; Central Africa (South Africa, Zambia, Zimbabwe)</option>
-                    <option>Asia &amp; Australia (China, India, Australia)</option>
+                    <option value="">Education Level *</option>
+                    <option value="Primary">Primary</option>
+                    <option value="Secondary">Secondary</option>
+                    <option value="Vocational">Vocational/Technical</option>
+                    <option value="Diploma">Diploma</option>
+                    <option value="Degree">Degree</option>
+                    <option value="Masters">Masters</option>
+                    <option value="PhD">PhD</option>
                   </select>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-1">
-                    Country of Residence
-                  </label>
-                  <input
-                    type="text"
-                    value={regData.country}
-                    onChange={(e) => setRegData({ ...regData, country: e.target.value })}
-                    placeholder="e.g. United States, United Kingdom"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none focus:border-[#63b849]"
+                  <textarea
+                    placeholder="Training in Agriculture (last 5 years)"
+                    value={formData.sectionB.agricultureTraining}
+                    onChange={(e) =>
+                      updateFormData({ sectionB: { ...formData.sectionB, agricultureTraining: e.target.value } })
+                    }
+                    rows={4}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
                   />
                 </div>
-              </div>
+              )}
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-1">
-                    Professional Background / Occupation
-                  </label>
-                  <input
-                    type="text"
-                    value={regData.occupation}
-                    onChange={(e) => setRegData({ ...regData, occupation: e.target.value })}
-                    placeholder="e.g. Financial Analyst, Agronomist, Engineer"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none focus:border-[#63b849]"
+              {currentStep === 2 && (
+                <div className="space-y-4">
+                  <div className="space-y-3">
+                    <Checkbox
+                      label="Crop production"
+                      checked={formData.sectionC.expertiseCrop}
+                      onChange={(checked) =>
+                        updateFormData({ sectionC: { ...formData.sectionC, expertiseCrop: checked } })
+                      }
+                    />
+                    <Checkbox
+                      label="Livestock"
+                      checked={formData.sectionC.expertiseLivestock}
+                      onChange={(checked) =>
+                        updateFormData({ sectionC: { ...formData.sectionC, expertiseLivestock: checked } })
+                      }
+                    />
+                    <Checkbox
+                      label="Aquaculture"
+                      checked={formData.sectionC.expertiseAquaculture}
+                      onChange={(checked) =>
+                        updateFormData({ sectionC: { ...formData.sectionC, expertiseAquaculture: checked } })
+                      }
+                    />
+                    <Checkbox
+                      label="Horticulture"
+                      checked={formData.sectionC.expertiseHorticulture}
+                      onChange={(checked) =>
+                        updateFormData({ sectionC: { ...formData.sectionC, expertiseHorticulture: checked } })
+                      }
+                    />
+                    <Checkbox
+                      label="Forestry"
+                      checked={formData.sectionC.expertiseForestry}
+                      onChange={(checked) =>
+                        updateFormData({ sectionC: { ...formData.sectionC, expertiseForestry: checked } })
+                      }
+                    />
+                    <Checkbox
+                      label="Services"
+                      checked={formData.sectionC.expertiseServices}
+                      onChange={(checked) =>
+                        updateFormData({ sectionC: { ...formData.sectionC, expertiseServices: checked } })
+                      }
+                    />
+                    {formData.sectionC.expertiseServices && (
+                      <input
+                        type="text"
+                        placeholder="Specify services"
+                        value={formData.sectionC.expertiseServicesSpecify}
+                        onChange={(e) =>
+                          updateFormData({
+                            sectionC: { ...formData.sectionC, expertiseServicesSpecify: e.target.value },
+                          })
+                        }
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none ml-6"
+                      />
+                    )}
+                    <Checkbox
+                      label="Other"
+                      checked={formData.sectionC.expertiseOther}
+                      onChange={(checked) =>
+                        updateFormData({ sectionC: { ...formData.sectionC, expertiseOther: checked } })
+                      }
+                    />
+                    {formData.sectionC.expertiseOther && (
+                      <input
+                        type="text"
+                        placeholder="Specify other"
+                        value={formData.sectionC.expertiseOtherSpecify}
+                        onChange={(e) =>
+                          updateFormData({
+                            sectionC: { ...formData.sectionC, expertiseOtherSpecify: e.target.value },
+                          })
+                        }
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none ml-6"
+                      />
+                    )}
+                  </div>
+                  {formData.sectionC.expertiseCrop && (
+                    <input
+                      type="text"
+                      placeholder="Crop commodity (e.g., Coffee, Maize)"
+                      value={formData.sectionC.cropCommodity}
+                      onChange={(e) =>
+                        updateFormData({ sectionC: { ...formData.sectionC, cropCommodity: e.target.value } })
+                      }
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                    />
+                  )}
+                </div>
+              )}
+
+              {currentStep === 3 && (
+                <div className="space-y-4">
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <label className="block text-xs font-bold mb-2">Have agribusiness in Uganda? *</label>
+                    <div className="flex gap-4">
+                      {["yes", "no"].map((val) => (
+                        <label key={val} className="flex items-center gap-2">
+                          <input
+                            type="radio"
+                            value={val}
+                            checked={formData.sectionD.hasBusiness === val}
+                            onChange={(e) =>
+                              updateFormData({ sectionD: { ...formData.sectionD, hasBusiness: e.target.value } })
+                            }
+                            className="sr-only"
+                          />
+                          <span
+                            className={`w-4 h-4 rounded-full border-2 ${
+                              formData.sectionD.hasBusiness === val
+                                ? "border-[#63b849] bg-[#63b849]"
+                                : "border-gray-300"
+                            }`}
+                          />
+                          <span className="text-xs">{val === "yes" ? "Yes" : "No"}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                  {formData.sectionD.hasBusiness === "yes" && (
+                    <>
+                      <input
+                        type="text"
+                        placeholder="Business name"
+                        value={formData.sectionD.businessName}
+                        onChange={(e) =>
+                          updateFormData({
+                            sectionD: { ...formData.sectionD, businessName: e.target.value },
+                          })
+                        }
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Business registration number"
+                        value={formData.sectionD.businessRegistration}
+                        onChange={(e) =>
+                          updateFormData({
+                            sectionD: { ...formData.sectionD, businessRegistration: e.target.value },
+                          })
+                        }
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                      />
+                      <div>
+                        <label className="block text-xs font-bold mb-2">Business location</label>
+                        <div className="flex gap-4">
+                          {["Town", "District"].map((loc) => (
+                            <label key={loc} className="flex items-center gap-2">
+                              <input
+                                type="radio"
+                                value={loc}
+                                checked={formData.sectionD.businessLocationType === loc}
+                                onChange={(e) =>
+                                  updateFormData({
+                                    sectionD: { ...formData.sectionD, businessLocationType: e.target.value },
+                                  })
+                                }
+                                className="sr-only"
+                              />
+                              <span
+                                className={`w-4 h-4 rounded-full border-2 ${
+                                  formData.sectionD.businessLocationType === loc
+                                    ? "border-[#63b849] bg-[#63b849]"
+                                    : "border-gray-300"
+                                }`}
+                              />
+                              <span className="text-xs">{loc}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold block mb-2">Enterprise type</label>
+                        <div className="space-y-2">
+                          <Checkbox
+                            label="Crop production"
+                            checked={formData.sectionD.enterpriseTypeCrop}
+                            onChange={(c) =>
+                              updateFormData({ sectionD: { ...formData.sectionD, enterpriseTypeCrop: c } })
+                            }
+                          />
+                          <Checkbox
+                            label="Livestock"
+                            checked={formData.sectionD.enterpriseTypeLivestock}
+                            onChange={(c) =>
+                              updateFormData({ sectionD: { ...formData.sectionD, enterpriseTypeLivestock: c } })
+                            }
+                          />
+                          <Checkbox
+                            label="Fish farming"
+                            checked={formData.sectionD.enterpriseTypeFish}
+                            onChange={(c) =>
+                              updateFormData({ sectionD: { ...formData.sectionD, enterpriseTypeFish: c } })
+                            }
+                          />
+                          <Checkbox
+                            label="Forestry"
+                            checked={formData.sectionD.enterpriseTypeForestry}
+                            onChange={(c) =>
+                              updateFormData({ sectionD: { ...formData.sectionD, enterpriseTypeForestry: c } })
+                            }
+                          />
+                          <Checkbox
+                            label="Agritech"
+                            checked={formData.sectionD.enterpriseTypeTech}
+                            onChange={(c) =>
+                              updateFormData({ sectionD: { ...formData.sectionD, enterpriseTypeTech: c } })
+                            }
+                          />
+                          <Checkbox
+                            label="Other"
+                            checked={formData.sectionD.enterpriseTypeOther}
+                            onChange={(c) =>
+                              updateFormData({ sectionD: { ...formData.sectionD, enterpriseTypeOther: c } })
+                            }
+                          />
+                          {formData.sectionD.enterpriseTypeOther && (
+                            <input
+                              type="text"
+                              placeholder="Specify"
+                              value={formData.sectionD.enterpriseTypeOtherSpecify}
+                              onChange={(e) =>
+                                updateFormData({
+                                  sectionD: { ...formData.sectionD, enterpriseTypeOtherSpecify: e.target.value },
+                                })
+                              }
+                              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none ml-6"
+                            />
+                          )}
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold block mb-2">Value chain position</label>
+                        <div className="space-y-2">
+                          <Checkbox
+                            label="Production"
+                            checked={formData.sectionD.valueChainProduction}
+                            onChange={(c) =>
+                              updateFormData({ sectionD: { ...formData.sectionD, valueChainProduction: c } })
+                            }
+                          />
+                          <Checkbox
+                            label="Aggregation"
+                            checked={formData.sectionD.valueChainAggregation}
+                            onChange={(c) =>
+                              updateFormData({ sectionD: { ...formData.sectionD, valueChainAggregation: c } })
+                            }
+                          />
+                          <Checkbox
+                            label="Processing"
+                            checked={formData.sectionD.valueChainProcessing}
+                            onChange={(c) =>
+                              updateFormData({ sectionD: { ...formData.sectionD, valueChainProcessing: c } })
+                            }
+                          />
+                          <Checkbox
+                            label="Distribution"
+                            checked={formData.sectionD.valueChainDistribution}
+                            onChange={(c) =>
+                              updateFormData({ sectionD: { ...formData.sectionD, valueChainDistribution: c } })
+                            }
+                          />
+                          <Checkbox
+                            label="Inputs"
+                            checked={formData.sectionD.valueChainInputs}
+                            onChange={(c) =>
+                              updateFormData({ sectionD: { ...formData.sectionD, valueChainInputs: c } })
+                            }
+                          />
+                          <Checkbox
+                            label="Services"
+                            checked={formData.sectionD.valueChainServices}
+                            onChange={(c) =>
+                              updateFormData({ sectionD: { ...formData.sectionD, valueChainServices: c } })
+                            }
+                          />
+                          {formData.sectionD.valueChainServices && (
+                            <input
+                              type="text"
+                              placeholder="Specify"
+                              value={formData.sectionD.valueChainServicesSpecify}
+                              onChange={(e) =>
+                                updateFormData({
+                                  sectionD: { ...formData.sectionD, valueChainServicesSpecify: e.target.value },
+                                })
+                              }
+                              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none ml-6"
+                            />
+                          )}
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold block mb-2">Your role</label>
+                        <div className="space-y-2">
+                          <Checkbox
+                            label="Owner/CEO"
+                            checked={formData.sectionD.roleOwner}
+                            onChange={(c) =>
+                              updateFormData({ sectionD: { ...formData.sectionD, roleOwner: c } })
+                            }
+                          />
+                          <Checkbox
+                            label="Financier"
+                            checked={formData.sectionD.roleFinancier}
+                            onChange={(c) =>
+                              updateFormData({ sectionD: { ...formData.sectionD, roleFinancier: c } })
+                            }
+                          />
+                          <Checkbox
+                            label="Permanent employee"
+                            checked={formData.sectionD.rolePermanent}
+                            onChange={(c) =>
+                              updateFormData({ sectionD: { ...formData.sectionD, rolePermanent: c } })
+                            }
+                          />
+                          <Checkbox
+                            label="Temporary employee"
+                            checked={formData.sectionD.roleTemporary}
+                            onChange={(c) =>
+                              updateFormData({ sectionD: { ...formData.sectionD, roleTemporary: c } })
+                            }
+                          />
+                          <Checkbox
+                            label="Cooperative member"
+                            checked={formData.sectionD.roleCooperative}
+                            onChange={(c) =>
+                              updateFormData({ sectionD: { ...formData.sectionD, roleCooperative: c } })
+                            }
+                          />
+                          <Checkbox
+                            label="Other"
+                            checked={formData.sectionD.roleOther}
+                            onChange={(c) =>
+                              updateFormData({ sectionD: { ...formData.sectionD, roleOther: c } })
+                            }
+                          />
+                          {formData.sectionD.roleOther && (
+                            <input
+                              type="text"
+                              placeholder="Specify"
+                              value={formData.sectionD.roleOtherSpecify}
+                              onChange={(e) =>
+                                updateFormData({
+                                  sectionD: { ...formData.sectionD, roleOtherSpecify: e.target.value },
+                                })
+                              }
+                              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none ml-6"
+                            />
+                          )}
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-3 gap-3">
+                        <select
+                          value={formData.sectionD.yearsExperience}
+                          onChange={(e) =>
+                            updateFormData({
+                              sectionD: { ...formData.sectionD, yearsExperience: e.target.value },
+                            })
+                          }
+                          className="px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                        >
+                          <option value="">Years exp.</option>
+                          <option value="1-2">1–2</option>
+                          <option value="3-5">3–5</option>
+                          <option value="5-10">5–10</option>
+                          <option value="10+">10+</option>
+                        </select>
+                        <input
+                          type="number"
+                          placeholder="Permanent emp."
+                          min="0"
+                          value={formData.sectionD.employeesPermanent}
+                          onChange={(e) =>
+                            updateFormData({
+                              sectionD: { ...formData.sectionD, employeesPermanent: e.target.value },
+                            })
+                          }
+                          className="px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                        />
+                        <input
+                          type="number"
+                          placeholder="Temp emp."
+                          min="0"
+                          value={formData.sectionD.employeesTemporary}
+                          onChange={(e) =>
+                            updateFormData({
+                              sectionD: { ...formData.sectionD, employeesTemporary: e.target.value },
+                            })
+                          }
+                          className="px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                        />
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
+
+              {currentStep === 4 && (
+                <div className="space-y-4">
+                  <textarea
+                    required
+                    placeholder="Business description *"
+                    value={formData.sectionE.businessDescription}
+                    onChange={(e) =>
+                      updateFormData({
+                        sectionE: { ...formData.sectionE, businessDescription: e.target.value },
+                      })
+                    }
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                  />
+                  <textarea
+                    required
+                    placeholder="Target customers *"
+                    value={formData.sectionE.targetCustomers}
+                    onChange={(e) =>
+                      updateFormData({
+                        sectionE: { ...formData.sectionE, targetCustomers: e.target.value },
+                      })
+                    }
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                  />
+                  <textarea
+                    placeholder="Major suppliers"
+                    value={formData.sectionE.majorSuppliers}
+                    onChange={(e) =>
+                      updateFormData({
+                        sectionE: { ...formData.sectionE, majorSuppliers: e.target.value },
+                      })
+                    }
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                  />
+                  <textarea
+                    placeholder="Partners"
+                    value={formData.sectionE.partners}
+                    onChange={(e) =>
+                      updateFormData({
+                        sectionE: { ...formData.sectionE, partners: e.target.value },
+                      })
+                    }
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                  />
+                  <textarea
+                    placeholder="Target market"
+                    value={formData.sectionE.targetMarket}
+                    onChange={(e) =>
+                      updateFormData({
+                        sectionE: { ...formData.sectionE, targetMarket: e.target.value },
+                      })
+                    }
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
                   />
                 </div>
+              )}
 
-                <div>
-                  <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-1">
-                    Organisation / Company
-                  </label>
-                  <input
-                    type="text"
-                    value={regData.company}
-                    onChange={(e) => setRegData({ ...regData, company: e.target.value })}
-                    placeholder="e.g. Sunland Hass Farm Ltd"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none focus:border-[#63b849]"
+              {currentStep === 5 && (
+                <div className="space-y-4">
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <label className="block text-xs font-bold mb-2">Business plan? *</label>
+                    <div className="flex gap-4">
+                      {["yes", "no"].map((val) => (
+                        <label key={val} className="flex items-center gap-2">
+                          <input
+                            type="radio"
+                            value={val}
+                            checked={formData.sectionF.hasBusinessPlan === val}
+                            onChange={(e) =>
+                              updateFormData({
+                                sectionF: { ...formData.sectionF, hasBusinessPlan: e.target.value },
+                              })
+                            }
+                            className="sr-only"
+                          />
+                          <span
+                            className={`w-4 h-4 rounded-full border-2 ${
+                              formData.sectionF.hasBusinessPlan === val
+                                ? "border-[#63b849] bg-[#63b849]"
+                                : "border-gray-300"
+                            }`}
+                          />
+                          <span className="text-xs">{val === "yes" ? "Yes" : "No"}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                  <textarea
+                    required
+                    placeholder="Growth plans (next 3 years) *"
+                    value={formData.sectionF.growthPlans}
+                    onChange={(e) =>
+                      updateFormData({
+                        sectionF: { ...formData.sectionF, growthPlans: e.target.value },
+                      })
+                    }
+                    rows={4}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
                   />
                 </div>
-              </div>
+              )}
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-1">
-                    Area of Agribusiness Interests
-                  </label>
-                  <select
-                    value={regData.agriInterests}
-                    onChange={(e) => setRegData({ ...regData, agriInterests: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none focus:border-[#63b849]"
+              {currentStep === 6 && (
+                <div className="space-y-4">
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <label className="block text-xs font-bold mb-2">Join UDAN network? *</label>
+                    <div className="flex gap-4 mb-2">
+                      {["yes", "no"].map((val) => (
+                        <label key={val} className="flex items-center gap-2">
+                          <input
+                            type="radio"
+                            value={val}
+                            checked={formData.sectionG.joinNetwork === val}
+                            onChange={(e) =>
+                              updateFormData({
+                                sectionG: { ...formData.sectionG, joinNetwork: e.target.value },
+                              })
+                            }
+                            className="sr-only"
+                          />
+                          <span
+                            className={`w-4 h-4 rounded-full border-2 ${
+                              formData.sectionG.joinNetwork === val
+                                ? "border-[#63b849] bg-[#63b849]"
+                                : "border-gray-300"
+                            }`}
+                          />
+                          <span className="text-xs">{val === "yes" ? "Yes" : "No"}</span>
+                        </label>
+                      ))}
+                    </div>
+                    {formData.sectionG.joinNetwork && (
+                      <textarea
+                        placeholder={
+                          formData.sectionG.joinNetwork === "yes" ? "Your expectations" : "Why not interested"
+                        }
+                        value={formData.sectionG.networkExpectations}
+                        onChange={(e) =>
+                          updateFormData({
+                            sectionG: { ...formData.sectionG, networkExpectations: e.target.value },
+                          })
+                        }
+                        rows={3}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none mt-2"
+                      />
+                    )}
+                  </div>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <label className="block text-xs font-bold mb-2">Willing to invest?</label>
+                    <div className="flex gap-4 mb-2">
+                      {["yes", "no"].map((val) => (
+                        <label key={val} className="flex items-center gap-2">
+                          <input
+                            type="radio"
+                            value={val}
+                            checked={formData.sectionG.willingInvest === val}
+                            onChange={(e) =>
+                              updateFormData({
+                                sectionG: { ...formData.sectionG, willingInvest: e.target.value },
+                              })
+                            }
+                            className="sr-only"
+                          />
+                          <span
+                            className={`w-4 h-4 rounded-full border-2 ${
+                              formData.sectionG.willingInvest === val
+                                ? "border-[#63b849] bg-[#63b849]"
+                                : "border-gray-300"
+                            }`}
+                          />
+                          <span className="text-xs">{val === "yes" ? "Yes" : "No"}</span>
+                        </label>
+                      ))}
+                    </div>
+                    {formData.sectionG.willingInvest === "yes" && (
+                      <div className="space-y-2 mt-2">
+                        <Checkbox
+                          label="Crop"
+                          checked={formData.sectionG.investSubsectorCrop}
+                          onChange={(c) =>
+                            updateFormData({
+                              sectionG: { ...formData.sectionG, investSubsectorCrop: c },
+                            })
+                          }
+                        />
+                        <Checkbox
+                          label="Livestock"
+                          checked={formData.sectionG.investSubsectorLivestock}
+                          onChange={(c) =>
+                            updateFormData({
+                              sectionG: { ...formData.sectionG, investSubsectorLivestock: c },
+                            })
+                          }
+                        />
+                        <Checkbox
+                          label="Fish"
+                          checked={formData.sectionG.investSubsectorFish}
+                          onChange={(c) =>
+                            updateFormData({
+                              sectionG: { ...formData.sectionG, investSubsectorFish: c },
+                            })
+                          }
+                        />
+                        <Checkbox
+                          label="Forestry"
+                          checked={formData.sectionG.investSubsectorForestry}
+                          onChange={(c) =>
+                            updateFormData({
+                              sectionG: { ...formData.sectionG, investSubsectorForestry: c },
+                            })
+                          }
+                        />
+                        <Checkbox
+                          label="Agritech"
+                          checked={formData.sectionG.investSubsectorTech}
+                          onChange={(c) =>
+                            updateFormData({
+                              sectionG: { ...formData.sectionG, investSubsectorTech: c },
+                            })
+                          }
+                        />
+                      </div>
+                    )}
+                  </div>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <label className="block text-xs font-bold mb-2">Collaboration interest?</label>
+                    <div className="flex gap-4 mb-2">
+                      {["yes", "no"].map((val) => (
+                        <label key={val} className="flex items-center gap-2">
+                          <input
+                            type="radio"
+                            value={val}
+                            checked={formData.sectionG.interestCollaboration === val}
+                            onChange={(e) =>
+                              updateFormData({
+                                sectionG: { ...formData.sectionG, interestCollaboration: e.target.value },
+                              })
+                            }
+                            className="sr-only"
+                          />
+                          <span
+                            className={`w-4 h-4 rounded-full border-2 ${
+                              formData.sectionG.interestCollaboration === val
+                                ? "border-[#63b849] bg-[#63b849]"
+                                : "border-gray-300"
+                            }`}
+                          />
+                          <span className="text-xs">{val === "yes" ? "Yes" : "No"}</span>
+                        </label>
+                      ))}
+                    </div>
+                    {formData.sectionG.interestCollaboration === "yes" && (
+                      <div className="space-y-2 mt-2">
+                        <Checkbox
+                          label="Supplier access"
+                          checked={formData.sectionG.collabSuppliers}
+                          onChange={(c) =>
+                            updateFormData({
+                              sectionG: { ...formData.sectionG, collabSuppliers: c },
+                            })
+                          }
+                        />
+                        <Checkbox
+                          label="Customer identification"
+                          checked={formData.sectionG.collabCustomers}
+                          onChange={(c) =>
+                            updateFormData({
+                              sectionG: { ...formData.sectionG, collabCustomers: c },
+                            })
+                          }
+                        />
+                        <Checkbox
+                          label="Youth monitoring support"
+                          checked={formData.sectionG.collabYouthMonitoring}
+                          onChange={(c) =>
+                            updateFormData({
+                              sectionG: { ...formData.sectionG, collabYouthMonitoring: c },
+                            })
+                          }
+                        />
+                        <Checkbox
+                          label="Community investment"
+                          checked={formData.sectionG.collabCommunityInvestment}
+                          onChange={(c) =>
+                            updateFormData({
+                              sectionG: { ...formData.sectionG, collabCommunityInvestment: c },
+                            })
+                          }
+                        />
+                        <Checkbox
+                          label="Mentorship"
+                          checked={formData.sectionG.collabMentorship}
+                          onChange={(c) =>
+                            updateFormData({
+                              sectionG: { ...formData.sectionG, collabMentorship: c },
+                            })
+                          }
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 7 && (
+                <div className="space-y-4">
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <label className="block text-xs font-bold mb-2">Willing to mentor? *</label>
+                    <div className="flex gap-4">
+                      {["yes", "no"].map((val) => (
+                        <label key={val} className="flex items-center gap-2">
+                          <input
+                            type="radio"
+                            value={val}
+                            checked={formData.sectionG.willingMentor === val}
+                            onChange={(e) =>
+                              updateFormData({
+                                sectionG: { ...formData.sectionG, willingMentor: e.target.value },
+                              })
+                            }
+                            className="sr-only"
+                          />
+                          <span
+                            className={`w-4 h-4 rounded-full border-2 ${
+                              formData.sectionG.willingMentor === val
+                                ? "border-[#63b849] bg-[#63b849]"
+                                : "border-gray-300"
+                            }`}
+                          />
+                          <span className="text-xs">{val === "yes" ? "Yes" : "No"}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                  {formData.sectionG.willingMentor === "yes" && (
+                    <>
+                      <select
+                        value={formData.sectionG.mentorSubsector}
+                        onChange={(e) =>
+                          updateFormData({
+                            sectionG: { ...formData.sectionG, mentorSubsector: e.target.value },
+                          })
+                        }
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                      >
+                        <option value="">Subsector</option>
+                        <option value="Crop">Crop</option>
+                        <option value="Livestock">Livestock</option>
+                        <option value="Fish">Fish</option>
+                        <option value="Forestry">Forestry</option>
+                        <option value="Agritech">Agritech</option>
+                      </select>
+                      <div>
+                        <label className="text-xs font-bold block mb-2">Areas of engagement</label>
+                        <div className="space-y-2">
+                          <Checkbox
+                            label="Crop prod."
+                            checked={formData.sectionG.mentorEngagementCrop}
+                            onChange={(c) =>
+                              updateFormData({
+                                sectionG: { ...formData.sectionG, mentorEngagementCrop: c },
+                              })
+                            }
+                          />
+                          <Checkbox
+                            label="Processing"
+                            checked={formData.sectionG.mentorEngagementProcessing}
+                            onChange={(c) =>
+                              updateFormData({
+                                sectionG: { ...formData.sectionG, mentorEngagementProcessing: c },
+                              })
+                            }
+                          />
+                          <Checkbox
+                            label="Management"
+                            checked={formData.sectionG.mentorEngagementManagement}
+                            onChange={(c) =>
+                              updateFormData({
+                                sectionG: { ...formData.sectionG, mentorEngagementManagement: c },
+                              })
+                            }
+                          />
+                          <Checkbox
+                            label="Market access"
+                            checked={formData.sectionG.mentorEngagementMarket}
+                            onChange={(c) =>
+                              updateFormData({
+                                sectionG: { ...formData.sectionG, mentorEngagementMarket: c },
+                              })
+                            }
+                          />
+                          <Checkbox
+                            label="Staff mgmt"
+                            checked={formData.sectionG.mentorEngagementStaff}
+                            onChange={(c) =>
+                              updateFormData({
+                                sectionG: { ...formData.sectionG, mentorEngagementStaff: c },
+                              })
+                            }
+                          />
+                          <Checkbox
+                            label="Tech"
+                            checked={formData.sectionG.mentorEngagementTech}
+                            onChange={(c) =>
+                              updateFormData({
+                                sectionG: { ...formData.sectionG, mentorEngagementTech: c },
+                              })
+                            }
+                          />
+                        </div>
+                      </div>
+                      <div className="bg-gray-50 p-4 rounded-lg">
+                        <label className="block text-xs font-bold mb-2">Past mentorship?</label>
+                        <div className="flex gap-4">
+                          {["yes", "no"].map((val) => (
+                            <label key={val} className="flex items-center gap-2">
+                              <input
+                                type="radio"
+                                value={val}
+                                checked={formData.sectionG.pastMentorship === val}
+                                onChange={(e) =>
+                                  updateFormData({
+                                    sectionG: { ...formData.sectionG, pastMentorship: e.target.value },
+                                  })
+                                }
+                                className="sr-only"
+                              />
+                              <span
+                                className={`w-4 h-4 rounded-full border-2 ${
+                                  formData.sectionG.pastMentorship === val
+                                    ? "border-[#63b849] bg-[#63b849]"
+                                    : "border-gray-300"
+                                }`}
+                              />
+                              <span className="text-xs">{val === "yes" ? "Yes" : "No"}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                      <select
+                        value={formData.sectionG.mentorshipFrequency}
+                        onChange={(e) =>
+                          updateFormData({
+                            sectionG: { ...formData.sectionG, mentorshipFrequency: e.target.value },
+                          })
+                        }
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                      >
+                        <option value="">Engagement type</option>
+                        <option value="in-person">In-person</option>
+                        <option value="online">Online</option>
+                        <option value="both">Both</option>
+                      </select>
+                      <select
+                        value={formData.sectionG.mentorshipHours}
+                        onChange={(e) =>
+                          updateFormData({
+                            sectionG: { ...formData.sectionG, mentorshipHours: e.target.value },
+                          })
+                        }
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                      >
+                        <option value="">Hours/month</option>
+                        <option value="1-2">1–2</option>
+                        <option value="3-4">3–4</option>
+                        <option value="5-6">5–6</option>
+                        <option value="7+">7+</option>
+                      </select>
+                    </>
+                  )}
+                </div>
+              )}
+
+              {currentStep === 8 && (
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-bold mb-1">Business Plan (PDF/Word)</label>
+                    <input
+                      type="file"
+                      accept=".pdf,.doc,.docx"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          updateFormData({
+                            sectionHI: {
+                              ...formData.sectionHI,
+                              businessPlanFile: file,
+                              businessPlanFileName: file.name,
+                            },
+                          });
+                        }
+                      }}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                    />
+                    {formData.sectionHI.businessPlanFileName && (
+                      <p className="text-xs text-gray-600 mt-1">📎 {formData.sectionHI.businessPlanFileName}</p>
+                    )}
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold mb-1">Other Documents</label>
+                    <input
+                      type="file"
+                      accept=".pdf,.doc,.docx,.xls,.xlsx"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          updateFormData({
+                            sectionHI: {
+                              ...formData.sectionHI,
+                              otherDocuments: file,
+                              otherDocumentsFileName: file.name,
+                            },
+                          });
+                        }
+                      }}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                    />
+                    {formData.sectionHI.otherDocumentsFileName && (
+                      <p className="text-xs text-gray-600 mt-1">📎 {formData.sectionHI.otherDocumentsFileName}</p>
+                    )}
+                  </div>
+                  <input
+                    type="url"
+                    placeholder="Website URL"
+                    value={formData.sectionHI.websiteUrl}
+                    onChange={(e) =>
+                      updateFormData({
+                        sectionHI: { ...formData.sectionHI, websiteUrl: e.target.value },
+                      })
+                    }
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                  />
+                  <textarea
+                    placeholder="Useful links (one per line)"
+                    value={formData.sectionHI.usefulLinks}
+                    onChange={(e) =>
+                      updateFormData({
+                        sectionHI: { ...formData.sectionHI, usefulLinks: e.target.value },
+                      })
+                    }
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:border-[#63b849] outline-none"
+                  />
+                </div>
+              )}
+
+              <div className="flex gap-3 pt-6 border-t border-gray-200">
+                <button
+                  type="button"
+                  onClick={handlePrevious}
+                  disabled={currentStep === 0}
+                  className="flex-1 px-4 py-2 border border-gray-300 text-[#1b2238] text-xs font-bold rounded-full hover:bg-gray-50 disabled:opacity-50"
+                >
+                  Previous
+                </button>
+                {currentStep === steps.length - 1 ? (
+                  <button
+                    type="submit"
+                    disabled={submitStatus === "loading"}
+                    className="flex-1 px-4 py-2 bg-[#63b849] text-white text-xs font-bold rounded-full hover:bg-[#558c3d] disabled:opacity-50"
                   >
-                    <option>Crop production</option>
-                    <option>Livestock and dairy farming</option>
-                    <option>Aquaculture and apiculture</option>
-                    <option>Agro-processing and value addition</option>
-                    <option>Agritech and farm mechanization</option>
-                    <option>Irrigation and climate-smart agriculture</option>
-                    <option>Agricultural inputs and farm services</option>
-                    <option>Trade, export, and supply chain management</option>
-                    <option>Agribusiness finance and investment</option>
-                    <option>Research, policy, and food systems development</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-1">
-                    Type of Membership
-                  </label>
-                  <select
-                    value={regData.membershipType}
-                    onChange={(e) => setRegData({ ...regData, membershipType: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none focus:border-[#63b849]"
+                    {submitStatus === "loading" ? "Submitting..." : "Submit"}
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={handleNext}
+                    className="flex-1 px-4 py-2 bg-[#63b849] text-white text-xs font-bold rounded-full hover:bg-[#558c3d]"
                   >
-                    <option>Ordinary Membership</option>
-                    <option>Business Membership</option>
-                    <option>Youth &amp; Student Membership</option>
-                  </select>
-                </div>
+                    Next
+                  </button>
+                )}
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-1">
-                    Password Setup *
-                  </label>
-                  <input
-                    type="password"
-                    required
-                    value={regData.password}
-                    onChange={(e) => setRegData({ ...regData, password: e.target.value })}
-                    placeholder="At least 8 characters"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none focus:border-[#63b849] focus:ring-1 focus:ring-[#63b849]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-[#1b2238] uppercase tracking-wider mb-1">
-                    Confirm Password *
-                  </label>
-                  <input
-                    type="password"
-                    required
-                    value={regData.confirmPassword}
-                    onChange={(e) => setRegData({ ...regData, confirmPassword: e.target.value })}
-                    placeholder="Repeat password"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none focus:border-[#63b849] focus:ring-1 focus:ring-[#63b849]"
-                  />
-                </div>
-              </div>
-
-              <div className="pt-2">
-                <label className="flex items-start gap-2 text-xs text-gray-600 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    required
-                    checked={regData.consent}
-                    onChange={(e) => setRegData({ ...regData, consent: e.target.checked })}
-                    className="mt-0.5 rounded text-[#63b849] focus:ring-[#63b849]"
-                  />
-                  <span>
-                    I consent to UDAN processing my personal data for membership onboarding, regional chapter affiliation, and communication according to the UDAN Constitution and Privacy Policy.
-                  </span>
-                </label>
-              </div>
-
-              <button
-                type="submit"
-                disabled={regStatus === "loading"}
-                className="w-full pill-btn pill-green text-xs justify-center py-3 font-bold uppercase tracking-wider disabled:opacity-50"
-              >
-                {regStatus === "loading" ? "Registering..." : "Complete Registration"}
-              </button>
-
-              {regMessage && (
+              {submitMessage && (
                 <div
                   className={`p-3 rounded-lg text-xs font-semibold ${
-                    regStatus === "success"
-                      ? "bg-green-50 text-green-700 border border-green-200"
-                      : "bg-red-50 text-red-700 border border-red-200"
+                    submitStatus === "error"
+                      ? "bg-red-50 text-red-700 border border-red-200"
+                      : "bg-blue-50 text-blue-700 border border-blue-200"
                   }`}
                 >
-                  {regMessage}
+                  {submitMessage}
                 </div>
               )}
             </form>

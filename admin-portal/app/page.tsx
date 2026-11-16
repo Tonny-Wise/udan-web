@@ -84,6 +84,7 @@ export default function AdminPortal() {
 
   // Registrations (unchanged)
   const [registrations, setRegistrations] = useState<Registration[]>([]);
+  const [exportingFormat, setExportingFormat] = useState<string | null>(null);
 
   // Gallery state: loaded from Supabase
   const [galleryCategories, setGalleryCategories] = useState<GalleryCategory[]>([]);
@@ -463,6 +464,44 @@ export default function AdminPortal() {
       if (error) { console.error("Error deleting registration:", error); return; }
       setRegistrations(registrations.filter((r) => r.id !== id));
     } catch (err) { console.error("Failed to delete registration:", err); }
+  };
+
+  // ── Export registrations ─────────────────────────────────────────────────────
+  const exportRegistrations = async (format: "csv" | "excel" | "pdf") => {
+    try {
+      setExportingFormat(format);
+      const response = await fetch(
+        `/api/export-registrations?format=${format}`
+      );
+
+      if (!response.ok) {
+        throw new Error("Export failed");
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+
+      const timestamp = new Date().toISOString().split("T")[0];
+      const filename =
+        format === "excel"
+          ? `udan-registrations-${timestamp}.xlsx`
+          : format === "pdf"
+          ? `udan-registrations-${timestamp}.pdf`
+          : `udan-registrations-${timestamp}.csv`;
+
+      link.setAttribute("download", filename);
+      document.body.appendChild(link);
+      link.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(link);
+    } catch (err) {
+      console.error("Export error:", err);
+      alert("Failed to export registrations. Please try again.");
+    } finally {
+      setExportingFormat(null);
+    }
   };
 
   // ── Gallery handlers ─────────────────────────────────────────────────────────
@@ -980,8 +1019,31 @@ export default function AdminPortal() {
               </div>
 
               <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-                <div className="px-6 py-4 border-b border-slate-100">
+                <div className="px-6 py-4 border-b border-slate-100 flex justify-between items-center">
                   <h2 className="font-semibold text-[#0f172a]">Member Registrations</h2>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => exportRegistrations("csv")}
+                      disabled={exportingFormat !== null || registrations.length === 0}
+                      className="px-3 py-2 bg-blue-50 text-blue-700 text-xs font-semibold rounded-lg hover:bg-blue-100 disabled:opacity-50 transition-colors"
+                    >
+                      {exportingFormat === "csv" ? "Exporting..." : "📊 CSV"}
+                    </button>
+                    <button
+                      onClick={() => exportRegistrations("excel")}
+                      disabled={exportingFormat !== null || registrations.length === 0}
+                      className="px-3 py-2 bg-green-50 text-green-700 text-xs font-semibold rounded-lg hover:bg-green-100 disabled:opacity-50 transition-colors"
+                    >
+                      {exportingFormat === "excel" ? "Exporting..." : "📈 Excel"}
+                    </button>
+                    <button
+                      onClick={() => exportRegistrations("pdf")}
+                      disabled={exportingFormat !== null || registrations.length === 0}
+                      className="px-3 py-2 bg-orange-50 text-orange-700 text-xs font-semibold rounded-lg hover:bg-orange-100 disabled:opacity-50 transition-colors"
+                    >
+                      {exportingFormat === "pdf" ? "Exporting..." : "📄 PDF"}
+                    </button>
+                  </div>
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full">
