@@ -1,21 +1,95 @@
 {
-  "verdict": "APPROVED",
-  "findings": [],
-  "fixes": [
+  "verdict": "CHANGES_REQUESTED",
+  "findings": [
     {
-      "id": "BLOCKER-001-FIXED",
-      "issue": "localStorage Auto-Save Mechanism",
-      "solution": "Replaced email-dependent storage key with constant 'udan_diaspora_form_draft'",
-      "changes": "Lines 227-233: Modified useEffect to use constant storage key; Lines 255-260: Modified saveToLocalStorage to use constant key; Line 369: Updated localStorage.removeItem in handleSubmit to use constant key",
-      "verification": "Build passes with no TypeScript errors; constant key ensures reliable data recovery on return visits"
-    },
-    {
-      "id": "BLOCKER-002-FIXED",
-      "issue": "Missing 'Save & Continue Later' Button",
-      "solution": "Added dedicated button with visual save confirmation",
-      "changes": "Line 221: Added saveStatus state; Lines 320-325: Created handleSaveContinueLater function; Lines 1670-1674: Added 'Save & Continue Later' button with conditional 'Saved' display",
-      "verification": "Button appears on all sections; shows '✓ Saved' confirmation for 3 seconds; integrates with existing saveToLocalStorage function"
+      "id": "BLOCKER-001",
+      "severity": "blocker",
+      "title": "Other Documents URLs Parameter Mismatch - Array Lost in API",
+      "description": "The form frontend sends multiple file URLs as 'otherDocumentsUrls' (array) but the API backend destructures the parameter as 'otherDocumentsUrl' (singular). Due to this naming mismatch, the array parameter is never captured by the API, resulting in undefined being stored in the database as null. All URLs for uploaded supporting documents are lost.",
+      "location": {
+        "files": [
+          {
+            "file": "/website/app/account/page.tsx",
+            "line": "391",
+            "context": "Form sends: otherDocumentsUrls (array)"
+          },
+          {
+            "file": "/website/app/api/diaspora-application/route.ts",
+            "line": "22",
+            "context": "API destructures: otherDocumentsUrl (singular mismatch)"
+          },
+          {
+            "file": "/website/app/api/diaspora-application/route.ts",
+            "line": "135",
+            "context": "Database stores: other_documents: otherDocumentsUrl || null (stores undefined)"
+          }
+        ]
+      },
+      "evidence": {
+        "frontendCode": "const otherDocumentsUrls: string[] = []; // Array created and populated\nbody: JSON.stringify({ ...formData, businessPlanUrl, otherDocumentsUrls }) // Array sent with 's'",
+        "apiCode": "const { sectionHI, businessPlanUrl, otherDocumentsUrl } = body; // Expecting singular 'Url'\nother_documents: otherDocumentsUrl || null, // Receives undefined"
+      },
+      "affectedComponents": [
+        "/website/app/account/page.tsx (line 364-391: otherDocumentsUrls array creation and transmission)",
+        "/website/app/api/diaspora-application/route.ts (line 22: parameter destructuring expects singular)",
+        "/website/app/api/diaspora-application/route.ts (line 135: database storage of undefined value)",
+        "/website/database/migrations/002_add_diaspora_form_columns.sql (line 100: VARCHAR(255) field may need TEXT type for array storage)"
+      ],
+      "userVisibleConsequence": "When users upload multiple supporting documents (the 'Other Documents (Multiple)' field has the 'multiple' attribute on line 1606), all selected files are uploaded to Supabase storage successfully. However, none of the file URLs are stored in the database because the API does not capture them. The database record receives null for other_documents field. Users have no way to retrieve or verify their uploaded documents were captured.",
+      "requirement": "Requirement 3 (FILE UPLOADS): 'business_plan_file and other_documents have upload UI' and 'Files upload to Supabase storage with correct path structure' and 'File paths stored in database'. Application.md Section H requests 'Please upload any other relevant document(s)' (plural), implying multiple documents should be supported end-to-end.",
+      "correction": "Option 1 (Recommended): Update API parameter destructuring to accept array:\n  Line 22: Change 'otherDocumentsUrl' to 'otherDocumentsUrls' (add 's')\n  Line 135: Change storage to handle array:\n    other_documents: otherDocumentsUrls?.length ? JSON.stringify(otherDocumentsUrls) : null,\n\nOption 2: Update database schema to use JSONB type (requires migration) instead of VARCHAR(255) and modify line 135 accordingly.\n\nOption 3: Create separate junction table diaspora_documents(id, member_id, file_path, doc_type) for proper normalization.",
+      "severity_justification": "This is a critical data loss issue. Users complete the form with multiple documents, the UI confirms the uploads, but the system silently fails to persist the document references. This violates data integrity and prevents document retrieval."
     }
   ],
+  "resolvedFindings": [
+    {
+      "id": "BLOCKER-002-RESOLVED",
+      "priorStatus": "BLOCKER",
+      "title": "Years of Experience Not Validated as Required Field",
+      "currentStatus": "FIXED",
+      "evidence": "Validation for step 3 now includes: return formData.sectionD.hasBusiness !== \"\" && (formData.sectionD.hasBusiness === \"no\" || formData.sectionD.yearsExperience !== \"\");",
+      "location": "/website/app/account/page.tsx line 297"
+    },
+    {
+      "id": "MINOR-001-UNRESOLVED",
+      "priorStatus": "MINOR",
+      "title": "Mentorship Frequency Field Labels Minor Semantic Mismatch",
+      "currentStatus": "UNRESOLVED - Not blocking",
+      "note": "Label 'Engagement type' differs from application.md 'Ready to regularly meet...' but functionality is correct. Remains a minor UX enhancement opportunity."
+    }
+  ],
+  "buildStatus": {
+    "result": "PASS",
+    "details": "TypeScript compilation successful in 3.6s, full build in 4.5s with Turbopack. All 22 routes generated. No errors or warnings.",
+    "apiRoutes": [
+      "/api/diaspora-application (confirmed present)",
+      "/api/upload-diaspora-file (confirmed present)"
+    ]
+  },
+  "keyVerifications": [
+    "✓ All 9 form sections (A-I) implemented with correct field names",
+    "✓ Multi-step interface with progress indicator functional",
+    "✓ localStorage auto-save on every field change verified",
+    "✓ Save & Continue Later button working with visual feedback",
+    "✓ Previous/Next navigation with proper state management",
+    "✓ Form data loads from storage on page load",
+    "✓ File upload UI present for business_plan_file with single file capture working",
+    "✓ File upload UI present for other_documents with MULTIPLE file support in frontend",
+    "✓ Supabase storage integration verified (diaspora-forms/ path structure)",
+    "✓ Required fields marked with asterisks",
+    "✓ Validation prevents advancing without completing required fields",
+    "✓ Years of experience validation now properly enforced",
+    "✓ Clear error messages displayed",
+    "✓ UDAN branding colors and responsive design throughout",
+    "✓ Admin export UI with CSV/Excel/PDF buttons integrated",
+    "✓ Database migration adds all required columns with proper types"
+  ],
+  "summaryNotes": {
+    "blockerCount": 1,
+    "priorBlockersResolved": 1,
+    "completionPercentage": 99,
+    "readinessForProduction": "NOT READY - Must fix parameter mismatch to prevent data loss",
+    "criticalPath": "Fix parameter name from 'otherDocumentsUrl' to 'otherDocumentsUrls' in API line 22, and update database storage line 135 to handle array (or migrate schema to JSON type)"
+  },
   "reviewDoc": "/Users/grimian/Documents/GiTHUB/udan-web/.agents/tasks/diaspora-form-review.md"
 }

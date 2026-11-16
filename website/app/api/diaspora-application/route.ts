@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
       sectionG,
       sectionHI,
       businessPlanUrl,
-      otherDocumentsUrl,
+      otherDocumentsUrls,
     } = body;
 
     // Validate required fields
@@ -131,7 +131,7 @@ export async function POST(req: NextRequest) {
       mentorship_frequency: sectionG.mentorshipFrequency || null,
       // Section H-I
       business_plan_file: businessPlanUrl || null,
-      other_documents: otherDocumentsUrl || null,
+      other_documents: otherDocumentsUrls?.length ? JSON.stringify(otherDocumentsUrls) : null,
       useful_links: sectionHI.usefulLinks || null,
       website_url: sectionHI.websiteUrl || null,
       // Metadata
